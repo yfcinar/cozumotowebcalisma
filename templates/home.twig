@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="page-header hero-header">
-    <div class="hero-header__glow" aria-hidden="true"></div>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center hero-header__text">
@@ -36,7 +35,7 @@
             <div class="col-md-6 col-lg-4 d-flex">
                 <a class="card card-service" href="/hizmet/{{ s.slug }}">
                     <div class="card-body">
-                        <div class="card-service__icon">{{ s.icon|default('🔧') }}</div>
+                        <div class="card-service__icon"><i class="fa {{ s.icon starts with 'fa-' ? s.icon : 'fa-wrench' }}" aria-hidden="true"></i></div>
                         <h3 class="card-title">{{ s.title }}</h3>
                         <p class="card-description">{{ s.summary|default(s.body|excerpt(110)) }}</p>
                         <span class="card-service__more">Detaylar <i class="fa fa-long-arrow-right"></i></span>
