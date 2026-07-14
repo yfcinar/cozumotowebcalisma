@@ -28,6 +28,53 @@ final class MessageRepository extends BaseRepository
         return $this->pdo->query('SELECT * FROM messages ORDER BY created_at DESC, id DESC')->fetchAll();
     }
 
+    /**
+     * Filtreli listeleme. $filter: all|unread|read|starred, $search: ad/telefon/eposta/konu araması.
+     */
+    public function filtered(string $filter = 'all', string $search = ''): array
+    {
+        $where = [];
+        $params = [];
+
+        if ($filter === 'unread') {
+            $where[] = 'is_read = 0';
+        } elseif ($filter === 'read') {
+            $where[] = 'is_read = 1';
+        } elseif ($filter === 'starred') {
+            $where[] = 'is_starred = 1';
+        }
+
+        if ($search !== '') {
+            $where[] = '(name LIKE :q OR phone LIKE :q OR email LIKE :q OR subject LIKE :q OR body LIKE :q)';
+            $params['q'] = '%' . $search . '%';
+        }
+
+        $sql = 'SELECT * FROM messages';
+        if ($where) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        $sql .= ' ORDER BY is_starred DESC, created_at DESC, id DESC';
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
+    public function starredCount(): int
+    {
+        return (int) $this->pdo->query('SELECT COUNT(*) FROM messages WHERE is_starred = 1')->fetchColumn();
+    }
+
+    public function toggleStar(int $id): void
+    {
+        $this->pdo->prepare('UPDATE messages SET is_starred = 1 - is_starred WHERE id = :id')->execute(['id' => $id]);
+    }
+
+    public function markUnread(int $id): void
+    {
+        $this->pdo->prepare('UPDATE messages SET is_read = 0 WHERE id = :id')->execute(['id' => $id]);
+    }
+
     public function find(int $id): ?array
     {
         $stmt = $this->pdo->prepare('SELECT * FROM messages WHERE id = :id');

@@ -1,0 +1,34 @@
+{% extends 'admin/layout.twig' %}
+{% set current_nav = 'activity' %}
+{% block title %}İşlem Günlüğü{% endblock %}
+
+{% block content %}
+<div class="adm-pagehead">
+    <div>
+        <h2>İşlem Günlüğü</h2>
+        <p>Panelde yapılan tüm ekleme, düzenleme ve silme işlemlerinin kaydı.</p>
+    </div>
+</div>
+
+<div class="adm-card">
+    <div class="adm-card__body adm-card__body--pad0">
+        {% if entries|length %}
+        <ul class="adm-feed">
+            {% for a in entries %}
+            <li>
+                <span class="adm-feed__dot"><i class="fa fa-{{ a.action == 'sildi' ? 'trash' : (a.action == 'ekledi' ? 'plus' : 'pencil') }}"></i></span>
+                <div class="adm-feed__main">
+                    <b>{{ a.user_name|default('Yönetici') }}</b>
+                    <span class="adm-badge adm-badge--{{ a.action == 'sildi' ? 'red' : (a.action == 'ekledi' ? 'green' : 'blue') }}">{{ a.action }}</span>
+                    {{ a.entity }}{% if a.detail %} <span class="adm-muted">— {{ a.detail }}</span>{% endif %}
+                    <div class="adm-feed__time"><i class="fa fa-clock-o"></i> {{ a.created_at }}</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="adm-empty"><i class="fa fa-history"></i>Henüz işlem kaydı yok.<br><small>İçerik ekleyip düzenledikçe burada görünecek.</small></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

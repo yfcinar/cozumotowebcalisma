@@ -3,34 +3,44 @@
 {% block title %}Hizmetler{% endblock %}
 
 {% block content %}
-<div class="adm-card">
-    <div class="adm-card__head">
-        <h2>Hizmetler ({{ services|length }})</h2>
-        <a class="adm-btn adm-btn--primary" href="/yonetim/hizmetler/yeni">+ Yeni Hizmet</a>
+<div class="adm-pagehead">
+    <div>
+        <h2>Hizmetler</h2>
+        <p>Sunduğunuz hizmetleri yönetin. Her hizmet otomatik ilçe landing sayfaları üretir.</p>
     </div>
-    <table class="adm-table">
-        <thead><tr><th>Sıra</th><th>Başlık</th><th>Slug</th><th>İlçe Sayfaları</th><th>Durum</th><th></th></tr></thead>
-        <tbody>
-        {% for s in services %}
-        <tr>
-            <td>{{ s.sort_order }}</td>
-            <td><strong>{{ s.icon }} {{ s.title }}</strong></td>
-            <td><code>/hizmet/{{ s.slug }}</code></td>
-            <td>{{ s.enable_districts ? 'Açık' : 'Kapalı' }}</td>
-            <td>{% if s.is_active %}<span class="adm-badge adm-badge--on">Aktif</span>{% else %}<span class="adm-badge">Pasif</span>{% endif %}</td>
-            <td class="adm-actions">
-                <a class="adm-link" href="/hizmet/{{ s.slug }}" target="_blank">Gör</a>
-                <a class="adm-link" href="/yonetim/hizmetler/{{ s.id }}/duzenle">Düzenle</a>
-                <form method="post" action="/yonetim/hizmetler/{{ s.id }}/sil" data-confirm="Bu hizmeti silmek istediğinize emin misiniz?">
-                    <input type="hidden" name="_csrf" value="{{ csrf }}">
-                    <button class="adm-link adm-link--danger">Sil</button>
-                </form>
-            </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="6" class="adm-empty">Henüz hizmet eklenmemiş.</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <a class="adm-btn adm-btn--primary" href="/yonetim/hizmetler/yeni"><i class="fa fa-plus"></i> Yeni Hizmet</a>
+</div>
+
+<div class="adm-card">
+    <div class="adm-card__body adm-card__body--pad0">
+        <div class="adm-tablewrap">
+        <table class="adm-table">
+            <thead><tr><th>Sıra</th><th>Başlık</th><th>URL</th><th>İlçe Sayfaları</th><th>Durum</th><th></th></tr></thead>
+            <tbody>
+            {% for s in services %}
+            <tr>
+                <td class="adm-muted">{{ s.sort_order }}</td>
+                <td><strong>{% if s.icon %}<i class="fa {{ s.icon starts with 'fa-' ? s.icon : 'fa-wrench' }}" style="color:var(--brand);width:18px"></i> {% endif %}{{ s.title }}</strong></td>
+                <td><span class="adm-mono adm-muted">/hizmet/{{ s.slug }}</span></td>
+                <td>{% if s.enable_districts %}<span class="adm-badge adm-badge--blue">Açık</span>{% else %}<span class="adm-badge adm-badge--gray">Kapalı</span>{% endif %}</td>
+                <td>{% if s.is_active %}<span class="adm-badge adm-badge--green">Aktif</span>{% else %}<span class="adm-badge adm-badge--gray">Pasif</span>{% endif %}</td>
+                <td class="text-right">
+                    <div class="adm-actions">
+                        <a class="adm-iconbtn" href="/hizmet/{{ s.slug }}" target="_blank" title="Görüntüle"><i class="fa fa-external-link"></i></a>
+                        <a class="adm-iconbtn" href="/yonetim/hizmetler/{{ s.id }}/duzenle" title="Düzenle"><i class="fa fa-pencil"></i></a>
+                        <form method="post" action="/yonetim/hizmetler/{{ s.id }}/sil" data-confirm="Bu hizmeti silmek istediğinize emin misiniz?">
+                            <input type="hidden" name="_csrf" value="{{ csrf }}">
+                            <button class="adm-iconbtn adm-iconbtn--danger" title="Sil"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="adm-table__empty"><i class="fa fa-wrench" style="font-size:2rem;opacity:.3"></i><br>Henüz hizmet eklenmemiş.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
 </div>
 {% endblock %}

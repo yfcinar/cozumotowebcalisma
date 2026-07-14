@@ -41,19 +41,32 @@ return [
     ViewGlobals::class => fn (ContainerInterface $c) => new ViewGlobals(
         $c->get(SettingsService::class),
         $c->get(ServiceRepository::class),
-        $c->get('settings')['app']
+        $c->get('settings')['app'],
+        $c->get(App\Repository\MessageRepository::class)
     ),
 
     SitemapController::class => fn (ContainerInterface $c) => new SitemapController(
         $c->get(ServiceRepository::class),
         $c->get(App\Repository\DistrictRepository::class),
         $c->get(App\Repository\PageRepository::class),
-        $c->get('settings')['app']
+        $c->get('settings')['app'],
+        $c->get(SettingsService::class)
     ),
 
     AdminGalleryController::class => fn (ContainerInterface $c) => new AdminGalleryController(
         $c->get(Twig::class),
         $c->get(App\Repository\GalleryRepository::class),
         $c->get('settings')['app']['root'] . '/public/assets/uploads'
+    ),
+
+    App\Controllers\Admin\SeoController::class => fn (ContainerInterface $c) => new App\Controllers\Admin\SeoController(
+        $c->get(Twig::class),
+        $c->get(ServiceRepository::class),
+        $c->get(App\Repository\PageRepository::class),
+        $c->get(App\Repository\DistrictRepository::class),
+        $c->get(SettingsService::class),
+        $c->get(App\Support\SeoAnalyzer::class),
+        $c->get(App\Repository\ActivityRepository::class),
+        $c->get('settings')['app']
     ),
 ];

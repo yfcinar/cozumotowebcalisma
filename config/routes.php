@@ -86,8 +86,18 @@ return function (SlimApp $app): void {
 
         // Mesajlar
         $g->get('/mesajlar', [App\Controllers\Admin\MessageController::class, 'index']);
+        $g->get('/mesajlar/disa-aktar', [App\Controllers\Admin\MessageController::class, 'export']);
         $g->get('/mesajlar/{id}', [App\Controllers\Admin\MessageController::class, 'show']);
+        $g->post('/mesajlar/{id}/yildiz', [App\Controllers\Admin\MessageController::class, 'toggleStar']);
+        $g->post('/mesajlar/{id}/okundu', [App\Controllers\Admin\MessageController::class, 'toggleRead']);
         $g->post('/mesajlar/{id}/sil', [App\Controllers\Admin\MessageController::class, 'delete']);
+
+        // SEO Merkezi
+        $g->get('/seo', [App\Controllers\Admin\SeoController::class, 'index']);
+        $g->post('/seo', [App\Controllers\Admin\SeoController::class, 'update']);
+
+        // İşlem günlüğü
+        $g->get('/gunluk', [App\Controllers\Admin\ActivityController::class, 'index']);
 
         // Ayarlar & Hesap
         $g->get('/ayarlar', [App\Controllers\Admin\SettingController::class, 'edit']);

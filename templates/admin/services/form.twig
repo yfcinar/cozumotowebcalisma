@@ -3,36 +3,97 @@
 {% block title %}{{ service ? 'Hizmet Düzenle' : 'Yeni Hizmet' }}{% endblock %}
 
 {% block content %}
+<div class="adm-pagehead">
+    <div>
+        <h2>{{ service ? 'Hizmet Düzenle' : 'Yeni Hizmet' }}</h2>
+        <p>{{ service ? service.title : 'Yeni bir hizmet ekleyin.' }}</p>
+    </div>
+    <a class="adm-btn" href="/yonetim/hizmetler"><i class="fa fa-arrow-left"></i> Listeye Dön</a>
+</div>
+
 <form class="adm-form" method="post" action="{{ action }}">
     <input type="hidden" name="_csrf" value="{{ csrf }}">
-    <div class="adm-form__grid">
-        <div class="adm-form__main">
+    <div class="adm-grid">
+        <div>
+            <div class="adm-card"><div class="adm-card__body">
+                <div class="adm-form">
+                    <div class="adm-field">
+                        <label>Başlık *</label>
+                        <input type="text" name="title" value="{{ service.title|default('') }}" required>
+                    </div>
+                    <div class="adm-field">
+                        <label>URL Slug <span class="hint">(boş bırakılırsa başlıktan üretilir)</span></label>
+                        <input type="text" name="slug" value="{{ service.slug|default('') }}" placeholder="edc-sanziman">
+                    </div>
+                    <div class="adm-field">
+                        <label>Kısa Özet <span class="hint">(kartlarda ve meta açıklamada kullanılır)</span></label>
+                        <textarea name="summary" rows="2">{{ service.summary|default('') }}</textarea>
+                    </div>
+                    <div class="adm-field">
+                        <label>İçerik <span class="hint">(HTML destekler)</span></label>
+                        <textarea name="body" rows="14">{{ service.body|default('') }}</textarea>
+                    </div>
+                </div>
+            </div></div>
+
             <div class="adm-card">
-                <label>Başlık *<input type="text" name="title" value="{{ service.title|default('') }}" required></label>
-                <label>Slug (boş bırakılırsa başlıktan üretilir)<input type="text" name="slug" value="{{ service.slug|default('') }}" placeholder="edc-sanziman"></label>
-                <label>Kısa Özet<textarea name="summary" rows="2">{{ service.summary|default('') }}</textarea></label>
-                <label>İçerik (HTML destekler)<textarea name="body" rows="14" class="adm-html">{{ service.body|default('') }}</textarea></label>
-            </div>
-            <div class="adm-card">
-                <h3>SEO</h3>
-                <label>Meta Başlık<input type="text" name="meta_title" value="{{ service.meta_title|default('') }}"></label>
-                <label>Meta Açıklama<textarea name="meta_description" rows="2">{{ service.meta_description|default('') }}</textarea></label>
+                <div class="adm-card__head"><h3><i class="fa fa-line-chart"></i> SEO</h3></div>
+                <div class="adm-card__body">
+                    <div class="adm-form">
+                        <div class="adm-field">
+                            <label>Meta Başlık <span class="hint">(30-60 karakter ideal)</span></label>
+                            <input type="text" name="meta_title" value="{{ service.meta_title|default('') }}" data-count="60">
+                        </div>
+                        <div class="adm-field">
+                            <label>Meta Açıklama <span class="hint">(70-160 karakter ideal)</span></label>
+                            <textarea name="meta_description" rows="2" data-count="160">{{ service.meta_description|default('') }}</textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="adm-form__side">
+
+        <div>
             <div class="adm-card">
-                <h3>Ayarlar</h3>
-                <label>İkon (emoji)<input type="text" name="icon" value="{{ service.icon|default('🔧') }}"></label>
-                <label>Görsel yolu<input type="text" name="image" value="{{ service.image|default('') }}" placeholder="assets/uploads/..."></label>
-                <label>Sıra<input type="number" name="sort_order" value="{{ service.sort_order|default(0) }}"></label>
-                <label class="adm-check"><input type="checkbox" name="is_active" {{ service is null or service.is_active ? 'checked' }}> Aktif</label>
-                <label class="adm-check"><input type="checkbox" name="enable_districts" {{ service is null or service.enable_districts ? 'checked' }}> İlçe landing sayfaları üret</label>
+                <div class="adm-card__head"><h3><i class="fa fa-sliders"></i> Ayarlar</h3></div>
+                <div class="adm-card__body">
+                    <div class="adm-form">
+                        <div class="adm-field">
+                            <label>İkon <span class="hint">(Font Awesome sınıfı, örn: fa-cogs)</span></label>
+                            <input type="text" name="icon" value="{{ service.icon|default('fa-wrench') }}" placeholder="fa-wrench">
+                        </div>
+                        <div class="adm-field">
+                            <label>Görsel Yolu</label>
+                            <input type="text" name="image" value="{{ service.image|default('') }}" placeholder="assets/uploads/...">
+                        </div>
+                        <div class="adm-field">
+                            <label>Sıralama</label>
+                            <input type="number" name="sort_order" value="{{ service.sort_order|default(0) }}">
+                        </div>
+                        <label class="adm-check"><input type="checkbox" name="is_active" {{ service is null or service.is_active ? 'checked' }}> Aktif</label>
+                        <label class="adm-check"><input type="checkbox" name="enable_districts" {{ service is null or service.enable_districts ? 'checked' }}> İlçe landing sayfaları üret</label>
+                    </div>
+                </div>
             </div>
-            <div class="adm-card adm-save">
-                <button type="submit" class="adm-btn adm-btn--primary">Kaydet</button>
-                <a href="/yonetim/hizmetler" class="adm-btn">Vazgeç</a>
-            </div>
+            <div class="adm-card"><div class="adm-card__body">
+                <div class="adm-quick" style="flex-direction:column">
+                    <button type="submit" class="adm-btn adm-btn--primary" style="justify-content:center"><i class="fa fa-check"></i> Kaydet</button>
+                    <a href="/yonetim/hizmetler" class="adm-btn" style="justify-content:center">Vazgeç</a>
+                </div>
+            </div></div>
         </div>
     </div>
 </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('[data-count]').forEach(function(el){
+  var max = +el.dataset.count;
+  var c = document.createElement('span'); c.className = 'adm-field__count';
+  el.parentNode.appendChild(c);
+  function upd(){ var n = el.value.length; c.textContent = n + ' / ' + max; c.className = 'adm-field__count ' + (n>=Math.round(max*0.5) && n<=max ? 'is-good':'is-bad'); }
+  el.addEventListener('input', upd); upd();
+});
+</script>
 {% endblock %}

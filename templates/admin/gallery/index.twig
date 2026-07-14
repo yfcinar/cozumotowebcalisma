@@ -3,36 +3,45 @@
 {% block title %}Galeri{% endblock %}
 
 {% block content %}
-<div class="adm-card">
-    <h2>Görsel Yükle</h2>
-    <form method="post" action="/yonetim/galeri" enctype="multipart/form-data" class="adm-upload">
-        <input type="hidden" name="_csrf" value="{{ csrf }}">
-        <input type="file" name="images[]" accept="image/*" multiple required>
-        <input type="text" name="title" placeholder="Başlık (opsiyonel)">
-        <button type="submit" class="adm-btn adm-btn--primary">Yükle</button>
-    </form>
-    <p class="adm-hint">JPG, PNG, WEBP, GIF · maks. 8MB · birden fazla seçebilirsiniz.</p>
+<div class="adm-pagehead">
+    <div><h2>Galeri</h2><p>Atölye ve çalışma görsellerini yükleyip yönetin.</p></div>
 </div>
 
 <div class="adm-card">
-    <div class="adm-card__head"><h2>Galeri ({{ images|length }})</h2></div>
-    {% if images|length %}
-    <div class="adm-gallery">
-        {% for g in images %}
-        <div class="adm-gallery__item">
-            <img src="/{{ g.file_path }}" alt="{{ g.title|default('') }}" loading="lazy">
-            <div class="adm-gallery__bar">
-                <span>{{ g.title|default('—') }}</span>
-                <form method="post" action="/yonetim/galeri/{{ g.id }}/sil" data-confirm="Görsel silinsin mi?">
+    <div class="adm-card__head"><h3><i class="fa fa-upload"></i> Görsel Yükle</h3></div>
+    <div class="adm-card__body">
+        <form method="post" action="/yonetim/galeri" enctype="multipart/form-data" class="adm-form">
+            <input type="hidden" name="_csrf" value="{{ csrf }}">
+            <div class="adm-row">
+                <div class="adm-field"><label>Görseller *</label><input type="file" name="images[]" accept="image/*" multiple required></div>
+                <div class="adm-field"><label>Başlık <span class="hint">(opsiyonel)</span></label><input type="text" name="title" placeholder="Çalışma başlığı"></div>
+            </div>
+            <div class="adm-form__actions">
+                <button type="submit" class="adm-btn adm-btn--primary"><i class="fa fa-upload"></i> Yükle</button>
+                <span class="adm-muted" style="align-self:center;font-size:.82rem">JPG, PNG, WEBP, GIF · maks. 8MB · çoklu seçim</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="adm-card">
+    <div class="adm-card__head"><h3><i class="fa fa-picture-o"></i> Galeri</h3><span class="adm-badge adm-badge--gray">{{ images|length }} görsel</span></div>
+    <div class="adm-card__body">
+        {% if images|length %}
+        <div class="adm-gallery">
+            {% for g in images %}
+            <div class="adm-gallery__item">
+                <img src="/{{ g.file_path }}" alt="{{ g.title|default('') }}" loading="lazy">
+                <form class="adm-gallery__del" method="post" action="/yonetim/galeri/{{ g.id }}/sil" data-confirm="Görsel silinsin mi?">
                     <input type="hidden" name="_csrf" value="{{ csrf }}">
-                    <button class="adm-link adm-link--danger">Sil</button>
+                    <button class="adm-iconbtn adm-iconbtn--danger" title="Sil"><i class="fa fa-trash"></i></button>
                 </form>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        {% else %}
+        <div class="adm-empty"><i class="fa fa-picture-o"></i>Henüz görsel yüklenmemiş.</div>
+        {% endif %}
     </div>
-    {% else %}
-    <p class="adm-empty">Henüz görsel yok.</p>
-    {% endif %}
 </div>
 {% endblock %}

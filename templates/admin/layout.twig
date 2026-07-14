@@ -5,58 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,nofollow">
     <title>{% block title %}Yönetim{% endblock %} · {{ site.brand_name|default('Çözüm Oto') }}</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/assets/vendor/montserrat/montserrat.css">
+    <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/admin.css">
+    {% block head %}{% endblock %}
 </head>
 <body>
-<div class="admin">
-    <aside class="adm-sidebar" id="adm-sidebar">
-        <div class="adm-brand">
-            <span class="adm-brand__mark">RES</span>
-            <span>Yönetim Paneli</span>
-        </div>
-        <nav class="adm-nav">
-            {% set nav = current_nav|default('') %}
-            <a href="/yonetim" class="{{ nav == 'dashboard' ? 'is-active' }}">📊 Panel</a>
-            <a href="/yonetim/hizmetler" class="{{ nav == 'services' ? 'is-active' }}">🔧 Hizmetler</a>
-            <a href="/yonetim/ilceler" class="{{ nav == 'districts' ? 'is-active' }}">📍 İlçeler</a>
-            <a href="/yonetim/sayfalar" class="{{ nav == 'pages' ? 'is-active' }}">📄 Sayfalar</a>
-            <a href="/yonetim/sss" class="{{ nav == 'faqs' ? 'is-active' }}">❓ S.S.S.</a>
-            <a href="/yonetim/galeri" class="{{ nav == 'gallery' ? 'is-active' }}">🖼️ Galeri</a>
-            <a href="/yonetim/mesajlar" class="{{ nav == 'messages' ? 'is-active' }}">✉️ Mesajlar</a>
-            <a href="/yonetim/ayarlar" class="{{ nav == 'settings' ? 'is-active' }}">⚙️ Ayarlar</a>
-            <a href="/yonetim/hesap" class="{{ nav == 'account' ? 'is-active' }}">👤 Hesabım</a>
+{% set nav = current_nav|default('') %}
+{% set unread_count = unread_messages() %}
+<div class="adm">
+    <aside class="adm-side" id="adm-side">
+        <a href="/yonetim" class="adm-logo">
+            <span class="adm-logo__mark">RES</span>
+            <span class="adm-logo__text">Yönetim<small>Çözüm Oto Elektrik</small></span>
+        </a>
+
+        <nav class="adm-menu">
+            <span class="adm-menu__label">Genel Bakış</span>
+            <a href="/yonetim" class="{{ nav == 'dashboard' ? 'is-active' }}"><i class="fa fa-tachometer"></i> Kontrol Paneli</a>
+            <a href="/yonetim/mesajlar" class="{{ nav == 'messages' ? 'is-active' }}"><i class="fa fa-envelope"></i> Mesajlar{% if unread_count is defined and unread_count %}<span class="adm-menu__badge">{{ unread_count }}</span>{% endif %}</a>
+
+            <span class="adm-menu__label">İçerik</span>
+            <a href="/yonetim/hizmetler" class="{{ nav == 'services' ? 'is-active' }}"><i class="fa fa-wrench"></i> Hizmetler</a>
+            <a href="/yonetim/ilceler" class="{{ nav == 'districts' ? 'is-active' }}"><i class="fa fa-map-marker"></i> İlçeler</a>
+            <a href="/yonetim/sayfalar" class="{{ nav == 'pages' ? 'is-active' }}"><i class="fa fa-file-text-o"></i> Sayfalar</a>
+            <a href="/yonetim/sss" class="{{ nav == 'faqs' ? 'is-active' }}"><i class="fa fa-question-circle"></i> S.S.S.</a>
+            <a href="/yonetim/galeri" class="{{ nav == 'gallery' ? 'is-active' }}"><i class="fa fa-picture-o"></i> Galeri</a>
+
+            <span class="adm-menu__label">Pazarlama</span>
+            <a href="/yonetim/seo" class="{{ nav == 'seo' ? 'is-active' }}"><i class="fa fa-line-chart"></i> SEO Merkezi</a>
+
+            <span class="adm-menu__label">Sistem</span>
+            <a href="/yonetim/ayarlar" class="{{ nav == 'settings' ? 'is-active' }}"><i class="fa fa-cog"></i> Site Ayarları</a>
+            <a href="/yonetim/gunluk" class="{{ nav == 'activity' ? 'is-active' }}"><i class="fa fa-history"></i> İşlem Günlüğü</a>
+            <a href="/yonetim/hesap" class="{{ nav == 'account' ? 'is-active' }}"><i class="fa fa-user-circle-o"></i> Hesabım</a>
         </nav>
-        <a href="/" class="adm-nav__site" target="_blank">🌐 Siteyi Gör</a>
+
+        <a href="/" class="adm-side__site" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> Siteyi Görüntüle</a>
     </aside>
 
-    <div class="adm-main">
-        <header class="adm-topbar">
-            <button class="adm-burger" id="adm-burger" aria-label="Menü">☰</button>
-            <h1 class="adm-topbar__title">{% block heading %}{{ block('title') }}{% endblock %}</h1>
-            <div class="adm-user">
-                <span>{{ auth.name|default('Yönetici') }}</span>
-                <a href="/yonetim/cikis" class="adm-logout">Çıkış</a>
+    <div class="adm-body">
+        <header class="adm-top">
+            <button class="adm-burger" id="adm-burger" aria-label="Menü"><i class="fa fa-bars"></i></button>
+            <h1 class="adm-top__title">{% block heading %}{{ block('title') }}{% endblock %}</h1>
+            <div class="adm-top__right">
+                <a href="/yonetim/mesajlar" class="adm-top__icon" title="Mesajlar">
+                    <i class="fa fa-bell-o"></i>
+                    {% if unread_count is defined and unread_count %}<span class="adm-top__dot">{{ unread_count }}</span>{% endif %}
+                </a>
+                <div class="adm-avatar" title="{{ auth.email|default('') }}">
+                    <span class="adm-avatar__circle">{{ (auth.name|default('Y'))|slice(0,1)|upper }}</span>
+                    <span class="adm-avatar__name">{{ auth.name|default('Yönetici') }}</span>
+                </div>
+                <a href="/yonetim/cikis" class="adm-top__logout" title="Çıkış"><i class="fa fa-sign-out"></i></a>
             </div>
         </header>
 
         <main class="adm-content">
             {% if flash is defined and flash|length %}
                 {% for f in flash %}
-                <div class="adm-flash adm-flash--{{ f.type }}">{{ f.message }}</div>
+                <div class="adm-alert adm-alert--{{ f.type == 'error' ? 'error' : 'success' }}">
+                    <i class="fa fa-{{ f.type == 'error' ? 'exclamation-circle' : 'check-circle' }}"></i>
+                    <span>{{ f.message }}</span>
+                </div>
                 {% endfor %}
             {% endif %}
             {% block content %}{% endblock %}
         </main>
     </div>
 </div>
+
+<div class="adm-overlay" id="adm-overlay"></div>
+
+<script src="/assets/vendor/chartjs/chart.umd.min.js"></script>
 <script>
-document.getElementById('adm-burger')?.addEventListener('click',function(){
-  document.getElementById('adm-sidebar').classList.toggle('is-open');
-});
-document.querySelectorAll('[data-confirm]').forEach(function(f){
-  f.addEventListener('submit',function(e){ if(!confirm(f.dataset.confirm)) e.preventDefault(); });
-});
+(function(){
+  var burger = document.getElementById('adm-burger');
+  var side = document.getElementById('adm-side');
+  var overlay = document.getElementById('adm-overlay');
+  function toggle(){ side.classList.toggle('is-open'); overlay.classList.toggle('is-visible'); }
+  burger && burger.addEventListener('click', toggle);
+  overlay && overlay.addEventListener('click', toggle);
+  document.querySelectorAll('[data-confirm]').forEach(function(f){
+    f.addEventListener('submit', function(e){ if(!confirm(f.dataset.confirm)) e.preventDefault(); });
+  });
+})();
 </script>
+{% block scripts %}{% endblock %}
 </body>
 </html>

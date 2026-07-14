@@ -3,32 +3,39 @@
 {% block title %}Sıkça Sorulan Sorular{% endblock %}
 
 {% block content %}
+<div class="adm-pagehead">
+    <div><h2>Sıkça Sorulan Sorular</h2><p>Genel veya hizmete özel soru-cevapları yönetin.</p></div>
+    <a class="adm-btn adm-btn--primary" href="/yonetim/sss/yeni"><i class="fa fa-plus"></i> Yeni Soru</a>
+</div>
+
 <div class="adm-card">
-    <div class="adm-card__head">
-        <h2>S.S.S. ({{ faqs|length }})</h2>
-        <a class="adm-btn adm-btn--primary" href="/yonetim/sss/yeni">+ Yeni Soru</a>
+    <div class="adm-card__body adm-card__body--pad0">
+        <div class="adm-tablewrap">
+        <table class="adm-table">
+            <thead><tr><th>Sıra</th><th>Soru</th><th>Hizmet</th><th>Durum</th><th></th></tr></thead>
+            <tbody>
+            {% for f in faqs %}
+            <tr>
+                <td class="adm-muted">{{ f.sort_order }}</td>
+                <td><strong>{{ f.question }}</strong></td>
+                <td>{% if f.service_title %}<span class="adm-badge adm-badge--blue">{{ f.service_title }}</span>{% else %}<span class="adm-badge adm-badge--gray">Genel</span>{% endif %}</td>
+                <td>{% if f.is_active %}<span class="adm-badge adm-badge--green">Aktif</span>{% else %}<span class="adm-badge adm-badge--gray">Pasif</span>{% endif %}</td>
+                <td class="text-right">
+                    <div class="adm-actions">
+                        <a class="adm-iconbtn" href="/yonetim/sss/{{ f.id }}/duzenle" title="Düzenle"><i class="fa fa-pencil"></i></a>
+                        <form method="post" action="/yonetim/sss/{{ f.id }}/sil" data-confirm="Silinsin mi?">
+                            <input type="hidden" name="_csrf" value="{{ csrf }}">
+                            <button class="adm-iconbtn adm-iconbtn--danger" title="Sil"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="adm-table__empty"><i class="fa fa-question-circle" style="font-size:2rem;opacity:.3"></i><br>Henüz soru eklenmemiş.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
     </div>
-    <table class="adm-table">
-        <thead><tr><th>Sıra</th><th>Soru</th><th>Hizmet</th><th>Durum</th><th></th></tr></thead>
-        <tbody>
-        {% for f in faqs %}
-        <tr>
-            <td>{{ f.sort_order }}</td>
-            <td><strong>{{ f.question }}</strong></td>
-            <td>{{ f.service_title|default('Genel') }}</td>
-            <td>{% if f.is_active %}<span class="adm-badge adm-badge--on">Aktif</span>{% else %}<span class="adm-badge">Pasif</span>{% endif %}</td>
-            <td class="adm-actions">
-                <a class="adm-link" href="/yonetim/sss/{{ f.id }}/duzenle">Düzenle</a>
-                <form method="post" action="/yonetim/sss/{{ f.id }}/sil" data-confirm="Silinsin mi?">
-                    <input type="hidden" name="_csrf" value="{{ csrf }}">
-                    <button class="adm-link adm-link--danger">Sil</button>
-                </form>
-            </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="5" class="adm-empty">Henüz soru eklenmemiş.</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
 </div>
 {% endblock %}

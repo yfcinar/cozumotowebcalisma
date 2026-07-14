@@ -101,8 +101,22 @@ CREATE TABLE IF NOT EXISTS messages (
     subject    VARCHAR(200) NULL,
     body       TEXT NOT NULL,
     is_read    TINYINT(1) NOT NULL DEFAULT 0,
+    is_starred TINYINT(1) NOT NULL DEFAULT 0,
+    status     VARCHAR(20) NOT NULL DEFAULT 'new',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    KEY idx_messages_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS activity_log (
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_name  VARCHAR(120) NULL,
+    action     VARCHAR(80) NOT NULL,
+    entity     VARCHAR(80) NULL,
+    detail     VARCHAR(400) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_activity_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET foreign_key_checks = 1;

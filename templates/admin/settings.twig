@@ -11,28 +11,43 @@
     'linkedin': 'LinkedIn', 'pinterest': 'Pinterest',
     'hero_title': 'Anasayfa Başlık', 'hero_subtitle': 'Anasayfa Alt Başlık'
 } %}
+{% set groups = {
+    'Genel & SEO': ['brand_name', 'site_title', 'site_description', 'hero_title', 'hero_subtitle'],
+    'İletişim': ['phone_primary', 'phone_secondary', 'whatsapp', 'email', 'address', 'working_hours', 'maps_url', 'maps_embed'],
+    'Sosyal Medya': ['instagram', 'facebook', 'twitter', 'youtube', 'linkedin', 'pinterest']
+} %}
 {% set longfields = ['site_description', 'address', 'maps_embed', 'hero_subtitle'] %}
 
 {% block content %}
+<div class="adm-pagehead">
+    <div><h2>Site Ayarları</h2><p>İletişim bilgileri, sosyal medya ve anasayfa metinleri.</p></div>
+</div>
+
 <form class="adm-form" method="post" action="/yonetim/ayarlar">
     <input type="hidden" name="_csrf" value="{{ csrf }}">
+    {% for group, gkeys in groups %}
     <div class="adm-card">
-        <h2>Genel & İletişim</h2>
-        <div class="adm-form__cols">
-            {% for key in keys %}
-            <label class="{{ key in longfields ? 'adm-col-full' }}">
-                {{ labels[key]|default(key) }}
-                {% if key in longfields %}
-                    <textarea name="{{ key }}" rows="3">{{ values[key]|default('') }}</textarea>
-                {% else %}
-                    <input type="text" name="{{ key }}" value="{{ values[key]|default('') }}">
+        <div class="adm-card__head"><h3><i class="fa fa-{{ group == 'İletişim' ? 'phone' : (group == 'Sosyal Medya' ? 'share-alt' : 'info-circle') }}"></i> {{ group }}</h3></div>
+        <div class="adm-card__body">
+            <div class="adm-form">
+                {% for key in gkeys %}
+                {% if key in keys %}
+                <div class="adm-field">
+                    <label>{{ labels[key]|default(key) }}</label>
+                    {% if key in longfields %}
+                        <textarea name="{{ key }}" rows="3">{{ values[key]|default('') }}</textarea>
+                    {% else %}
+                        <input type="text" name="{{ key }}" value="{{ values[key]|default('') }}">
+                    {% endif %}
+                </div>
                 {% endif %}
-            </label>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-        <div class="adm-save">
-            <button type="submit" class="adm-btn adm-btn--primary">Ayarları Kaydet</button>
-        </div>
+    </div>
+    {% endfor %}
+    <div class="adm-form__actions" style="border:0">
+        <button type="submit" class="adm-btn adm-btn--primary"><i class="fa fa-check"></i> Ayarları Kaydet</button>
     </div>
 </form>
 {% endblock %}

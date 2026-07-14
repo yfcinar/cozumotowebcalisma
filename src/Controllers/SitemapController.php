@@ -7,6 +7,7 @@ namespace App\Controllers;
 use App\Repository\DistrictRepository;
 use App\Repository\PageRepository;
 use App\Repository\ServiceRepository;
+use App\Support\SettingsService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -19,7 +20,8 @@ final class SitemapController
         private readonly ServiceRepository $services,
         private readonly DistrictRepository $districts,
         private readonly PageRepository $pages,
-        private readonly array $appConfig
+        private readonly array $appConfig,
+        private readonly ?SettingsService $settings = null
     ) {
     }
 
@@ -74,7 +76,18 @@ final class SitemapController
     public function robots(Request $request, Response $response): Response
     {
         $base = $this->appConfig['url'] ?: $this->baseFromRequest($request);
-        $txt  = "User-agent: *\nAllow: /\nDisallow: /yonetim\n\nSitemap: {$base}/sitemap.xml\n";
+
+        // Panelden özel robots.txt tanımlandıysa onu kullan.
+        $custom = $this->settings?->get('robots_custom');
+        if ($custom !== null && trim($custom) !== '') {
+            $txt = trim($custom) . "\n";
+            if (!str_contains($txt, 'Sitemap:')) {
+                $txt .= "\nSitemap: {$base}/sitemap.xml\n";
+            }
+        } else {
+            $txt = "User-agent: *\nAllow: /\nDisallow: /yonetim\n\nSitemap: {$base}/sitemap.xml\n";
+        }
+
         $response->getBody()->write($txt);
         return $response->withHeader('Content-Type', 'text/plain; charset=utf-8');
     }

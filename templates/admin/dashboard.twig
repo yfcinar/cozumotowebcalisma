@@ -1,41 +1,180 @@
 {% extends 'admin/layout.twig' %}
 {% set current_nav = 'dashboard' %}
-{% block title %}Panel{% endblock %}
+{% block title %}Kontrol Paneli{% endblock %}
 
 {% block content %}
-<div class="adm-stats">
-    <a class="adm-stat" href="/yonetim/hizmetler"><span class="adm-stat__num">{{ stats.services }}</span><span class="adm-stat__lbl">Hizmet</span></a>
-    <a class="adm-stat" href="/yonetim/ilceler"><span class="adm-stat__num">{{ stats.districts }}</span><span class="adm-stat__lbl">İlçe</span></a>
-    <a class="adm-stat" href="/yonetim/galeri"><span class="adm-stat__num">{{ stats.gallery }}</span><span class="adm-stat__lbl">Galeri Görseli</span></a>
-    <a class="adm-stat adm-stat--accent" href="/yonetim/mesajlar"><span class="adm-stat__num">{{ stats.unread }}</span><span class="adm-stat__lbl">Okunmamış Mesaj</span></a>
+<div class="adm-pagehead">
+    <div>
+        <h2>Kontrol Paneli</h2>
+        <p>Sitenizin genel durumu, içerik ve iletişim istatistikleri.</p>
+    </div>
+    <div class="adm-quick">
+        <a class="adm-btn" href="/yonetim/seo"><i class="fa fa-line-chart"></i> SEO Raporu</a>
+        <a class="adm-btn adm-btn--primary" href="/yonetim/hizmetler/yeni"><i class="fa fa-plus"></i> Hizmet Ekle</a>
+    </div>
+</div>
+
+<div class="adm-kpis">
+    <div class="adm-kpi">
+        <div class="adm-kpi__top">
+            <div class="adm-kpi__icon adm-kpi__icon--red"><i class="fa fa-envelope"></i></div>
+            {% if messages.unread %}<span class="adm-badge adm-badge--new">{{ messages.unread }} yeni</span>{% endif %}
+        </div>
+        <div class="adm-kpi__num">{{ messages.total }}</div>
+        <div class="adm-kpi__lbl">Toplam Mesaj</div>
+        <div class="adm-kpi__sub">Bugün <b>{{ messages.today }}</b> · Bu hafta <b>{{ messages.week }}</b></div>
+    </div>
+    <div class="adm-kpi">
+        <div class="adm-kpi__top">
+            <div class="adm-kpi__icon adm-kpi__icon--blue"><i class="fa fa-sitemap"></i></div>
+        </div>
+        <div class="adm-kpi__num">{{ kpi.total_urls }}</div>
+        <div class="adm-kpi__lbl">Toplam SEO Sayfası</div>
+        <div class="adm-kpi__sub"><b>{{ kpi.generated }}</b> dinamik landing sayfası</div>
+    </div>
+    <div class="adm-kpi">
+        <div class="adm-kpi__top">
+            <div class="adm-kpi__icon adm-kpi__icon--green"><i class="fa fa-wrench"></i></div>
+        </div>
+        <div class="adm-kpi__num">{{ kpi.services }}</div>
+        <div class="adm-kpi__lbl">Hizmet</div>
+        <div class="adm-kpi__sub"><b>{{ kpi.services_active }}</b> aktif · {{ kpi.districts_active }} aktif ilçe</div>
+    </div>
+    <div class="adm-kpi">
+        <div class="adm-kpi__top">
+            <div class="adm-kpi__icon adm-kpi__icon--amber"><i class="fa fa-line-chart"></i></div>
+            <span class="adm-grade adm-grade--{{ kpi.seo_grade }}">{{ kpi.seo_grade }}</span>
+        </div>
+        <div class="adm-kpi__num">{{ kpi.seo_score }}<span style="font-size:1rem;color:var(--muted)">/100</span></div>
+        <div class="adm-kpi__lbl">Ortalama SEO Puanı</div>
+        <div class="adm-kpi__sub"><a href="/yonetim/seo" style="color:var(--brand);font-weight:600">Detaylı rapor →</a></div>
+    </div>
+</div>
+
+<div class="adm-grid">
+    <div class="adm-card">
+        <div class="adm-card__head">
+            <h3><i class="fa fa-area-chart"></i> Son 30 Gün — Gelen Mesajlar</h3>
+            <span class="adm-badge adm-badge--gray">Bu ay {{ messages.month }} mesaj</span>
+        </div>
+        <div class="adm-card__body">
+            <div class="adm-chart"><canvas id="chartMessages"></canvas></div>
+        </div>
+    </div>
+    <div class="adm-card">
+        <div class="adm-card__head"><h3><i class="fa fa-pie-chart"></i> İçerik Dağılımı</h3></div>
+        <div class="adm-card__body">
+            <div class="adm-chart adm-chart--sm"><canvas id="chartContent"></canvas></div>
+        </div>
+    </div>
+</div>
+
+<div class="adm-grid">
+    <div class="adm-card">
+        <div class="adm-card__head">
+            <h3><i class="fa fa-inbox"></i> Son Mesajlar</h3>
+            <a class="adm-link" href="/yonetim/mesajlar">Tümünü Gör</a>
+        </div>
+        <div class="adm-card__body adm-card__body--pad0">
+            <div class="adm-tablewrap">
+            <table class="adm-table">
+                <thead><tr><th>Durum</th><th>Gönderen</th><th>İletişim</th><th>Tarih</th><th></th></tr></thead>
+                <tbody>
+                {% for m in recent_messages %}
+                <tr class="{{ m.is_read ? '' : 'is-unread' }}">
+                    <td>{% if m.is_read %}<span class="adm-badge adm-badge--gray">Okundu</span>{% else %}<span class="adm-badge adm-badge--new">Yeni</span>{% endif %}</td>
+                    <td><strong>{{ m.name }}</strong>{% if m.subject %}<br><small class="adm-muted">{{ m.subject }}</small>{% endif %}</td>
+                    <td>{{ m.phone|default(m.email|default('—')) }}</td>
+                    <td class="adm-muted">{{ m.created_at|slice(0,16) }}</td>
+                    <td class="text-right"><a class="adm-iconbtn" href="/yonetim/mesajlar/{{ m.id }}"><i class="fa fa-eye"></i></a></td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="adm-table__empty"><i class="fa fa-inbox"></i><br>Henüz mesaj yok.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    <div class="adm-card">
+        <div class="adm-card__head"><h3><i class="fa fa-history"></i> Son İşlemler</h3></div>
+        <div class="adm-card__body adm-card__body--pad0">
+            {% if recent_activity|length %}
+            <ul class="adm-feed">
+                {% for a in recent_activity %}
+                <li>
+                    <span class="adm-feed__dot"><i class="fa fa-{{ a.action == 'sildi' ? 'trash' : (a.action == 'ekledi' ? 'plus' : 'pencil') }}"></i></span>
+                    <div class="adm-feed__main">
+                        <b>{{ a.user_name|default('Yönetici') }}</b> {{ a.entity }} {{ a.action }}{% if a.detail %} <span class="adm-muted">— {{ a.detail }}</span>{% endif %}
+                        <div class="adm-feed__time">{{ a.created_at|slice(0,16) }}</div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="adm-empty"><i class="fa fa-history"></i>Henüz işlem kaydı yok.<br><small>İçerik ekleyip düzenledikçe burada görünür.</small></div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 <div class="adm-card">
-    <div class="adm-card__head"><h2>Son Mesajlar</h2><a class="adm-btn" href="/yonetim/mesajlar">Tümü</a></div>
-    {% if recent_messages|length %}
-    <table class="adm-table">
-        <thead><tr><th>Ad</th><th>İletişim</th><th>Konu</th><th>Tarih</th><th></th></tr></thead>
-        <tbody>
-        {% for m in recent_messages %}
-        <tr class="{{ m.is_read ? '' : 'is-unread' }}">
-            <td>{{ m.name }}</td>
-            <td>{{ m.phone|default(m.email) }}</td>
-            <td>{{ m.subject|default('—') }}</td>
-            <td>{{ m.created_at }}</td>
-            <td><a class="adm-link" href="/yonetim/mesajlar/{{ m.id }}">Aç</a></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p class="adm-empty">Henüz mesaj yok.</p>
-    {% endif %}
+    <div class="adm-card__head"><h3><i class="fa fa-bolt"></i> Hızlı İşlemler</h3></div>
+    <div class="adm-card__body">
+        <div class="adm-quick">
+            <a class="adm-btn" href="/yonetim/hizmetler/yeni"><i class="fa fa-wrench"></i> Hizmet Ekle</a>
+            <a class="adm-btn" href="/yonetim/ilceler/yeni"><i class="fa fa-map-marker"></i> İlçe Ekle</a>
+            <a class="adm-btn" href="/yonetim/sayfalar/yeni"><i class="fa fa-file-text-o"></i> Sayfa Ekle</a>
+            <a class="adm-btn" href="/yonetim/sss/yeni"><i class="fa fa-question-circle"></i> S.S.S. Ekle</a>
+            <a class="adm-btn" href="/yonetim/galeri"><i class="fa fa-picture-o"></i> Galeri Yükle</a>
+            <a class="adm-btn" href="/yonetim/ayarlar"><i class="fa fa-cog"></i> Site Ayarları</a>
+        </div>
+    </div>
 </div>
+{% endblock %}
 
-<div class="adm-quick">
-    <a class="adm-btn adm-btn--primary" href="/yonetim/hizmetler/yeni">+ Hizmet Ekle</a>
-    <a class="adm-btn adm-btn--primary" href="/yonetim/ilceler/yeni">+ İlçe Ekle</a>
-    <a class="adm-btn adm-btn--primary" href="/yonetim/sayfalar/yeni">+ Sayfa Ekle</a>
-    <a class="adm-btn" href="/yonetim/ayarlar">⚙️ Site Ayarları</a>
-</div>
+{% block scripts %}
+<script>
+(function(){
+  var g = '#e8eaf0', mut = '#8b93a3';
+  Chart.defaults.font.family = "Montserrat, sans-serif";
+  Chart.defaults.color = mut;
+
+  new Chart(document.getElementById('chartMessages'), {
+    type: 'line',
+    data: {
+      labels: {{ chart_days|json_encode|raw }},
+      datasets: [{
+        label: 'Mesaj', data: {{ chart_counts|json_encode|raw }},
+        borderColor: '#e1141d', backgroundColor: 'rgba(225,20,29,.10)',
+        fill: true, tension: .35, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } },
+        y: { beginAtZero: true, grid: { color: g }, ticks: { precision: 0 } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chartContent'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Hizmet','İlçe','Sayfa','S.S.S.','Galeri'],
+      datasets: [{
+        data: [{{ content.services }},{{ content.districts }},{{ content.pages }},{{ content.faqs }},{{ content.gallery }}],
+        backgroundColor: ['#e1141d','#2563c9','#1f9d55','#e08e0b','#7c3aed'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '62%',
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } } }
+    }
+  });
+})();
+</script>
 {% endblock %}

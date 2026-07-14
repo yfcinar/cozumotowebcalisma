@@ -3,33 +3,42 @@
 {% block title %}İlçeler{% endblock %}
 
 {% block content %}
-<div class="adm-card">
-    <div class="adm-card__head">
-        <h2>İlçeler ({{ districts|length }})</h2>
-        <a class="adm-btn adm-btn--primary" href="/yonetim/ilceler/yeni">+ Yeni İlçe</a>
+<div class="adm-pagehead">
+    <div>
+        <h2>İlçeler</h2>
+        <p>Her aktif ilçe, ilçe sayfaları açık hizmetler için otomatik landing sayfası üretir.</p>
     </div>
-    <p class="adm-hint">Eklenen her aktif ilçe, ilçe sayfaları açık olan tüm hizmetler için otomatik landing sayfası oluşturur.</p>
-    <table class="adm-table">
-        <thead><tr><th>Sıra</th><th>İlçe</th><th>Slug</th><th>Durum</th><th></th></tr></thead>
-        <tbody>
-        {% for d in districts %}
-        <tr>
-            <td>{{ d.sort_order }}</td>
-            <td><strong>{{ d.name }}</strong></td>
-            <td><code>{{ d.slug }}</code></td>
-            <td>{% if d.is_active %}<span class="adm-badge adm-badge--on">Aktif</span>{% else %}<span class="adm-badge">Pasif</span>{% endif %}</td>
-            <td class="adm-actions">
-                <a class="adm-link" href="/yonetim/ilceler/{{ d.id }}/duzenle">Düzenle</a>
-                <form method="post" action="/yonetim/ilceler/{{ d.id }}/sil" data-confirm="Bu ilçeyi silmek istediğinize emin misiniz?">
-                    <input type="hidden" name="_csrf" value="{{ csrf }}">
-                    <button class="adm-link adm-link--danger">Sil</button>
-                </form>
-            </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="5" class="adm-empty">Henüz ilçe eklenmemiş.</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <a class="adm-btn adm-btn--primary" href="/yonetim/ilceler/yeni"><i class="fa fa-plus"></i> Yeni İlçe</a>
+</div>
+
+<div class="adm-card">
+    <div class="adm-card__body adm-card__body--pad0">
+        <div class="adm-tablewrap">
+        <table class="adm-table">
+            <thead><tr><th>Sıra</th><th>İlçe</th><th>Slug</th><th>Durum</th><th></th></tr></thead>
+            <tbody>
+            {% for d in districts %}
+            <tr>
+                <td class="adm-muted">{{ d.sort_order }}</td>
+                <td><strong><i class="fa fa-map-marker" style="color:var(--brand)"></i> {{ d.name }}</strong></td>
+                <td><span class="adm-mono adm-muted">{{ d.slug }}</span></td>
+                <td>{% if d.is_active %}<span class="adm-badge adm-badge--green">Aktif</span>{% else %}<span class="adm-badge adm-badge--gray">Pasif</span>{% endif %}</td>
+                <td class="text-right">
+                    <div class="adm-actions">
+                        <a class="adm-iconbtn" href="/yonetim/ilceler/{{ d.id }}/duzenle" title="Düzenle"><i class="fa fa-pencil"></i></a>
+                        <form method="post" action="/yonetim/ilceler/{{ d.id }}/sil" data-confirm="Bu ilçeyi silmek istediğinize emin misiniz?">
+                            <input type="hidden" name="_csrf" value="{{ csrf }}">
+                            <button class="adm-iconbtn adm-iconbtn--danger" title="Sil"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="adm-table__empty"><i class="fa fa-map-marker" style="font-size:2rem;opacity:.3"></i><br>Henüz ilçe eklenmemiş.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
 </div>
 {% endblock %}

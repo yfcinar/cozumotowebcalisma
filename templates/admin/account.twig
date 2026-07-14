@@ -3,17 +3,34 @@
 {% block title %}Hesabım{% endblock %}
 
 {% block content %}
-<div class="adm-card adm-card--narrow">
-    <h2>Şifre Değiştir</h2>
-    <p class="adm-hint">Giriş: <strong>{{ auth.email }}</strong></p>
-    <form method="post" action="/yonetim/hesap/sifre">
-        <input type="hidden" name="_csrf" value="{{ csrf }}">
-        <label>Mevcut Şifre<input type="password" name="current_password" required></label>
-        <label>Yeni Şifre (en az 8 karakter)<input type="password" name="new_password" required minlength="8"></label>
-        <label>Yeni Şifre (Tekrar)<input type="password" name="new_password_confirm" required minlength="8"></label>
-        <div class="adm-save">
-            <button type="submit" class="adm-btn adm-btn--primary">Güncelle</button>
+<div class="adm-pagehead">
+    <div><h2>Hesabım</h2><p>Giriş bilgileriniz ve şifre yönetimi.</p></div>
+</div>
+
+<div class="adm-grid">
+    <div class="adm-card" style="max-width:520px">
+        <div class="adm-card__head"><h3><i class="fa fa-lock"></i> Şifre Değiştir</h3></div>
+        <div class="adm-card__body">
+            <form method="post" action="/yonetim/hesap/sifre" class="adm-form">
+                <input type="hidden" name="_csrf" value="{{ csrf }}">
+                <div class="adm-field"><label>Mevcut Şifre</label><input type="password" name="current_password" required></div>
+                <div class="adm-field"><label>Yeni Şifre <span class="hint">(en az 8 karakter)</span></label><input type="password" name="new_password" required minlength="8"></div>
+                <div class="adm-field"><label>Yeni Şifre (Tekrar)</label><input type="password" name="new_password_confirm" required minlength="8"></div>
+                <div class="adm-form__actions">
+                    <button type="submit" class="adm-btn adm-btn--primary"><i class="fa fa-check"></i> Güncelle</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+    <div class="adm-card" style="align-self:start">
+        <div class="adm-card__head"><h3><i class="fa fa-user"></i> Hesap Bilgileri</h3></div>
+        <div class="adm-card__body">
+            <div class="adm-form" style="gap:.9rem">
+                <div><small class="adm-muted">Ad</small><br><strong>{{ auth.name }}</strong></div>
+                <div><small class="adm-muted">E-posta</small><br><strong>{{ auth.email }}</strong></div>
+                <div><small class="adm-muted">Rol</small><br><span class="adm-badge adm-badge--blue">{{ auth.role|default('admin') }}</span></div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

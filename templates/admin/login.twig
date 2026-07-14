@@ -5,28 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,nofollow">
     <title>Giriş · Yönetim Paneli</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/assets/vendor/montserrat/montserrat.css">
+    <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
-<body class="adm-login-body">
+<body>
 <div class="adm-login">
-    <div class="adm-login__brand">
-        <span class="adm-brand__mark">RES</span>
-        <h1>Çözüm Oto Elektrik</h1>
-        <p>Yönetim Paneli</p>
+    <div class="adm-login__card">
+        <div class="adm-login__logo">
+            <span class="m">RES</span>
+            <h1>Çözüm Oto Elektrik</h1>
+        </div>
+        <p class="adm-login__sub">Yönetim paneline erişmek için giriş yapın</p>
+
+        {% if flash is defined and flash|length %}
+            {% for f in flash %}
+            <div class="adm-alert adm-alert--{{ f.type == 'error' ? 'error' : 'success' }}">
+                <i class="fa fa-{{ f.type == 'error' ? 'exclamation-circle' : 'check-circle' }}"></i>
+                <span>{{ f.message }}</span>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" action="/yonetim/giris" class="adm-form">
+            <input type="hidden" name="_csrf" value="{{ csrf }}">
+            <div class="adm-field">
+                <label>E-posta</label>
+                <input type="email" name="email" required autofocus placeholder="admin@site.com">
+            </div>
+            <div class="adm-field">
+                <label>Şifre</label>
+                <input type="password" name="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="adm-btn adm-btn--primary" style="justify-content:center"><i class="fa fa-sign-in"></i> Giriş Yap</button>
+        </form>
+        <div style="text-align:center;margin-top:1.2rem">
+            <a href="/" class="adm-muted" style="font-size:.85rem"><i class="fa fa-arrow-left"></i> Siteye dön</a>
+        </div>
     </div>
-
-    {% if flash is defined and flash|length %}
-        {% for f in flash %}<div class="adm-flash adm-flash--{{ f.type }}">{{ f.message }}</div>{% endfor %}
-    {% endif %}
-
-    <form method="post" action="/yonetim/giris" class="adm-login__form">
-        <input type="hidden" name="_csrf" value="{{ csrf }}">
-        <label>E-posta<input type="email" name="email" required autofocus></label>
-        <label>Şifre<input type="password" name="password" required></label>
-        <button type="submit" class="adm-btn adm-btn--primary">Giriş Yap</button>
-    </form>
-    <a href="/" class="adm-login__back">← Siteye dön</a>
 </div>
 </body>
 </html>

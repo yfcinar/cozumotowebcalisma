@@ -9,8 +9,20 @@
     <meta property="og:title" content="{{ block('title') }}">
     <meta property="og:description" content="{{ block('description') }}">
     <meta property="og:type" content="website">
+    {% if site.og_image %}<meta property="og:image" content="{{ site.og_image }}">{% endif %}
+    {% if site.seo_keywords %}<meta name="keywords" content="{{ site.seo_keywords }}">{% endif %}
+    {% if site.seo_index == '0' %}<meta name="robots" content="noindex,nofollow">{% endif %}
+    {% if site.gsc_verification %}<meta name="google-site-verification" content="{{ site.gsc_verification }}">{% endif %}
+    {% if site.bing_verification %}<meta name="msvalidate.01" content="{{ site.bing_verification }}">{% endif %}
     <meta name="theme-color" content="#0b0e14">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    {% if site.gtm_id %}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','{{ site.gtm_id }}');</script>
+    {% endif %}
+    {% if site.ga4_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga4_id }}"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.ga4_id }}');</script>
+    {% endif %}
     <link rel="stylesheet" href="/assets/vendor/montserrat/montserrat.css">
     {# Paper Kit 2 (Creative Tim) — Bootstrap 4 tabanlı UI kiti #}
     <link rel="stylesheet" href="/assets/vendor/paper-kit/css/bootstrap.min.css">
@@ -20,6 +32,7 @@
     {% block head %}{% endblock %}
 </head>
 <body class="sidebar-collapse">
+{% if site.gtm_id %}<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.gtm_id }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>{% endif %}
 {% include 'partials/header.twig' %}
 
 <div class="wrapper">

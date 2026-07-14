@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Repository\ActivityRepository;
 use App\Repository\DistrictRepository;
 use App\Support\Session;
 use App\Support\Str;
@@ -15,8 +16,11 @@ use Slim\Views\Twig;
 
 final class DistrictController extends BaseController
 {
-    public function __construct(Twig $view, private readonly DistrictRepository $districts)
-    {
+    public function __construct(
+        Twig $view,
+        private readonly DistrictRepository $districts,
+        private readonly ActivityRepository $activity
+    ) {
         parent::__construct($view);
     }
 
@@ -42,6 +46,7 @@ final class DistrictController extends BaseController
             return $this->redirect($response, '/yonetim/ilceler/yeni');
         }
         $this->districts->create($data);
+        $this->activity->log(Session::user()['name'] ?? null, 'ekledi', 'İlçe', $data['name']);
         Session::flash('success', 'İlçe eklendi. İlgili landing sayfaları otomatik oluştu.');
         return $this->redirect($response, '/yonetim/ilceler');
     }
@@ -69,13 +74,16 @@ final class DistrictController extends BaseController
             return $this->redirect($response, '/yonetim/ilceler/' . $id . '/duzenle');
         }
         $this->districts->update($id, $data);
+        $this->activity->log(Session::user()['name'] ?? null, 'güncelledi', 'İlçe', $data['name']);
         Session::flash('success', 'İlçe güncellendi.');
         return $this->redirect($response, '/yonetim/ilceler');
     }
 
     public function delete(Request $request, Response $response, array $args): Response
     {
+        $d = $this->districts->find((int) $args['id']);
         $this->districts->delete((int) $args['id']);
+        $this->activity->log(Session::user()['name'] ?? null, 'sildi', 'İlçe', $d['name'] ?? ('#' . $args['id']));
         Session::flash('success', 'İlçe silindi.');
         return $this->redirect($response, '/yonetim/ilceler');
     }

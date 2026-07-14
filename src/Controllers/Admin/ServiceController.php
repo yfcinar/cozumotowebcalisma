@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Repository\ActivityRepository;
 use App\Repository\ServiceRepository;
 use App\Support\Session;
 use App\Support\Str;
@@ -15,8 +16,11 @@ use Slim\Views\Twig;
 
 final class ServiceController extends BaseController
 {
-    public function __construct(Twig $view, private readonly ServiceRepository $services)
-    {
+    public function __construct(
+        Twig $view,
+        private readonly ServiceRepository $services,
+        private readonly ActivityRepository $activity
+    ) {
         parent::__construct($view);
     }
 
@@ -42,6 +46,7 @@ final class ServiceController extends BaseController
             return $this->redirect($response, '/yonetim/hizmetler/yeni');
         }
         $this->services->create($data);
+        $this->activity->log(Session::user()['name'] ?? null, 'ekledi', 'Hizmet', $data['title']);
         Session::flash('success', 'Hizmet eklendi.');
         return $this->redirect($response, '/yonetim/hizmetler');
     }
@@ -69,13 +74,16 @@ final class ServiceController extends BaseController
             return $this->redirect($response, '/yonetim/hizmetler/' . $id . '/duzenle');
         }
         $this->services->update($id, $data);
+        $this->activity->log(Session::user()['name'] ?? null, 'güncelledi', 'Hizmet', $data['title']);
         Session::flash('success', 'Hizmet güncellendi.');
         return $this->redirect($response, '/yonetim/hizmetler');
     }
 
     public function delete(Request $request, Response $response, array $args): Response
     {
+        $svc = $this->services->find((int) $args['id']);
         $this->services->delete((int) $args['id']);
+        $this->activity->log(Session::user()['name'] ?? null, 'sildi', 'Hizmet', $svc['title'] ?? ('#' . $args['id']));
         Session::flash('success', 'Hizmet silindi.');
         return $this->redirect($response, '/yonetim/hizmetler');
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support;
 
+use App\Repository\MessageRepository;
 use App\Repository\ServiceRepository;
 use Slim\Views\Twig;
 use Twig\TwigFilter;
@@ -17,7 +18,8 @@ final class ViewGlobals
     public function __construct(
         private readonly SettingsService $settings,
         private readonly ServiceRepository $services,
-        private readonly array $appConfig
+        private readonly array $appConfig,
+        private readonly ?MessageRepository $messages = null
     ) {
     }
 
@@ -60,6 +62,11 @@ final class ViewGlobals
         $env->addFilter(new TwigFilter('excerpt', function (?string $html, int $len = 160): string {
             $text = trim(preg_replace('/\s+/', ' ', strip_tags((string) $html)));
             return mb_strlen($text) > $len ? mb_substr($text, 0, $len - 1) . '…' : $text;
+        }));
+
+        // Okunmamış mesaj sayısı (yalnızca admin şablonlarında çağrılır).
+        $env->addFunction(new TwigFunction('unread_messages', function (): int {
+            return $this->messages?->unreadCount() ?? 0;
         }));
     }
 }
