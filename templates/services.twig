@@ -3,27 +3,32 @@
 {% block description %}Renault EDC şanzıman, beyin onarımı, kavrama, DW5 otomatik şanzıman, AdBlue, EGR ve partikül filtre temizliği hizmetlerimiz.{% endblock %}
 
 {% block content %}
-<div class="page-header page-header-small page-head">
+<div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
+    <div class="filter"></div>
     <div class="container">
-        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>Hizmetler</span></nav>
-        <h1>Hizmetlerimiz</h1>
-        <p>Renault ve uyumlu modellerde elektronik ve mekanik arızalara profesyonel çözümler.</p>
+        <div class="motto">
+            <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>Hizmetler</span></nav>
+            <h1>Hizmetlerimiz</h1>
+            <p>Renault ve uyumlu modellerde elektronik ve mekanik arızalara profesyonel çözümler.</p>
+        </div>
     </div>
 </div>
 
-<div class="section">
+<div class="section text-center">
     <div class="container">
         <div class="row">
             {% for s in services %}
-            <div class="col-md-6 col-lg-4 d-flex">
-                <a class="card card-service" href="/hizmet/{{ s.slug }}">
-                    <div class="card-body">
-                        <div class="card-service__icon"><i class="fa {{ s.icon starts with 'fa-' ? s.icon : 'fa-wrench' }}" aria-hidden="true"></i></div>
-                        <h3 class="card-title">{{ s.title }}</h3>
-                        <p class="card-description">{{ s.summary|default(s.body|excerpt(120)) }}</p>
-                        <span class="card-service__more">Detaylar <i class="fa fa-long-arrow-right"></i></span>
+            <div class="col-md-4 col-sm-6">
+                <div class="info">
+                    <div class="icon icon-danger">
+                        <i class="fa {{ s.icon starts with 'fa-' ? s.icon : 'fa-wrench' }}" aria-hidden="true"></i>
                     </div>
-                </a>
+                    <div class="description">
+                        <h4 class="info-title">{{ s.title }}</h4>
+                        <p class="description">{{ s.summary|default(s.body|excerpt(110)) }}</p>
+                        <a href="/hizmet/{{ s.slug }}" class="btn btn-link btn-danger">Detaylar</a>
+                    </div>
+                </div>
             </div>
             {% endfor %}
         </div>

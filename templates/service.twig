@@ -3,11 +3,14 @@
 {% block description %}{{ service.meta_description|default(service.summary|default(service.body|excerpt(150))) }}{% endblock %}
 
 {% block content %}
-<div class="page-header page-header-small page-head">
+<div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
+    <div class="filter"></div>
     <div class="container">
-        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <a href="/hizmetler">Hizmetler</a> <i class="fa fa-angle-right"></i> <span>{{ service.title }}</span></nav>
-        <h1>{{ service.title }}</h1>
-        {% if service.summary %}<p>{{ service.summary }}</p>{% endif %}
+        <div class="motto">
+            <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <a href="/hizmetler">Hizmetler</a> <i class="fa fa-angle-right"></i> <span>{{ service.title }}</span></nav>
+            <h1>{{ service.title }}</h1>
+            {% if service.summary %}<p>{{ service.summary }}</p>{% endif %}
+        </div>
     </div>
 </div>
 

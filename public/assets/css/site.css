@@ -13,8 +13,9 @@
 body{overflow-x:hidden}
 
 /* ---------- Marka rengi: Paper Kit danger'ını kırmızıya çek ---------- */
-.btn-danger{background-color:var(--brand)!important;border-color:var(--brand)!important}
-.btn-danger:hover,.btn-danger:focus,.btn-danger:active{background-color:var(--brand-d)!important;border-color:var(--brand-d)!important}
+.btn-danger:not(.btn-link){background-color:var(--brand)!important;border-color:var(--brand)!important}
+.btn-danger:not(.btn-link):hover,.btn-danger:not(.btn-link):focus,.btn-danger:not(.btn-link):active{background-color:var(--brand-d)!important;border-color:var(--brand-d)!important}
+.btn-link.btn-danger,.btn-link.btn-danger:hover{background:transparent!important;border-color:transparent!important}
 .btn-outline-danger{border-color:var(--brand)!important;color:var(--brand)!important}
 .btn-outline-danger:hover{background-color:var(--brand)!important;border-color:var(--brand)!important;color:#fff!important}
 .text-danger{color:var(--brand)!important}
@@ -44,26 +45,26 @@ body{overflow-x:hidden}
 .dropdown-menu .dropdown-item:hover{background:#fdf0f0;color:var(--brand)}
 .dropdown-item--all{font-weight:700;color:var(--brand)}
 
-/* ---------- Hero (anasayfa) ---------- */
-.hero-header{background:#10141c;min-height:88vh;position:relative}
-.hero-header::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 70% 20%,rgba(225,20,29,.12),transparent 55%);pointer-events:none}
-.hero-header .container{position:relative;z-index:2}
-.hero-header .btn{box-shadow:none}
-.hero-badge{display:inline-block;background:transparent;border:1px solid rgba(255,255,255,.25);padding:.45rem 1rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c7cdd9;margin-bottom:1.3rem;animation:fadeUp .7s var(--ease) both}
-.hero-title{color:#fff;font-size:clamp(1.9rem,4.5vw,2.9rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;animation:fadeUp .7s var(--ease) .1s both}
-.hero-lead{color:#c7cdd9;font-size:1.12rem;margin:1.1rem auto 1.8rem;max-width:640px;animation:fadeUp .7s var(--ease) .2s both}
-.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s var(--ease) .3s both}
-.hero-trust{display:flex;gap:1.6rem;flex-wrap:wrap;justify-content:center;color:#d7dce6;font-size:.9rem;margin:2.2rem 0 0;animation:fadeUp .7s var(--ease) .4s both}
-.hero-trust i{color:var(--wa);margin-right:.3rem}
-
-/* ---------- İç sayfa başlığı ---------- */
-.page-head{background:linear-gradient(135deg,#0b0e14,#1b2233);min-height:auto!important;max-height:none;padding:9.5rem 0 3rem;display:block;color:#fff}
-.page-head .container{position:relative;z-index:2}
-.page-head h1{color:#fff;font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;margin:0 0 .4rem;animation:fadeUp .6s var(--ease) both}
-.page-head p{color:#c7cdd9;max-width:680px;margin:0;animation:fadeUp .6s var(--ease) .1s both}
-.breadcrumb-line{font-size:.82rem;color:#9aa3b2;margin-bottom:.8rem}
+/* ---------- PK page-header uyarlamaları ---------- */
+.page-header .motto h1{font-weight:800;font-size:clamp(2rem,4.5vw,3.1rem);letter-spacing:-.02em}
+.page-header .motto h3{font-size:1.15rem;color:#e8ebf0;max-width:680px;margin:1rem auto 0;line-height:1.55}
+.page-header .motto .btn{margin:.35rem .3rem 0}
+/* İç sayfalar: kısa fotoğraflı başlık */
+.page-head{min-height:45vh!important;max-height:none}
+.page-head .motto{padding-top:110px!important;padding-bottom:30px}
+.page-head .motto h1{font-size:clamp(1.7rem,3.5vw,2.4rem)}
+.page-head .motto p{color:#dfe3ea;max-width:680px;margin:.6rem 0 0}
+.breadcrumb-line{font-size:.82rem;color:#c3c9d4;margin-bottom:.8rem}
 .breadcrumb-line a:hover{color:#fff}
 .breadcrumb-line i{font-size:.7rem;margin:0 .3rem;opacity:.6}
+
+/* ---------- PK info blokları ---------- */
+.icon-danger{color:var(--brand)!important}
+.info{padding:0 .5rem}
+.info .info-title{font-weight:700;margin:.8rem 0 .5rem;font-size:1.05rem}
+.info p.description{color:var(--muted);font-size:.9rem}
+.btn-link.btn-danger{color:var(--brand)!important}
+.btn-link.btn-danger:hover{color:var(--brand-d)!important}
 
 /* ---------- Bölümler ---------- */
 .section{padding:4.5rem 0}
@@ -84,7 +85,13 @@ body{overflow-x:hidden}
 .card-service__more{color:var(--brand);font-weight:600;font-size:.88rem;margin-top:.7rem;display:inline-flex;align-items:center;gap:.35rem;transition:gap .2s}
 .card-service:hover .card-service__more{gap:.6rem}
 
-/* ---------- Neden biz / istatistik ---------- */
+/* ---------- Neden biz / istatistik (fotoğraf zeminli) ---------- */
+.section-stats{position:relative;background-size:cover;background-position:center;overflow:hidden}
+.section-stats .filter{position:absolute;inset:0;background:rgba(8,11,16,.82)}
+.section-stats .container{position:relative;z-index:2}
+.section-stats .title{color:#fff}
+.why-line{color:#c7cdd9;max-width:720px;margin:1.4rem auto 1.6rem}
+
 .section-dark{background:linear-gradient(135deg,#0b0e14,#1b2233);color:#fff}
 .section-dark .title{color:#fff;font-weight:800}
 .why-list{margin:1.2rem 0 1.8rem}
