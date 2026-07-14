@@ -1,0 +1,9 @@
+.git
+vendor
+.env
+database/*.sqlite
+database/*.sqlite-journal
+node_modules
+*.log
+.idea
+.vscode
