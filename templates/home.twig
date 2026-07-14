@@ -3,85 +3,110 @@
 {% block title %}{{ site.site_title|default('Çözüm Oto Elektrik — Renault EDC Şanzıman & Elektronik Servisi') }}{% endblock %}
 
 {% block content %}
-<section class="hero">
-    <div class="container hero__inner">
-        <div class="hero__text">
-            <span class="hero__badge">Renault Uzman Servisi · Esenyurt / İstanbul</span>
-            <h1>{{ site.hero_title|default('Renault EDC Şanzıman ve Oto Elektronik Çözüm Merkezi') }}</h1>
-            <p>{{ site.hero_subtitle|default('EDC şanzıman, beyin onarımı, kavrama, EGR ve partikül filtre temizliğinde garantili işçilik. Aracınız aynı gün içinde teslim edilir.') }}</p>
-            <div class="hero__actions">
-                {% if site.whatsapp %}<a class="btn btn--primary" href="{{ whatsapp_link('Merhaba, arıza tespiti için bilgi almak istiyorum.') }}" target="_blank" rel="noopener">WhatsApp'tan Yaz</a>{% endif %}
-                {% if site.phone_primary %}<a class="btn btn--ghost" href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a>{% endif %}
+<div class="page-header hero-header">
+    <div class="hero-header__glow" aria-hidden="true"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center hero-header__text">
+                <span class="badge badge-pill hero-badge">Renault Uzman Servisi · Esenyurt / İstanbul</span>
+                <h1 class="hero-title">{{ site.hero_title|default('Renault EDC Şanzıman ve Oto Elektronik Çözüm Merkezi') }}</h1>
+                <p class="hero-lead">{{ site.hero_subtitle|default('EDC şanzıman, beyin onarımı, kavrama, EGR ve partikül filtre temizliğinde garantili işçilik. Aracınız aynı gün içinde teslim edilir.') }}</p>
+                <div class="hero-actions">
+                    {% if site.whatsapp %}<a class="btn btn-success btn-round btn-lg" href="{{ whatsapp_link('Merhaba, arıza tespiti için bilgi almak istiyorum.') }}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> WhatsApp'tan Yaz</a>{% endif %}
+                    {% if site.phone_primary %}<a class="btn btn-outline-neutral btn-round btn-lg" href="{{ tel_link(site.phone_primary) }}"><i class="fa fa-phone"></i> {{ site.phone_primary }}</a>{% endif %}
+                </div>
+                <ul class="hero-trust list-unstyled">
+                    <li><i class="fa fa-check-circle"></i> Garantili İşçilik</li>
+                    <li><i class="fa fa-check-circle"></i> Aynı Gün Teslim</li>
+                    <li><i class="fa fa-check-circle"></i> Ücretsiz Ön Değerlendirme</li>
+                </ul>
             </div>
-            <ul class="hero__trust">
-                <li>✔ Garantili İşçilik</li>
-                <li>✔ Aynı Gün Teslim</li>
-                <li>✔ Ücretsiz Ön Değerlendirme</li>
-            </ul>
         </div>
     </div>
-</section>
+</div>
 
-<section class="section">
+<div class="section section-services">
     <div class="container">
-        <div class="section__head">
-            <h2>Hizmetlerimiz</h2>
-            <p>Renault ve uyumlu modellerde elektronik ve mekanik arızalara uçtan uca çözüm.</p>
+        <div class="section-head text-center">
+            <h2 class="title">Hizmetlerimiz</h2>
+            <p class="description">Renault ve uyumlu modellerde elektronik ve mekanik arızalara uçtan uca çözüm.</p>
         </div>
-        <div class="cards">
+        <div class="row">
             {% for s in services %}
-            <a class="card" href="/hizmet/{{ s.slug }}">
-                <span class="card__icon">{{ s.icon|default('🔧') }}</span>
-                <h3>{{ s.title }}</h3>
-                <p>{{ s.summary|default(s.body|excerpt(110)) }}</p>
-                <span class="card__more">Detaylar →</span>
-            </a>
+            <div class="col-md-6 col-lg-4 d-flex">
+                <a class="card card-service" href="/hizmet/{{ s.slug }}">
+                    <div class="card-body">
+                        <div class="card-service__icon">{{ s.icon|default('🔧') }}</div>
+                        <h3 class="card-title">{{ s.title }}</h3>
+                        <p class="card-description">{{ s.summary|default(s.body|excerpt(110)) }}</p>
+                        <span class="card-service__more">Detaylar <i class="fa fa-long-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
-</section>
+</div>
 
-<section class="section section--alt">
-    <div class="container why">
-        <div class="why__text">
-            <h2>Neden {{ site.brand_name|default('Çözüm Oto Elektrik') }}?</h2>
-            <ul class="why__list">
-                <li><strong>Uzmanlık:</strong> Yıllara dayanan Renault EDC ve oto elektronik deneyimi.</li>
-                <li><strong>Güncel Cihazlar:</strong> Orijinal diagnostik ve programlama ekipmanları.</li>
-                <li><strong>Şeffaflık:</strong> Onarım öncesi net bilgilendirme ve fiyatlandırma.</li>
-                <li><strong>Garanti:</strong> Yapılan tüm işlemler garanti kapsamındadır.</li>
-            </ul>
-            <a class="btn btn--primary" href="/iletisim">Randevu / Bilgi Al</a>
-        </div>
-        <div class="why__stats">
-            <div class="stat"><strong>10+</strong><span>Yıl Tecrübe</span></div>
-            <div class="stat"><strong>5.000+</strong><span>Onarılan Araç</span></div>
-            <div class="stat"><strong>%100</strong><span>Garantili İşçilik</span></div>
-            <div class="stat"><strong>Aynı Gün</strong><span>Teslim</span></div>
+<div class="section section-dark section-why">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="title">Neden {{ site.brand_name|default('Çözüm Oto Elektrik') }}?</h2>
+                <ul class="why-list list-unstyled">
+                    <li><i class="fa fa-check"></i> <span><strong>Uzmanlık:</strong> Yıllara dayanan Renault EDC ve oto elektronik deneyimi.</span></li>
+                    <li><i class="fa fa-check"></i> <span><strong>Güncel Cihazlar:</strong> Orijinal diagnostik ve programlama ekipmanları.</span></li>
+                    <li><i class="fa fa-check"></i> <span><strong>Şeffaflık:</strong> Onarım öncesi net bilgilendirme ve fiyatlandırma.</span></li>
+                    <li><i class="fa fa-check"></i> <span><strong>Garanti:</strong> Yapılan tüm işlemler garanti kapsamındadır.</span></li>
+                </ul>
+                <a class="btn btn-danger btn-round" href="/iletisim">Randevu / Bilgi Al</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="row stats-row">
+                    <div class="col-6"><div class="stat"><strong>10+</strong><span>Yıl Tecrübe</span></div></div>
+                    <div class="col-6"><div class="stat"><strong>5.000+</strong><span>Onarılan Araç</span></div></div>
+                    <div class="col-6"><div class="stat"><strong>%100</strong><span>Garantili İşçilik</span></div></div>
+                    <div class="col-6"><div class="stat"><strong>Aynı Gün</strong><span>Teslim</span></div></div>
+                </div>
+            </div>
         </div>
     </div>
-</section>
+</div>
 
 {% if faqs|length %}
-<section class="section">
+<div class="section">
     <div class="container">
-        <div class="section__head"><h2>Sıkça Sorulan Sorular</h2></div>
-        <div class="faq">
+        <div class="section-head text-center">
+            <h2 class="title">Sıkça Sorulan Sorular</h2>
+        </div>
+        <div class="faq-acc" id="faq-accordion" role="tablist">
             {% for f in faqs %}
-            <details class="faq__item">
-                <summary>{{ f.question }}</summary>
-                <div class="faq__body">{{ f.answer|nl2br }}</div>
-            </details>
+            <div class="card card-faq">
+                <div class="card-header" role="tab" id="faq-h{{ loop.index }}">
+                    <a data-toggle="collapse" href="#faq-c{{ loop.index }}" role="button"
+                       aria-expanded="false" aria-controls="faq-c{{ loop.index }}" class="collapsed">
+                        {{ f.question }}
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                </div>
+                <div id="faq-c{{ loop.index }}" class="collapse" role="tabpanel"
+                     aria-labelledby="faq-h{{ loop.index }}" data-parent="#faq-accordion">
+                    <div class="card-body">{{ f.answer|nl2br }}</div>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
-</section>
+</div>
 {% endif %}
 
 {% if gallery|length %}
-<section class="section section--alt">
+<div class="section section-gray">
     <div class="container">
-        <div class="section__head"><h2>Çalışmalarımızdan</h2><a href="/galeri" class="section__link">Tüm galeri →</a></div>
+        <div class="section-head text-center">
+            <h2 class="title">Çalışmalarımızdan</h2>
+            <a href="/galeri" class="section-link">Tüm galeri <i class="fa fa-long-arrow-right"></i></a>
+        </div>
         <div class="masonry">
             {% for g in gallery %}
             <a class="masonry__item" href="/{{ g.file_path }}" target="_blank" rel="noopener">
@@ -90,19 +115,21 @@
             {% endfor %}
         </div>
     </div>
-</section>
+</div>
 {% endif %}
 
-<section class="cta">
-    <div class="container cta__inner">
-        <div>
-            <h2>Aracınızda EDC veya elektronik arıza mı var?</h2>
-            <p>Hemen iletişime geçin, ücretsiz ön değerlendirme yapalım.</p>
-        </div>
-        <div class="cta__actions">
-            {% if site.phone_primary %}<a class="btn btn--light" href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a>{% endif %}
-            {% if site.whatsapp %}<a class="btn btn--primary" href="{{ whatsapp_link() }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+<div class="section section-cta">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h2 class="title mb-1">Aracınızda EDC veya elektronik arıza mı var?</h2>
+                <p class="mb-lg-0">Hemen iletişime geçin, ücretsiz ön değerlendirme yapalım.</p>
+            </div>
+            <div class="col-lg-5 text-lg-right cta-actions">
+                {% if site.phone_primary %}<a class="btn btn-neutral btn-round" href="{{ tel_link(site.phone_primary) }}"><i class="fa fa-phone"></i> {{ site.phone_primary }}</a>{% endif %}
+                {% if site.whatsapp %}<a class="btn btn-success btn-round" href="{{ whatsapp_link() }}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> WhatsApp</a>{% endif %}
+            </div>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

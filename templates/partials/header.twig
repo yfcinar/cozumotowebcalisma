@@ -1,66 +1,50 @@
-<div class="topbar">
-    <div class="container topbar__inner">
-        <span class="topbar__item topbar__address">📍 {{ site.address|default('Esenyurt / İstanbul')|excerpt(60) }}</span>
-        <span class="topbar__spacer"></span>
-        {% if site.phone_primary %}
-            <a class="topbar__item" href="{{ tel_link(site.phone_primary) }}">📞 {{ site.phone_primary }}</a>
-        {% endif %}
-        {% if site.working_hours %}<span class="topbar__item topbar__hours">🕐 {{ site.working_hours }}</span>{% endif %}
-    </div>
-</div>
-
-<header class="header" id="site-header">
-    <div class="container header__inner">
-        <a class="brand" href="/">
-            <span class="brand__mark">RES</span>
-            <span class="brand__text">
-                <strong>{{ site.brand_name|default('Çözüm Oto Elektrik') }}</strong>
-                <small>Renault Elektronik Servisi</small>
-            </span>
-        </a>
-
-        <button class="nav-toggle" type="button" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="main-nav">
-            <span class="nav-toggle__box">
-                <span class="nav-toggle__line"></span>
-                <span class="nav-toggle__line"></span>
-                <span class="nav-toggle__line"></span>
-            </span>
-        </button>
-
-        <div class="nav-backdrop" id="nav-backdrop" hidden></div>
-
-        <nav class="nav" id="main-nav" aria-label="Ana menü">
-            <div class="nav__drawer-head">
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="60">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand brand" href="/">
                 <span class="brand__mark">RES</span>
-                <strong>Menü</strong>
-            </div>
-            <a href="/" class="nav__link">Anasayfa</a>
-            <div class="nav__dropdown">
-                <button type="button" class="nav__link nav__dropdown-toggle" aria-expanded="false">
-                    Hizmetler
-                    <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <div class="nav__menu">
-                    <a href="/hizmetler" class="nav__menu-all">Tüm Hizmetler</a>
-                    {% for s in menu_services %}
-                        <a href="/hizmet/{{ s.slug }}">{{ s.icon|default('🔧') }} {{ s.title }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-            <a href="/hakkimizda" class="nav__link">Hakkımızda</a>
-            <a href="/galeri" class="nav__link">Galeri</a>
-            <a href="/iletisim" class="nav__link">İletişim</a>
-            <div class="nav__actions">
+                <span class="brand__text">
+                    <strong>{{ site.brand_name|default('Çözüm Oto Elektrik') }}</strong>
+                    <small>Renault Elektronik Servisi</small>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                    aria-controls="navigation" aria-expanded="false" aria-label="Menüyü aç/kapat">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/">Anasayfa</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/hizmetler" id="nav-services" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Hizmetler</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-services">
+                        <a class="dropdown-item dropdown-item--all" href="/hizmetler">Tüm Hizmetler</a>
+                        <div class="dropdown-divider"></div>
+                        {% for s in menu_services %}
+                            <a class="dropdown-item" href="/hizmet/{{ s.slug }}">{{ s.icon|default('🔧') }} {{ s.title }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/hakkimizda">Hakkımızda</a></li>
+                <li class="nav-item"><a class="nav-link" href="/galeri">Galeri</a></li>
+                <li class="nav-item"><a class="nav-link" href="/iletisim">İletişim</a></li>
                 {% if site.phone_primary %}
-                    <a class="nav__phone" href="{{ tel_link(site.phone_primary) }}">📞 {{ site.phone_primary }}</a>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" href="{{ tel_link(site.phone_primary) }}"><i class="fa fa-phone"></i> {{ site.phone_primary }}</a>
+                </li>
                 {% endif %}
                 {% if site.whatsapp %}
-                    <a class="nav__cta" href="{{ whatsapp_link('Merhaba, bilgi almak istiyorum.') }}" target="_blank" rel="noopener">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-2.6-.8-4.7-2.5-6.2-4.9-.8-1.3-1.2-2.6-.9-3.6.2-.7.9-1.6 1.4-1.6h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.2.2-.3.4-.1.7.6 1 1.5 1.9 2.6 2.5.3.2.5.1.7-.1l.6-.7c.2-.2.4-.3.6-.2l1.9.9c.4.2.5.3.5.5v1.5Z"/></svg>
-                        WhatsApp
-                    </a>
+                <li class="nav-item">
+                    <a class="btn btn-success btn-round nav-wa" href="{{ whatsapp_link('Merhaba, bilgi almak istiyorum.') }}"
+                       target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> WhatsApp</a>
+                </li>
                 {% endif %}
-            </div>
-        </nav>
+            </ul>
+        </div>
     </div>
-</header>
+</nav>

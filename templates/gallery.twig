@@ -2,14 +2,14 @@
 {% block title %}Galeri | {{ site.brand_name|default('Çözüm Oto Elektrik') }}{% endblock %}
 
 {% block content %}
-<section class="page-head">
+<div class="page-header page-header-small page-head">
     <div class="container">
-        <nav class="breadcrumb"><a href="/">Anasayfa</a> / <span>Galeri</span></nav>
+        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>Galeri</span></nav>
         <h1>Galeri</h1>
         <p>Atölyemizden ve tamamladığımız çalışmalardan kareler.</p>
     </div>
-</section>
-<section class="section">
+</div>
+<div class="section">
     <div class="container">
         {% if images|length %}
         <div class="masonry">
@@ -23,5 +23,5 @@
         <p class="empty">Galeri yakında güncellenecek.</p>
         {% endif %}
     </div>
-</section>
+</div>
 {% endblock %}

@@ -1,11 +1,15 @@
 {% extends 'layout.twig' %}
 {% block title %}Sayfa Bulunamadı | {{ site.brand_name|default('Çözüm Oto Elektrik') }}{% endblock %}
 {% block content %}
-<section class="section error-page">
-    <div class="container">
+<div class="page-header page-header-small page-head">
+    <div class="container text-center">
         <h1>404</h1>
         <p>Aradığınız sayfa bulunamadı veya taşınmış olabilir.</p>
-        <a class="btn btn--primary" href="/">Anasayfaya Dön</a>
     </div>
-</section>
+</div>
+<div class="section text-center">
+    <div class="container">
+        <a class="btn btn-danger btn-round" href="/"><i class="fa fa-home"></i> Anasayfaya Dön</a>
+    </div>
+</div>
 {% endblock %}

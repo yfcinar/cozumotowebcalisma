@@ -3,26 +3,30 @@
 {% block description %}Renault EDC şanzıman, beyin onarımı, kavrama, DW5 otomatik şanzıman, AdBlue, EGR ve partikül filtre temizliği hizmetlerimiz.{% endblock %}
 
 {% block content %}
-<section class="page-head">
+<div class="page-header page-header-small page-head">
     <div class="container">
-        <nav class="breadcrumb"><a href="/">Anasayfa</a> / <span>Hizmetler</span></nav>
+        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>Hizmetler</span></nav>
         <h1>Hizmetlerimiz</h1>
         <p>Renault ve uyumlu modellerde elektronik ve mekanik arızalara profesyonel çözümler.</p>
     </div>
-</section>
+</div>
 
-<section class="section">
+<div class="section">
     <div class="container">
-        <div class="cards">
+        <div class="row">
             {% for s in services %}
-            <a class="card" href="/hizmet/{{ s.slug }}">
-                <span class="card__icon">{{ s.icon|default('🔧') }}</span>
-                <h3>{{ s.title }}</h3>
-                <p>{{ s.summary|default(s.body|excerpt(120)) }}</p>
-                <span class="card__more">Detaylar →</span>
-            </a>
+            <div class="col-md-6 col-lg-4 d-flex">
+                <a class="card card-service" href="/hizmet/{{ s.slug }}">
+                    <div class="card-body">
+                        <div class="card-service__icon">{{ s.icon|default('🔧') }}</div>
+                        <h3 class="card-title">{{ s.title }}</h3>
+                        <p class="card-description">{{ s.summary|default(s.body|excerpt(120)) }}</p>
+                        <span class="card-service__more">Detaylar <i class="fa fa-long-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

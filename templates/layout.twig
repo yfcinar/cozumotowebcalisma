@@ -10,23 +10,34 @@
     <meta property="og:description" content="{{ block('description') }}">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#0b0e14">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/assets/vendor/montserrat/montserrat.css">
+    {# Paper Kit 2 (Creative Tim) — Bootstrap 4 tabanlı UI kiti #}
+    <link rel="stylesheet" href="/assets/vendor/paper-kit/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendor/paper-kit/css/paper-kit.min.css">
+    <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/site.css">
     {% block head %}{% endblock %}
 </head>
-<body>
+<body class="sidebar-collapse">
 {% include 'partials/header.twig' %}
 
-{% include 'partials/flash.twig' %}
+<div class="wrapper">
+    {% include 'partials/flash.twig' %}
 
-<main>
-    {% block content %}{% endblock %}
-</main>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-{% include 'partials/footer.twig' %}
+    {% include 'partials/footer.twig' %}
+</div>
+
 {% include 'partials/floating.twig' %}
 
+<script src="/assets/vendor/paper-kit/js/jquery.min.js"></script>
+<script src="/assets/vendor/paper-kit/js/popper.min.js"></script>
+<script src="/assets/vendor/paper-kit/js/bootstrap.min.js"></script>
+<script src="/assets/vendor/paper-kit/js/paper-kit.min.js"></script>
 <script src="/assets/js/site.js" defer></script>
 {% block scripts %}{% endblock %}
 </body>

@@ -3,53 +3,73 @@
 {% block description %}{{ service.meta_description|default(service.summary|default(service.body|excerpt(150))) }}{% endblock %}
 
 {% block content %}
-<section class="page-head">
+<div class="page-header page-header-small page-head">
     <div class="container">
-        <nav class="breadcrumb"><a href="/">Anasayfa</a> / <a href="/hizmetler">Hizmetler</a> / <span>{{ service.title }}</span></nav>
+        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <a href="/hizmetler">Hizmetler</a> <i class="fa fa-angle-right"></i> <span>{{ service.title }}</span></nav>
         <h1>{{ service.title }}</h1>
         {% if service.summary %}<p>{{ service.summary }}</p>{% endif %}
     </div>
-</section>
+</div>
 
-<section class="section">
-    <div class="container content-layout">
-        <article class="content">
-            {% if service.image %}<img class="content__hero" src="/{{ service.image }}" alt="{{ service.title }}">{% endif %}
-            <div class="prose">{{ service.body|raw }}</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% if service.image %}<img class="content__hero img-rounded" src="/{{ service.image }}" alt="{{ service.title }}">{% endif %}
+                <div class="card card-prose"><div class="card-body prose">{{ service.body|raw }}</div></div>
 
-            <div class="content__cta">
-                {% if site.whatsapp %}<a class="btn btn--primary" href="{{ whatsapp_link('Merhaba, ' ~ service.title ~ ' hakkında bilgi almak istiyorum.') }}" target="_blank" rel="noopener">WhatsApp'tan Sor</a>{% endif %}
-                {% if site.phone_primary %}<a class="btn btn--ghost" href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a>{% endif %}
-            </div>
+                <div class="content__cta">
+                    {% if site.whatsapp %}<a class="btn btn-success btn-round" href="{{ whatsapp_link('Merhaba, ' ~ service.title ~ ' hakkında bilgi almak istiyorum.') }}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> WhatsApp'tan Sor</a>{% endif %}
+                    {% if site.phone_primary %}<a class="btn btn-outline-danger btn-round" href="{{ tel_link(site.phone_primary) }}"><i class="fa fa-phone"></i> {{ site.phone_primary }}</a>{% endif %}
+                </div>
 
-            {% if faqs|length %}
-            <div class="faq">
-                <h2>Sıkça Sorulan Sorular</h2>
-                {% for f in faqs %}
-                <details class="faq__item"><summary>{{ f.question }}</summary><div class="faq__body">{{ f.answer|nl2br }}</div></details>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </article>
-
-        <aside class="sidebar">
-            {% if districts|length %}
-            <div class="sidebar__box">
-                <h3>Hizmet Bölgelerimiz</h3>
-                <p class="sidebar__hint">{{ service.title }} için bölgenizi seçin:</p>
-                <ul class="district-list">
-                    {% for d in districts %}
-                    <li><a href="/hizmet/{{ service.slug }}/{{ d.slug }}">{{ d.name }} {{ service.title }}</a></li>
+                {% if faqs|length %}
+                <div class="faq-acc mt-4" id="faq-accordion" role="tablist">
+                    <h2 class="title">Sıkça Sorulan Sorular</h2>
+                    {% for f in faqs %}
+                    <div class="card card-faq">
+                        <div class="card-header" role="tab" id="faq-h{{ loop.index }}">
+                            <a data-toggle="collapse" href="#faq-c{{ loop.index }}" role="button"
+                               aria-expanded="false" aria-controls="faq-c{{ loop.index }}" class="collapsed">
+                                {{ f.question }}
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </div>
+                        <div id="faq-c{{ loop.index }}" class="collapse" role="tabpanel"
+                             aria-labelledby="faq-h{{ loop.index }}" data-parent="#faq-accordion">
+                            <div class="card-body">{{ f.answer|nl2br }}</div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
-            <div class="sidebar__box sidebar__box--accent">
-                <h3>Hızlı İletişim</h3>
-                {% if site.phone_primary %}<a class="sidebar__phone" href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a>{% endif %}
-                {% if site.address %}<p>{{ site.address }}</p>{% endif %}
+
+            <div class="col-lg-4">
+                <aside class="sidebar">
+                    {% if districts|length %}
+                    <div class="card sidebar__box">
+                        <div class="card-body">
+                            <h3 class="card-title">Hizmet Bölgelerimiz</h3>
+                            <p class="sidebar__hint">{{ service.title }} için bölgenizi seçin:</p>
+                            <ul class="district-list list-unstyled">
+                                {% for d in districts %}
+                                <li><a href="/hizmet/{{ service.slug }}/{{ d.slug }}">{{ d.name }} {{ service.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="card sidebar__box sidebar__box--accent">
+                        <div class="card-body">
+                            <h3 class="card-title">Hızlı İletişim</h3>
+                            {% if site.phone_primary %}<a class="sidebar__phone" href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a>{% endif %}
+                            {% if site.address %}<p>{{ site.address }}</p>{% endif %}
+                        </div>
+                    </div>
+                </aside>
             </div>
-        </aside>
+        </div>
     </div>
-</section>
+</div>
 {% endblock %}

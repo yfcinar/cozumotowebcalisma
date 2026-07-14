@@ -3,71 +3,25 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Mobil menü (çekmece + karartma) ---------- */
-  var toggle = document.querySelector('.nav-toggle');
-  var nav = document.getElementById('main-nav');
-  var backdrop = document.getElementById('nav-backdrop');
-
-  function openNav() {
-    nav.classList.add('is-open');
-    toggle.classList.add('is-active');
-    toggle.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('nav-open');
-    if (backdrop) {
-      backdrop.hidden = false;
-      requestAnimationFrame(function () { backdrop.classList.add('is-visible'); });
-    }
-  }
-
-  function closeNav() {
-    nav.classList.remove('is-open');
-    toggle.classList.remove('is-active');
-    toggle.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('nav-open');
-    if (backdrop) {
-      backdrop.classList.remove('is-visible');
-      setTimeout(function () { backdrop.hidden = true; }, 350);
-    }
-  }
-
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      nav.classList.contains('is-open') ? closeNav() : openNav();
-    });
-    if (backdrop) backdrop.addEventListener('click', closeNav);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && nav.classList.contains('is-open')) closeNav();
-    });
-    nav.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeNav);
+  /* ---------- Paper Kit mobil menü düzeltmesi ----------
+     PK, panel içine yapılan HER tıklamada menüyü kapatır; bu da
+     "Hizmetler" alt menüsü açılırken panelin kaymasına yol açar.
+     Bu davranışı kaldırıp kapatmayı yalnızca gerçek linklere bağlarız. */
+  if (window.jQuery) {
+    // PK kendi handler'ını DOM ready'de bağlar; kaldırma işlemi ondan sonra çalışmalı.
+    window.jQuery(function ($) {
+      $('.navbar-collapse').off('click');
+      $('.navbar-collapse').on('click', 'a[href]:not(.dropdown-toggle)', function () {
+        $('html').removeClass('nav-open');
+        if (window.pk && pk.misc) pk.misc.navbar_menu_visible = 0;
+        $('#bodyClick').remove();
+        setTimeout(function () { $('.navbar-toggler').removeClass('toggled'); }, 550);
+      });
     });
   }
 
-  /* ---------- Hizmetler alt menüsü (mobilde akordeon, masaüstünde hover) ---------- */
-  document.querySelectorAll('.nav__dropdown-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var dd = btn.closest('.nav__dropdown');
-      var open = dd.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-
-  // Dışarı tıklanınca açık dropdown'ları kapat (masaüstü).
-  document.addEventListener('click', function (e) {
-    document.querySelectorAll('.nav__dropdown.is-open').forEach(function (dd) {
-      if (!dd.contains(e.target)) {
-        dd.classList.remove('is-open');
-        var b = dd.querySelector('.nav__dropdown-toggle');
-        if (b) b.setAttribute('aria-expanded', 'false');
-      }
-    });
-  });
-
-  /* ---------- Flash mesajı kapatma + otomatik gizleme ---------- */
-  document.querySelectorAll('.flash').forEach(function (el) {
-    var close = el.querySelector('.flash__close');
-    if (close) close.addEventListener('click', function () { el.remove(); });
+  /* ---------- Flash mesajlarını otomatik gizle ---------- */
+  document.querySelectorAll('.flash-wrap .alert').forEach(function (el) {
     setTimeout(function () {
       el.style.transition = 'opacity .4s';
       el.style.opacity = '0';
@@ -75,21 +29,10 @@
     }, 6000);
   });
 
-  /* ---------- Header gölgesi (scroll) ---------- */
-  var header = document.getElementById('site-header');
-  if (header) {
-    var onScroll = function () {
-      header.classList.toggle('is-scrolled', window.scrollY > 10);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-
   /* ---------- Scroll'da beliren içerikler ---------- */
   var revealSelectors = [
-    '.section__head', '.card', '.stat', '.why__text', '.faq__item',
-    '.masonry__item', '.contact-info__item', '.contact-form', '.prose',
-    '.cta__inner', '.footer__col'
+    '.section-head', '.card-service', '.stat', '.why-list li', '.card-faq',
+    '.masonry__item', '.contact-info__item', '.card-contact-form', '.card-prose'
   ];
   var revealEls = document.querySelectorAll(revealSelectors.join(','));
 
@@ -100,13 +43,12 @@
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         var el = entry.target;
-        // Aynı grid/kapsayıcıdaki kardeşlere kademeli gecikme uygula.
         var parent = el.parentElement;
         var siblings = parent ? Array.prototype.filter.call(parent.children, function (c) {
           return c.classList.contains('reveal');
         }) : [el];
         var idx = siblings.indexOf(el);
-        el.style.transitionDelay = Math.min(idx * 70, 420) + 'ms';
+        el.style.transitionDelay = Math.min(Math.max(idx, 0) * 70, 420) + 'ms';
         el.classList.add('is-visible');
         io.unobserve(el);
       });
@@ -123,13 +65,11 @@
       var m = text.match(/^([^\d]*)([\d.]+)(.*)$/);
       if (!m) return; // "Aynı Gün" gibi sayısız metinleri atla
       var prefix = m[1], numStr = m[2], suffix = m[3];
-      var hasDots = numStr.indexOf('.') !== -1; // 5.000 → binlik ayracı
+      var hasDots = numStr.indexOf('.') !== -1;
       var target = parseInt(numStr.replace(/\./g, ''), 10);
       if (!target) return;
       var dur = 1400, start = null;
-      var fmt = function (n) {
-        return hasDots ? n.toLocaleString('tr-TR') : String(n);
-      };
+      var fmt = function (n) { return hasDots ? n.toLocaleString('tr-TR') : String(n); };
       var step = function (ts) {
         if (!start) start = ts;
         var p = Math.min((ts - start) / dur, 1);

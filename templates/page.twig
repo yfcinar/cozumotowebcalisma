@@ -3,15 +3,15 @@
 {% block description %}{{ page.meta_description|default(page.body|excerpt(150)) }}{% endblock %}
 
 {% block content %}
-<section class="page-head">
+<div class="page-header page-header-small page-head">
     <div class="container">
-        <nav class="breadcrumb"><a href="/">Anasayfa</a> / <span>{{ page.title }}</span></nav>
+        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>{{ page.title }}</span></nav>
         <h1>{{ page.title }}</h1>
     </div>
-</section>
-<section class="section">
+</div>
+<div class="section">
     <div class="container">
-        <div class="prose prose--wide">{{ page.body|raw }}</div>
+        <div class="card card-prose card-prose--wide"><div class="card-body prose">{{ page.body|raw }}</div></div>
     </div>
-</section>
+</div>
 {% endblock %}

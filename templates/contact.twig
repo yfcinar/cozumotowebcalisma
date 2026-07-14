@@ -3,60 +3,94 @@
 {% block description %}{{ site.brand_name|default('Çözüm Oto Elektrik') }} iletişim bilgileri, adres ve konum. Esenyurt / İstanbul.{% endblock %}
 
 {% block content %}
-<section class="page-head">
+<div class="page-header page-header-small page-head">
     <div class="container">
-        <nav class="breadcrumb"><a href="/">Anasayfa</a> / <span>İletişim</span></nav>
+        <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>İletişim</span></nav>
         <h1>İletişim</h1>
         <p>Sorularınız ve randevu için bize ulaşın.</p>
     </div>
-</section>
+</div>
 
-<section class="section">
-    <div class="container contact-layout">
-        <div class="contact-info">
-            <div class="contact-info__item">
-                <h3>📍 Adres</h3>
-                <p>{{ site.address|default('Esenyurt / İstanbul') }}</p>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="contact-info">
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-map-marker text-danger"></i> Adres</h3>
+                        <p>{{ site.address|default('Esenyurt / İstanbul') }}</p>
+                    </div></div>
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-phone text-danger"></i> Telefon</h3>
+                        {% if site.phone_primary %}<p><a href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a></p>{% endif %}
+                        {% if site.phone_secondary %}<p><a href="{{ tel_link(site.phone_secondary) }}">{{ site.phone_secondary }}</a></p>{% endif %}
+                    </div></div>
+                    {% if site.whatsapp %}
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-whatsapp text-success"></i> WhatsApp</h3>
+                        <p><a href="{{ whatsapp_link() }}" target="_blank" rel="noopener">{{ site.whatsapp }}</a></p>
+                    </div></div>
+                    {% endif %}
+                    {% if site.working_hours %}
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-clock-o text-danger"></i> Çalışma Saatleri</h3>
+                        <p>{{ site.working_hours }}</p>
+                    </div></div>
+                    {% endif %}
+                </div>
             </div>
-            <div class="contact-info__item">
-                <h3>📞 Telefon</h3>
-                {% if site.phone_primary %}<p><a href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a></p>{% endif %}
-                {% if site.phone_secondary %}<p><a href="{{ tel_link(site.phone_secondary) }}">{{ site.phone_secondary }}</a></p>{% endif %}
+
+            <div class="col-lg-7">
+                <div class="card card-contact-form">
+                    <div class="card-body">
+                        <h3 class="card-title mb-3">Bize Yazın</h3>
+                        <form method="post" action="/iletisim">
+                            <input type="hidden" name="_csrf" value="{{ csrf }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Ad Soyad *</label>
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Telefon</label>
+                                        <input type="tel" name="phone" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>E-posta</label>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Konu</label>
+                                        <input type="text" name="subject" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mesajınız *</label>
+                                <textarea name="message" rows="5" class="form-control" required></textarea>
+                            </div>
+                            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                            <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-paper-plane"></i> Gönder</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            {% if site.whatsapp %}
-            <div class="contact-info__item">
-                <h3>💬 WhatsApp</h3>
-                <p><a href="{{ whatsapp_link() }}" target="_blank" rel="noopener">{{ site.whatsapp }}</a></p>
-            </div>
-            {% endif %}
-            {% if site.working_hours %}
-            <div class="contact-info__item">
-                <h3>🕐 Çalışma Saatleri</h3>
-                <p>{{ site.working_hours }}</p>
-            </div>
-            {% endif %}
         </div>
 
-        <form class="contact-form" method="post" action="/iletisim">
-            <input type="hidden" name="_csrf" value="{{ csrf }}">
-            <div class="form-row">
-                <label>Ad Soyad *<input type="text" name="name" required></label>
-                <label>Telefon<input type="tel" name="phone"></label>
-            </div>
-            <div class="form-row">
-                <label>E-posta<input type="email" name="email"></label>
-                <label>Konu<input type="text" name="subject"></label>
-            </div>
-            <label>Mesajınız *<textarea name="message" rows="5" required></textarea></label>
-            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <button type="submit" class="btn btn--primary">Gönder</button>
-        </form>
+        {% if site.maps_embed %}
+        <div class="map">{{ site.maps_embed|raw }}</div>
+        {% elseif site.maps_url %}
+        <div class="map-link"><a class="btn btn-outline-danger btn-round" href="{{ site.maps_url }}" target="_blank" rel="noopener">Haritada Aç <i class="fa fa-long-arrow-right"></i></a></div>
+        {% endif %}
     </div>
-
-    {% if site.maps_embed %}
-    <div class="map">{{ site.maps_embed|raw }}</div>
-    {% elseif site.maps_url %}
-    <div class="container map-link"><a class="btn btn--ghost" href="{{ site.maps_url }}" target="_blank" rel="noopener">Haritada Aç →</a></div>
-    {% endif %}
-</section>
+</div>
 {% endblock %}
