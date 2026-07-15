@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="/assets/vendor/paper-kit/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendor/paper-kit/css/paper-kit.min.css">
     <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/vendor/toastify/toastify.css">
+    <link rel="stylesheet" href="/assets/css/toast.css">
     <link rel="stylesheet" href="/assets/css/site.css">
     <script type="application/ld+json">{{ schema_business()|raw }}</script>
     {% block head %}{% endblock %}
@@ -52,6 +54,11 @@
 <script src="/assets/vendor/paper-kit/js/popper.min.js"></script>
 <script src="/assets/vendor/paper-kit/js/bootstrap.min.js"></script>
 <script src="/assets/vendor/paper-kit/js/paper-kit.min.js"></script>
+{% if flash is defined and flash|length %}
+<script>window.__flash = {{ flash|json_encode|raw }};</script>
+{% endif %}
+<script src="/assets/vendor/toastify/toastify.js"></script>
+<script src="/assets/js/toast.js"></script>
 <script src="/assets/js/site.js" defer></script>
 {% block scripts %}{% endblock %}
 </body>

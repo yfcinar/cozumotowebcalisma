@@ -1,12 +1,1 @@
-{% if flash is defined and flash|length %}
-<div class="flash-wrap">
-    <div class="container">
-        {% for f in flash %}
-            <div class="alert alert-{{ f.type == 'error' ? 'danger' : 'success' }} alert-dismissible fade show" role="alert">
-                <span>{{ f.message }}</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Kapat"><span aria-hidden="true">×</span></button>
-            </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
+{# Flash mesajları artık animasyonlu toast bildirimi olarak gösterilir (bkz. toast.js). #}
