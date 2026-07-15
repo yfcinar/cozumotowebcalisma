@@ -37,8 +37,8 @@ final class ServiceRepository extends BaseRepository
     public function create(array $data): int
     {
         $sql = 'INSERT INTO services
-            (slug, title, summary, body, icon, image, meta_title, meta_description, sort_order, is_active, enable_districts, created_at, updated_at)
-            VALUES (:slug, :title, :summary, :body, :icon, :image, :meta_title, :meta_description, :sort_order, :is_active, :enable_districts, :created_at, :updated_at)';
+            (slug, title, summary, body, icon, image, price, meta_title, meta_description, sort_order, is_active, enable_districts, created_at, updated_at)
+            VALUES (:slug, :title, :summary, :body, :icon, :image, :price, :meta_title, :meta_description, :sort_order, :is_active, :enable_districts, :created_at, :updated_at)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($this->bind($data));
         return (int) $this->pdo->lastInsertId();
@@ -48,7 +48,7 @@ final class ServiceRepository extends BaseRepository
     {
         $sql = 'UPDATE services SET
             slug = :slug, title = :title, summary = :summary, body = :body, icon = :icon, image = :image,
-            meta_title = :meta_title, meta_description = :meta_description, sort_order = :sort_order,
+            price = :price, meta_title = :meta_title, meta_description = :meta_description, sort_order = :sort_order,
             is_active = :is_active, enable_districts = :enable_districts, updated_at = :updated_at
             WHERE id = :id';
         $params = $this->bind($data);
@@ -72,6 +72,7 @@ final class ServiceRepository extends BaseRepository
             'body'             => $d['body'] ?? null,
             'icon'             => $d['icon'] ?? null,
             'image'            => $d['image'] ?? null,
+            'price'            => $d['price'] ?? null,
             'meta_title'       => $d['meta_title'] ?? null,
             'meta_description' => $d['meta_description'] ?? null,
             'sort_order'       => (int) ($d['sort_order'] ?? 0),

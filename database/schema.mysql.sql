@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS services (
     body             MEDIUMTEXT NULL,
     icon             VARCHAR(80) NULL,
     image            VARCHAR(255) NULL,
+    price            VARCHAR(120) NULL,
     meta_title       VARCHAR(200) NULL,
     meta_description VARCHAR(320) NULL,
     sort_order       INT NOT NULL DEFAULT 0,

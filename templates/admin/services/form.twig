@@ -59,6 +59,10 @@
                 <div class="adm-card__body">
                     <div class="adm-form">
                         <div class="adm-field">
+                            <label>Fiyat <span class="hint">(anasayfada gösterilir, boş = "Fiyat için arayın")</span></label>
+                            <input type="text" name="price" value="{{ service.price|default('') }}" placeholder="1.500 ₺'den başlayan">
+                        </div>
+                        <div class="adm-field">
                             <label>İkon <span class="hint">(Font Awesome sınıfı, örn: fa-cogs)</span></label>
                             <input type="text" name="icon" value="{{ service.icon|default('fa-wrench') }}" placeholder="fa-wrench">
                         </div>

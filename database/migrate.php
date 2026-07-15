@@ -61,6 +61,7 @@ $columnExists = static function (PDO $pdo, string $driver, string $table, string
 $additions = [
     ['messages', 'is_starred', 'INTEGER NOT NULL DEFAULT 0', 'TINYINT(1) NOT NULL DEFAULT 0'],
     ['messages', 'status', "TEXT NOT NULL DEFAULT 'new'", "VARCHAR(20) NOT NULL DEFAULT 'new'"],
+    ['services', 'price', 'TEXT', 'VARCHAR(120) NULL'],
 ];
 foreach ($additions as [$table, $column, $sqliteType, $mysqlType]) {
     if (!$columnExists($pdo, $driver, $table, $column)) {

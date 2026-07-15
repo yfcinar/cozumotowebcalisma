@@ -48,6 +48,41 @@
         </div>
     </div>
 
+    <div class="section section-gray text-center section-pricing" id="fiyatlar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <h2 class="title">Fiyat Listesi</h2>
+                    <h5 class="description">Güncel başlangıç fiyatlarımız. Kesin fiyat, aracınızın markası/modeli ve arıza durumuna göre ücretsiz ön değerlendirme sonrası netleşir.</h5>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                {% for s in services %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="price-card">
+                        <div class="price-card__icon"><i class="fa {{ s.icon starts with 'fa-' ? s.icon : 'fa-wrench' }}" aria-hidden="true"></i></div>
+                        <h4 class="price-card__title">{{ s.title }}</h4>
+                        <div class="price-card__price">
+                            {% if s.price %}{{ s.price }}{% else %}<span class="price-card__call">Fiyat için arayın</span>{% endif %}
+                        </div>
+                        <a href="/hizmet/{{ s.slug }}" class="btn btn-outline-danger btn-round btn-sm">Detaylar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-md-10 ml-auto mr-auto">
+                    <p class="price-note">* Fiyatlara KDV dahildir ve işçilik + parça durumuna göre değişkenlik gösterebilir. Net fiyat için bizi arayın.</p>
+                    <div class="price-cta">
+                        {% if site.whatsapp %}<a class="btn btn-success btn-round" href="{{ whatsapp_link('Merhaba, fiyat bilgisi almak istiyorum.') }}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> WhatsApp'tan Fiyat Al</a>{% endif %}
+                        {% if site.phone_primary %}<a class="btn btn-danger btn-round" href="{{ tel_link(site.phone_primary) }}"><i class="fa fa-phone"></i> {{ site.phone_primary }}</a>{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="section section-dark text-center section-stats" style="background-image: url('/assets/img/dark-garage.jpg');">
         <div class="filter"></div>
         <div class="container">

@@ -104,6 +104,7 @@ final class ServiceController extends BaseController
             'body'             => (string) ($d['body'] ?? ''),
             'icon'             => trim((string) ($d['icon'] ?? '')) ?: null,
             'image'            => trim((string) ($d['image'] ?? '')) ?: null,
+            'price'            => trim((string) ($d['price'] ?? '')) ?: null,
             'meta_title'       => trim((string) ($d['meta_title'] ?? '')) ?: null,
             'meta_description' => trim((string) ($d['meta_description'] ?? '')) ?: null,
             'sort_order'       => (int) ($d['sort_order'] ?? 0),

@@ -69,8 +69,8 @@ $serviceCount = (int) $pdo->query('SELECT COUNT(*) FROM services')->fetchColumn(
 if ($serviceCount === 0) {
     $services = require __DIR__ . '/seed_data/services.php';
     $stmt = $pdo->prepare(
-        'INSERT INTO services (slug, title, summary, body, icon, meta_title, meta_description, sort_order, is_active, enable_districts, created_at, updated_at)
-         VALUES (:slug, :title, :summary, :body, :icon, :meta_title, :meta_description, :sort_order, 1, :enable_districts, :now, :now)'
+        'INSERT INTO services (slug, title, summary, body, icon, price, meta_title, meta_description, sort_order, is_active, enable_districts, created_at, updated_at)
+         VALUES (:slug, :title, :summary, :body, :icon, :price, :meta_title, :meta_description, :sort_order, 1, :enable_districts, :now, :now)'
     );
     $now = date('Y-m-d H:i:s');
     foreach ($services as $i => $s) {
@@ -80,6 +80,7 @@ if ($serviceCount === 0) {
             'summary' => $s['summary'],
             'body' => $s['body'],
             'icon' => $s['icon'],
+            'price' => $s['price'] ?? null,
             'meta_title' => $s['meta_title'] ?? null,
             'meta_description' => $s['meta_description'] ?? null,
             'sort_order' => $i + 1,

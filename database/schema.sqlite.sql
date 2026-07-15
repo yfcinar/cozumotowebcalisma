@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS services (
     body             TEXT,
     icon             TEXT,
     image            TEXT,
+    price            TEXT,
     meta_title       TEXT,
     meta_description TEXT,
     sort_order       INTEGER NOT NULL DEFAULT 0,
