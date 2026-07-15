@@ -34,6 +34,7 @@ return function (SlimApp $app): void {
     // SEO.
     $app->get('/sitemap.xml', [SitemapController::class, 'sitemap']);
     $app->get('/robots.txt', [SitemapController::class, 'robots']);
+    $app->get('/llms.txt', [SitemapController::class, 'llms']);
 
     // Eski CMS URL'leri için 301 yönlendirmeleri.
     $app->get('/icerik[/{rest:.*}]', [LegacyRedirectController::class, 'handle']);

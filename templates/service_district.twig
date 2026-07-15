@@ -17,6 +17,7 @@
   }
 }
 </script>
+{% if faqs|length %}<script type="application/ld+json">{{ schema_faq(faqs)|raw }}</script>{% endif %}
 {% endblock %}
 
 {% block content %}

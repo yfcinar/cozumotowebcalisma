@@ -2,6 +2,27 @@
 {% block title %}{{ service.meta_title|default(service.title ~ ' | ' ~ site.brand_name) }}{% endblock %}
 {% block description %}{{ service.meta_description|default(service.summary|default(service.body|excerpt(150))) }}{% endblock %}
 
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": {{ service.title|json_encode|raw }},
+  "serviceType": {{ service.title|json_encode|raw }},
+  "description": {{ (service.summary|default(service.body|excerpt(160)))|json_encode|raw }},
+  "url": "{{ app.url }}/hizmet/{{ service.slug }}",
+  "areaServed": "İstanbul",
+  "provider": {
+    "@type": "AutoRepair",
+    "name": {{ (site.brand_name|default('Çözüm Oto Elektrik'))|json_encode|raw }},
+    "telephone": {{ (site.phone_primary|default(''))|json_encode|raw }}
+  }{% if service.price %},
+  "offers": { "@type": "Offer", "priceCurrency": "TRY", "description": {{ service.price|json_encode|raw }} }{% endif %}
+}
+</script>
+{% if faqs|length %}<script type="application/ld+json">{{ schema_faq(faqs)|raw }}</script>{% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
     <div class="filter"></div>

@@ -68,5 +68,69 @@ final class ViewGlobals
         $env->addFunction(new TwigFunction('unread_messages', function (): int {
             return $this->messages?->unreadCount() ?? 0;
         }));
+
+        // İşletme (AutoRepair / LocalBusiness) yapısal verisi — Google zengin sonuçları.
+        $env->addFunction(new TwigFunction('schema_business', function (): string {
+            $s = $this->settings->all();
+            $url = rtrim($this->appConfig['url'] ?? '', '/');
+
+            $data = array_filter([
+                '@context'    => 'https://schema.org',
+                '@type'       => 'AutoRepair',
+                'name'        => $s['brand_name'] ?? 'Çözüm Oto Elektrik',
+                'description' => $s['site_description'] ?? null,
+                'url'         => $url ?: null,
+                'telephone'   => $s['phone_primary'] ?? null,
+                'email'       => $s['email'] ?? null,
+                'image'       => $s['og_image'] ?? ($url ? $url . '/favicon.svg' : null),
+                'priceRange'  => '₺₺',
+                'areaServed'  => 'İstanbul',
+            ]);
+
+            if (!empty($s['address'])) {
+                $data['address'] = [
+                    '@type'           => 'PostalAddress',
+                    'streetAddress'   => $s['address'],
+                    'addressLocality' => 'Esenyurt',
+                    'addressRegion'   => 'İstanbul',
+                    'addressCountry'  => 'TR',
+                ];
+            }
+            if (!empty($s['working_hours'])) {
+                $data['openingHours'] = $s['working_hours'];
+            }
+            $sameAs = array_values(array_filter([
+                $s['instagram'] ?? null, $s['facebook'] ?? null,
+                $s['youtube'] ?? null, $s['linkedin'] ?? null, $s['twitter'] ?? null,
+            ]));
+            if ($sameAs) {
+                $data['sameAs'] = $sameAs;
+            }
+
+            return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        }));
+
+        // SSS yapısal verisi (FAQPage) — SSS listesinden üretir.
+        $env->addFunction(new TwigFunction('schema_faq', function (array $faqs): ?string {
+            if (!$faqs) {
+                return null;
+            }
+            $items = [];
+            foreach ($faqs as $f) {
+                $items[] = [
+                    '@type'          => 'Question',
+                    'name'           => $f['question'] ?? '',
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text'  => strip_tags((string) ($f['answer'] ?? '')),
+                    ],
+                ];
+            }
+            return json_encode([
+                '@context'   => 'https://schema.org',
+                '@type'      => 'FAQPage',
+                'mainEntity' => $items,
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        }));
     }
 }
