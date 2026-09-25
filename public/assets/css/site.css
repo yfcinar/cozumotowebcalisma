@@ -108,7 +108,7 @@ body{overflow-x:hidden}
 .faq-acc{max-width:820px;margin:0 auto}
 .faq-acc .title{font-weight:800;margin-bottom:1rem}
 .card-faq{border:1px solid #ecedf2;border-radius:12px!important;box-shadow:none;margin-bottom:.7rem;overflow:hidden;transition:border-color .25s,box-shadow .25s}
-.card-faq:hover{border-color:rgba(225,20,29,.3)}
+.card-faq:hover{border-color:rgba(225,20,29,.3);transform:none!important;box-shadow:none!important}
 .card-faq .card-header{background:#fff;border:0;padding:0}
 .card-faq .card-header a{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.2rem;font-weight:600;color:var(--ink)}
 .card-faq .card-header a:not(.collapsed){color:var(--brand)}
@@ -241,12 +241,23 @@ textarea.form-control{max-height:none}
 }
 @media(max-width:576px){
   .masonry{columns:2 140px}
-  .float-btn__label{display:none}
-  .float-btn{padding:.85rem}
+  .float-btn{display:none}
   .section{padding:3.2rem 0}
   .navbar .brand__text strong{font-size:.9rem}
   .navbar .brand__text small{font-size:.56rem}
   .cta-actions{text-align:left!important;margin-top:1rem}
+  body{padding-bottom:60px}
+}
+
+/* ---------- Mobil alt CTA bar ---------- */
+.cta-bar{display:none}
+@media(max-width:576px){
+  .cta-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:200;box-shadow:0 -6px 20px rgba(0,0,0,.2)}
+  .cta-bar__btn{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem .5rem;color:#fff!important;font-weight:600;font-size:.9rem}
+  .cta-bar__btn i{font-size:1.05rem}
+  .cta-bar__btn--call{background:var(--dark)}
+  .cta-bar__btn--wa{background:var(--wa)}
+  .cta-bar__btn:hover{text-decoration:none;color:#fff!important}
 }
 
 /* ---------- Hareket azaltma ---------- */

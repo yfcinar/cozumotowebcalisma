@@ -1,3 +1,18 @@
+{% if site.phone_primary or site.whatsapp %}
+<div class="cta-bar">
+    {% if site.phone_primary %}
+    <a class="cta-bar__btn cta-bar__btn--call" href="{{ tel_link(site.phone_primary) }}" aria-label="Hemen ara">
+        <i class="fa fa-phone"></i><span>Bizi Arayın</span>
+    </a>
+    {% endif %}
+    {% if site.whatsapp %}
+    <a class="cta-bar__btn cta-bar__btn--wa" href="{{ whatsapp_link('Merhaba, aracım için bilgi almak istiyorum.') }}" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın">
+        <i class="fa fa-whatsapp"></i><span>WhatsApp</span>
+    </a>
+    {% endif %}
+</div>
+{% endif %}
+
 {% if site.whatsapp %}
 <a class="float-btn float-btn--wa" href="{{ whatsapp_link('Merhaba, aracım için bilgi almak istiyorum.') }}" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın">
     <i class="fa fa-whatsapp"></i><span class="float-btn__label">WhatsApp</span>
