@@ -1,0 +1,256 @@
+/* =====================================================================
+   Çözüm Oto Elektrik — Paper Kit 2 (Creative Tim) üzerine marka katmanı
+   Temel bileşenler Paper Kit 2 / Bootstrap 4'ten gelir; bu dosya marka
+   renkleri, hero, kartlar ve küçük animasyon dokunuşlarını içerir.
+   ===================================================================== */
+
+:root{
+  --brand:#e1141d; --brand-d:#b30f17; --dark:#0b0e14; --dark-2:#161c2b;
+  --gold:#f5c518; --wa:#25d366; --ink:#2c2c2c; --muted:#66615b;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+body{overflow-x:hidden}
+
+/* ---------- Marka rengi: Paper Kit danger'ını kırmızıya çek ---------- */
+.btn-danger:not(.btn-link){background-color:var(--brand)!important;border-color:var(--brand)!important}
+.btn-danger:not(.btn-link):hover,.btn-danger:not(.btn-link):focus,.btn-danger:not(.btn-link):active{background-color:var(--brand-d)!important;border-color:var(--brand-d)!important}
+.btn-link.btn-danger,.btn-link.btn-danger:hover{background:transparent!important;border-color:transparent!important}
+.btn-outline-danger{border-color:var(--brand)!important;color:var(--brand)!important}
+.btn-outline-danger:hover{background-color:var(--brand)!important;border-color:var(--brand)!important;color:#fff!important}
+.text-danger{color:var(--brand)!important}
+.btn-success{background-color:var(--wa)!important;border-color:var(--wa)!important;color:#fff!important}
+.btn-success:hover,.btn-success:focus{background-color:#1eb455!important;border-color:#1eb455!important}
+.btn{font-weight:600}
+.btn-round{border-radius:30px}
+
+/* ---------- Animasyonlar ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.is-visible{opacity:1;transform:none}
+
+/* ---------- Navbar / marka ---------- */
+.brand{display:flex;align-items:center;gap:.65rem}
+.brand__mark{display:grid;place-items:center;width:42px;height:42px;background:var(--brand);color:#fff;font-weight:800;border-radius:10px;letter-spacing:.5px;font-size:.85rem}
+.navbar .brand__text strong{display:block;font-size:1rem;line-height:1.15;text-transform:none}
+.navbar .brand__text small{display:block;font-size:.62rem;letter-spacing:.6px;text-transform:uppercase;opacity:.75;line-height:1}
+.navbar-brand{padding:0}
+.navbar .navbar-nav .nav-link{font-weight:600;font-size:.8rem}
+.navbar .nav-wa{margin-left:.5rem;padding:.55rem 1.1rem}
+.navbar:not(.navbar-transparent) .brand__text strong{color:var(--ink)}
+.navbar.navbar-transparent .brand__text strong{color:#fff}
+.navbar.navbar-transparent .brand__text small{color:#cdd3df}
+.dropdown-menu{border-radius:12px;box-shadow:0 18px 40px rgba(13,18,30,.18);border:0;max-height:70vh;overflow-y:auto}
+.dropdown-menu .dropdown-item{font-size:.82rem;padding:.5rem 1rem;transition:background .15s,color .15s}
+.dropdown-menu .dropdown-item:hover{background:#fdf0f0;color:var(--brand)}
+.dropdown-item--all{font-weight:700;color:var(--brand)}
+
+/* ---------- PK page-header uyarlamaları ---------- */
+.page-header .motto h1{font-weight:800;font-size:clamp(2rem,4.5vw,3.1rem);letter-spacing:-.02em}
+.page-header .motto h3{font-size:1.15rem;color:#e8ebf0;max-width:680px;margin:1rem auto 0;line-height:1.55}
+.page-header .motto .btn{margin:.35rem .3rem 0}
+/* İç sayfalar: kısa fotoğraflı başlık */
+.page-head{min-height:45vh!important;max-height:none}
+.page-head .motto{padding-top:110px!important;padding-bottom:30px}
+.page-head .motto h1{font-size:clamp(1.7rem,3.5vw,2.4rem)}
+.page-head .motto p{color:#dfe3ea;max-width:680px;margin:.6rem 0 0}
+.breadcrumb-line{font-size:.82rem;color:#c3c9d4;margin-bottom:.8rem}
+.breadcrumb-line a:hover{color:#fff}
+.breadcrumb-line i{font-size:.7rem;margin:0 .3rem;opacity:.6}
+
+/* ---------- PK info blokları ---------- */
+.icon-danger{color:var(--brand)!important}
+.info{padding:0 .5rem}
+.info .info-title{font-weight:700;margin:.8rem 0 .5rem;font-size:1.05rem}
+.info p.description{color:var(--muted);font-size:.9rem}
+.btn-link.btn-danger{color:var(--brand)!important}
+.btn-link.btn-danger:hover{color:var(--brand-d)!important}
+
+/* ---------- Bölümler ---------- */
+.section{padding:4.5rem 0}
+.section-gray{background:#f6f7fb}
+.section-head{max-width:680px;margin:0 auto 2.4rem}
+.section-head .title{font-weight:800;letter-spacing:-.02em;margin-bottom:.4rem}
+.section-head .description{color:var(--muted)}
+.section-link{color:var(--brand);font-weight:600}
+.section-link:hover{color:var(--brand-d)}
+
+/* ---------- Hizmet kartları ---------- */
+.card-service{width:100%;border:1px solid #ecedf2;border-radius:14px;box-shadow:0 10px 30px rgba(13,18,30,.07);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .3s;overflow:hidden;position:relative;margin-bottom:1.4rem;color:inherit}
+.card-service:hover{transform:translateY(-5px);box-shadow:0 20px 45px rgba(13,18,30,.12);border-color:#dfe2ea;color:inherit;text-decoration:none}
+.card-service .card-body{display:flex;flex-direction:column;height:100%}
+.card-service__icon{width:50px;height:50px;display:grid;place-items:center;font-size:1.25rem;background:#fdf0f0;color:var(--brand);border-radius:12px;margin-bottom:1rem}
+.card-service .card-title{font-size:1.12rem;font-weight:700;margin:0 0 .4rem}
+.card-service .card-description{color:var(--muted);font-size:.9rem;flex:1}
+.card-service__more{color:var(--brand);font-weight:600;font-size:.88rem;margin-top:.7rem;display:inline-flex;align-items:center;gap:.35rem;transition:gap .2s}
+.card-service:hover .card-service__more{gap:.6rem}
+
+/* ---------- Neden biz / istatistik (fotoğraf zeminli) ---------- */
+.section-stats{position:relative;background-size:cover;background-position:center;overflow:hidden}
+.section-stats .filter{position:absolute;inset:0;background:rgba(8,11,16,.82)}
+.section-stats .container{position:relative;z-index:2}
+.section-stats .title{color:#fff}
+.why-line{color:#c7cdd9;max-width:720px;margin:1.4rem auto 1.6rem}
+
+.section-dark{background:linear-gradient(135deg,#0b0e14,#1b2233);color:#fff}
+.section-dark .title{color:#fff;font-weight:800}
+.why-list{margin:1.2rem 0 1.8rem}
+.why-list li{display:flex;gap:.7rem;margin-bottom:.8rem;color:#c7cdd9}
+.why-list li strong{color:#fff}
+.why-list i{color:var(--brand);margin-top:.3rem}
+.stats-row{margin-top:1rem}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:1.6rem 1.2rem;text-align:center;margin-bottom:1rem;transition:border-color .3s}
+.stat:hover{border-color:rgba(255,255,255,.2)}
+.stat strong{display:block;font-size:1.9rem;color:#fff;letter-spacing:-.02em;font-weight:800}
+.stat span{color:#aeb6c4;font-size:.85rem}
+
+/* ---------- SSS akordeon ---------- */
+.faq-acc{max-width:820px;margin:0 auto}
+.faq-acc .title{font-weight:800;margin-bottom:1rem}
+.card-faq{border:1px solid #ecedf2;border-radius:12px!important;box-shadow:none;margin-bottom:.7rem;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.card-faq:hover{border-color:rgba(225,20,29,.3)}
+.card-faq .card-header{background:#fff;border:0;padding:0}
+.card-faq .card-header a{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.2rem;font-weight:600;color:var(--ink)}
+.card-faq .card-header a:not(.collapsed){color:var(--brand)}
+.card-faq .card-header a i{transition:transform .3s var(--ease)}
+.card-faq .card-header a:not(.collapsed) i{transform:rotate(180deg)}
+.card-faq .card-body{color:var(--muted);padding:0 1.2rem 1.1rem}
+
+/* ---------- Masonry galeri ---------- */
+.masonry{columns:4 220px;column-gap:1rem}
+.masonry__item{display:block;margin-bottom:1rem;border-radius:12px;overflow:hidden;break-inside:avoid;box-shadow:0 10px 30px rgba(13,18,30,.08)}
+.masonry__item img{transition:transform .5s var(--ease),filter .4s;width:100%}
+.masonry__item:hover img{transform:scale(1.06);filter:brightness(1.05)}
+
+/* ---------- Fiyat listesi ---------- */
+.section-pricing .title{font-weight:800}
+.price-card{background:#fff;border:1px solid #ecedf2;border-radius:16px;padding:2rem 1.4rem;margin-bottom:1.6rem;height:calc(100% - 1.6rem);display:flex;flex-direction:column;align-items:center;box-shadow:0 10px 30px rgba(13,18,30,.07);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+.price-card:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(13,18,30,.13);border-color:rgba(225,20,29,.35)}
+.price-card__icon{width:58px;height:58px;display:grid;place-items:center;font-size:1.5rem;background:#fdf0f0;color:var(--brand);border-radius:14px;margin-bottom:1rem}
+.price-card__title{font-size:1.05rem;font-weight:700;margin:0 0 .8rem;min-height:2.6em;display:flex;align-items:center}
+.price-card__price{font-size:1.5rem;font-weight:800;color:var(--brand);letter-spacing:-.02em;margin-bottom:1.1rem;line-height:1.2}
+.price-card__call{font-size:1rem;font-weight:700;color:var(--muted)}
+.price-card .btn-sm{padding:.45rem 1.2rem;font-size:.82rem}
+.price-note{color:var(--muted);font-size:.82rem;margin:.5rem 0 1.4rem}
+.price-cta{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+
+/* ---------- CTA şeridi ---------- */
+.section-cta{background:var(--brand-d);color:#fff;padding:3rem 0;position:relative}
+.section-cta .title{color:#fff;font-weight:800}
+.section-cta .container{position:relative;z-index:1}
+.cta-actions .btn{margin:.25rem}
+
+/* ---------- İçerik / sidebar ---------- */
+.content__hero{border-radius:14px;margin-bottom:1.5rem;width:100%}
+.card-prose{border:1px solid #ecedf2;border-radius:14px;box-shadow:0 10px 30px rgba(13,18,30,.07)}
+.card-prose--wide{max-width:880px;margin:0 auto}
+.prose{color:#3a4252}
+.prose h2,.prose h3{margin-top:1.4rem;font-weight:700}
+.prose img{border-radius:10px;margin:1rem 0;max-width:100%}
+.content__cta{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.5rem 0}
+.sidebar{display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:90px}
+.sidebar__box{border:1px solid #ecedf2;border-radius:14px;box-shadow:0 10px 30px rgba(13,18,30,.07);margin-bottom:0}
+.sidebar__box .card-title{font-weight:700;font-size:1.05rem}
+.sidebar__hint{color:var(--muted);font-size:.85rem}
+.sidebar__box--accent{background:linear-gradient(135deg,#11151f,#1d2334);color:#fff;border:0}
+.sidebar__box--accent .card-title{color:#fff}
+.sidebar__box--accent p{color:#aeb6c4;font-size:.88rem}
+.sidebar__phone{display:block;font-size:1.4rem;font-weight:800;color:var(--gold);margin:.4rem 0}
+.sidebar__phone:hover{color:#fff}
+.district-list{margin:.6rem 0 0;max-height:340px;overflow:auto}
+.district-list a{display:block;padding:.5rem .7rem;border-radius:8px;font-size:.9rem;color:#3a4252;transition:background .15s,color .15s,transform .2s var(--ease)}
+.district-list a:hover{background:#f3f4f8;color:var(--brand);transform:translateX(4px);text-decoration:none}
+.district-list .is-active a{background:var(--brand);color:#fff}
+
+/* ---------- İletişim ---------- */
+.contact-info{display:flex;flex-direction:column;gap:1.1rem}
+.contact-info__item{border:1px solid #ecedf2;border-radius:13px;box-shadow:0 10px 30px rgba(13,18,30,.07);transition:transform .3s var(--ease),border-color .25s;margin-bottom:0}
+.contact-info__item:hover{transform:translateY(-3px);border-color:rgba(225,20,29,.3)}
+.contact-info__item .card-title{font-weight:700;font-size:1rem;margin-bottom:.3rem}
+.contact-info__item p{margin:0;color:var(--muted)}
+.contact-info__item a{color:var(--brand);font-weight:600}
+.card-contact-form{border:1px solid #ecedf2;border-radius:14px;box-shadow:0 10px 30px rgba(13,18,30,.07)}
+.card-contact-form .card-title{font-weight:700}
+.card-contact-form label{font-weight:600;font-size:.85rem;color:#3a4252}
+.form-control{border-radius:10px;border:1px solid #dfe2ea;padding:.7rem .9rem;height:auto;font-size:.92rem}
+.form-control:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(225,20,29,.12)}
+textarea.form-control{max-height:none}
+.hp-field{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.map{margin-top:2.5rem}
+.map iframe{width:100%;min-height:380px;border:0;border-radius:14px}
+.map-link{margin-top:2rem;text-align:center}
+
+/* Boydan boya harita */
+.map-full{position:relative;width:100%;margin-top:3.5rem;line-height:0}
+.map-full iframe{width:100%;height:460px;border:0;display:block;filter:grayscale(.15)}
+.map-full__btn{position:absolute;right:24px;bottom:24px;z-index:2;line-height:normal;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+@media(max-width:768px){
+  .map-full{margin-top:2.5rem}
+  .map-full iframe{height:340px}
+  .map-full__btn{right:16px;bottom:16px;font-size:.82rem;padding:.5rem 1rem}
+}
+
+/* ---------- Footer ---------- */
+.footer{background:#070a10!important;color:#aeb6c4;padding:3rem 0 1.5rem;line-height:1.6!important}
+.brand--footer .brand__text strong{color:#fff}
+.brand--footer .brand__text small{color:#9aa3b2;text-transform:uppercase;letter-spacing:.5px;font-size:.62rem;display:block}
+.footer__about{font-size:.9rem;margin:1rem 0}
+.footer__title{color:#fff;font-weight:700;font-size:1rem;margin-bottom:1rem;text-transform:none}
+.footer__links{list-style:none;padding:0;margin:0;font-size:.9rem}
+.footer__links li{margin-bottom:.45rem}
+.footer__links a{color:#aeb6c4;transition:color .15s,padding-left .25s var(--ease)}
+.footer__links a:hover{color:#fff;padding-left:4px;text-decoration:none}
+.footer__contact i{width:18px;color:var(--brand)}
+.footer__social .btn{margin-right:.4rem}
+.footer__hr{border-color:rgba(255,255,255,.08);margin:1.5rem 0 1rem}
+.footer__bottom{font-size:.82rem;color:#8891a0}
+.footer__admin{color:#8891a0;opacity:.7}
+.footer__admin:hover{color:#fff}
+
+/* ---------- Flash ---------- */
+.flash-wrap{position:relative;z-index:90;padding-top:90px;margin-bottom:-70px}
+.flash-wrap .alert{border-radius:10px;animation:fadeUp .45s var(--ease)}
+
+/* ---------- Yüzen butonlar ---------- */
+.float-btn{position:fixed;right:18px;z-index:150;display:flex;align-items:center;gap:.5rem;padding:.7rem 1.05rem;border-radius:999px;color:#fff!important;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.28);font-size:.9rem;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.float-btn i{font-size:1.15rem}
+.float-btn--wa{bottom:84px;background:var(--wa)}
+.float-btn--call{bottom:24px;background:var(--brand)}
+.float-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 32px rgba(0,0,0,.35);text-decoration:none}
+
+/* ---------- Muhtelif ---------- */
+.empty{text-align:center;color:var(--muted);padding:3rem 0}
+.img-rounded{border-radius:14px}
+
+/* ---------- Mobil ---------- */
+@media(max-width:991px){
+  .sidebar{position:static}
+  .hero-header{min-height:100vh}
+  .navbar .nav-wa{margin:.6rem 0 0;display:inline-flex}
+  /* PK2 off-canvas menüde koyu zemin yerine beyaz panel: linkler koyu */
+  .navbar-collapse .brand__text strong{color:var(--ink)}
+  /* Off-canvas panel: sayfayı kaydırmak yerine panel üstte kayarak açılır */
+  .navbar .navbar-collapse{width:min(320px,85vw)!important;transform:translateX(105%);transition:transform .45s var(--ease);overflow-y:auto;overscroll-behavior:contain;box-shadow:-18px 0 50px rgba(0,0,0,.25);padding:1.4rem 1.2rem}
+  .nav-open .navbar .navbar-collapse{transform:translateX(0)}
+  .nav-open .navbar-translate,.nav-open .wrapper{transform:none!important}
+  html.nav-open,html.nav-open body{overflow:hidden}
+  #bodyClick{position:fixed;inset:0;left:0;right:0;z-index:1029;background:rgba(5,8,14,.55);opacity:1;transition:opacity .4s}
+  .navbar .navbar-collapse .navbar-nav .nav-link{font-size:.92rem;padding:.7rem .6rem}
+  .navbar .dropdown-menu{position:static!important;float:none;width:100%;min-width:0;max-height:none;box-shadow:none;border-radius:10px;background:#f6f4f2;margin:.3rem 0 .6rem;transform:none!important}
+  .navbar .dropdown-menu .dropdown-item{white-space:normal;padding:.55rem .9rem}
+}
+@media(max-width:576px){
+  .masonry{columns:2 140px}
+  .float-btn__label{display:none}
+  .float-btn{padding:.85rem}
+  .section{padding:3.2rem 0}
+  .navbar .brand__text strong{font-size:.9rem}
+  .navbar .brand__text small{font-size:.56rem}
+  .cta-actions{text-align:left!important;margin-top:1rem}
+}
+
+/* ---------- Hareket azaltma ---------- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}

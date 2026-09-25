@@ -1,0 +1,111 @@
+{% extends 'layout.twig' %}
+{% block title %}İletişim | {{ site.brand_name|default('Çözüm Oto Elektrik') }}{% endblock %}
+{% block description %}{{ site.brand_name|default('Çözüm Oto Elektrik') }} iletişim bilgileri, adres ve konum. Esenyurt / İstanbul.{% endblock %}
+
+{% block content %}
+<div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto">
+            <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>İletişim</span></nav>
+            <h1>İletişim</h1>
+            <p>Sorularınız ve randevu için bize ulaşın.</p>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="contact-info">
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-map-marker text-danger"></i> Adres</h3>
+                        <p>{{ site.address|default('Esenyurt / İstanbul') }}</p>
+                    </div></div>
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-phone text-danger"></i> Telefon</h3>
+                        {% if site.phone_primary %}<p><a href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a></p>{% endif %}
+                        {% if site.phone_secondary %}<p><a href="{{ tel_link(site.phone_secondary) }}">{{ site.phone_secondary }}</a></p>{% endif %}
+                    </div></div>
+                    {% if site.whatsapp %}
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-whatsapp text-success"></i> WhatsApp</h3>
+                        <p><a href="{{ whatsapp_link() }}" target="_blank" rel="noopener">{{ site.whatsapp }}</a></p>
+                    </div></div>
+                    {% endif %}
+                    {% if site.working_hours %}
+                    <div class="card contact-info__item"><div class="card-body">
+                        <h3 class="card-title"><i class="fa fa-clock-o text-danger"></i> Çalışma Saatleri</h3>
+                        <p>{{ site.working_hours }}</p>
+                    </div></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="card card-contact-form">
+                    <div class="card-body">
+                        <h3 class="card-title mb-3">Bize Yazın</h3>
+                        <form method="post" action="/iletisim">
+                            <input type="hidden" name="_csrf" value="{{ csrf }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Ad Soyad *</label>
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Telefon</label>
+                                        <input type="tel" name="phone" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>E-posta</label>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Konu</label>
+                                        <input type="text" name="subject" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mesajınız *</label>
+                                <textarea name="message" rows="5" class="form-control" required></textarea>
+                            </div>
+                            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                            <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-paper-plane"></i> Gönder</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{# Boydan boya (tam genişlik) Google Harita #}
+<section class="map-full" aria-label="Konum haritası">
+    {% if site.maps_embed %}
+        {{ site.maps_embed|raw }}
+    {% else %}
+        {% set map_query = site.maps_query|default(site.address|default('Esenyurt İstanbul')) %}
+        <iframe
+            src="https://www.google.com/maps?q={{ map_query|url_encode }}&hl=tr&z=16&output=embed"
+            title="{{ site.brand_name|default('Çözüm Oto Elektrik') }} konumu"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+    {% endif %}
+    {% if site.maps_url %}
+    <a class="map-full__btn btn btn-danger btn-round" href="{{ site.maps_url }}" target="_blank" rel="noopener"><i class="fa fa-map-marker"></i> Yol Tarifi Al</a>
+    {% endif %}
+</section>
+{% endblock %}

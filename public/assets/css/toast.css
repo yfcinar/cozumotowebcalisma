@@ -1,0 +1,19 @@
+/* Çözüm Oto — Toastify marka teması (Toastify.js üzerine) */
+.cz-toast{
+  display:flex;align-items:center;gap:.6rem;
+  font-family:'Montserrat',system-ui,sans-serif;font-weight:600;font-size:.9rem;
+  color:#fff;border-radius:12px;padding:.9rem 1.1rem;
+  box-shadow:0 12px 32px rgba(13,18,30,.22);border:0;
+  max-width:360px;
+}
+.cz-toast i{font-size:1.15rem;flex-shrink:0}
+.cz-toast span{line-height:1.35}
+.cz-toast--success{background:linear-gradient(135deg,#1f9d55,#12813f)}
+.cz-toast--error{background:linear-gradient(135deg,#e1141d,#b30f17)}
+.cz-toast--info{background:linear-gradient(135deg,#2563c9,#1d4ed8)}
+.cz-toast--warning{background:linear-gradient(135deg,#e08e0b,#c9760a)}
+.cz-toast .toast-close{color:#fff;opacity:.8;font-size:1.2rem;padding-left:.4rem;align-self:flex-start}
+.cz-toast .toast-close:hover{opacity:1}
+
+/* Giriş/çıkış animasyonu Toastify tarafından yönetilir; hafifçe hızlandır */
+.toastify{transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .4s ease!important}

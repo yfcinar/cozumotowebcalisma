@@ -1,0 +1,99 @@
+{% extends 'layout.twig' %}
+{% block title %}{{ service.meta_title|default(service.title ~ ' | ' ~ site.brand_name) }}{% endblock %}
+{% block description %}{{ service.meta_description|default(service.summary|default(service.body|excerpt(150))) }}{% endblock %}
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": {{ service.title|json_encode|raw }},
+  "serviceType": {{ service.title|json_encode|raw }},
+  "description": {{ (service.summary|default(service.body|excerpt(160)))|json_encode|raw }},
+  "url": "{{ app.url }}/hizmet/{{ service.slug }}",
+  "areaServed": "İstanbul",
+  "provider": {
+    "@type": "AutoRepair",
+    "name": {{ (site.brand_name|default('Çözüm Oto Elektrik'))|json_encode|raw }},
+    "telephone": {{ (site.phone_primary|default(''))|json_encode|raw }}
+  }{% if service.price %},
+  "offers": { "@type": "Offer", "priceCurrency": "TRY", "description": {{ service.price|json_encode|raw }} }{% endif %}
+}
+</script>
+{% if faqs|length %}<script type="application/ld+json">{{ schema_faq(faqs)|raw }}</script>{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto">
+            <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <a href="/hizmetler">Hizmetler</a> <i class="fa fa-angle-right"></i> <span>{{ service.title }}</span></nav>
+            <h1>{{ service.title }}</h1>
+            {% if service.summary %}<p>{{ service.summary }}</p>{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% if service.image %}<img class="content__hero img-rounded" src="/{{ service.image }}" alt="{{ service.title }}">{% endif %}
+                <div class="card card-prose"><div class="card-body prose">{{ service.body|raw }}</div></div>
+
+                <div class="content__cta">
+                    {% if site.whatsapp %}<a class="btn btn-success btn-round" href="{{ whatsapp_link('Merhaba, ' ~ service.title ~ ' hakkında bilgi almak istiyorum.') }}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> WhatsApp'tan Sor</a>{% endif %}
+                    {% if site.phone_primary %}<a class="btn btn-outline-danger btn-round" href="{{ tel_link(site.phone_primary) }}"><i class="fa fa-phone"></i> {{ site.phone_primary }}</a>{% endif %}
+                </div>
+
+                {% if faqs|length %}
+                <div class="faq-acc mt-4" id="faq-accordion" role="tablist">
+                    <h2 class="title">Sıkça Sorulan Sorular</h2>
+                    {% for f in faqs %}
+                    <div class="card card-faq">
+                        <div class="card-header" role="tab" id="faq-h{{ loop.index }}">
+                            <a data-toggle="collapse" href="#faq-c{{ loop.index }}" role="button"
+                               aria-expanded="false" aria-controls="faq-c{{ loop.index }}" class="collapsed">
+                                {{ f.question }}
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </div>
+                        <div id="faq-c{{ loop.index }}" class="collapse" role="tabpanel"
+                             aria-labelledby="faq-h{{ loop.index }}" data-parent="#faq-accordion">
+                            <div class="card-body">{{ f.answer|nl2br }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <aside class="sidebar">
+                    {% if districts|length %}
+                    <div class="card sidebar__box">
+                        <div class="card-body">
+                            <h3 class="card-title">Hizmet Bölgelerimiz</h3>
+                            <p class="sidebar__hint">{{ service.title }} için bölgenizi seçin:</p>
+                            <ul class="district-list list-unstyled">
+                                {% for d in districts %}
+                                <li><a href="/hizmet/{{ service.slug }}/{{ d.slug }}">{{ d.name }} {{ service.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="card sidebar__box sidebar__box--accent">
+                        <div class="card-body">
+                            <h3 class="card-title">Hızlı İletişim</h3>
+                            {% if site.phone_primary %}<a class="sidebar__phone" href="{{ tel_link(site.phone_primary) }}">{{ site.phone_primary }}</a>{% endif %}
+                            {% if site.address %}<p>{{ site.address }}</p>{% endif %}
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
