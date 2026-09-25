@@ -1,0 +1,43 @@
+name: Deploy to cPanel (FTP)
+
+# main'e her push/merge'de değişen dosyaları FTP ile sunucuya yükler.
+# vendor/, .env ve yüklenen görseller hariç tutulur (sunucuda korunur).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  web-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu al
+        uses: actions/checkout@v4
+
+      - name: FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          # FTP hesabı public_html'e kilitli olduğu için kök = public_html
+          server-dir: ./
+          # Sunucuda korunacak / gönderilmeyecek dosyalar:
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            vendor/**
+            .env
+            .env.example
+            public/assets/uploads/**
+            README.md
+            Dockerfile
+            docker/**
+            render.yaml
+            .dockerignore
+            KURULUM-TALIMATLARI.txt
+            tests/**
