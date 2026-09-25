@@ -1,0 +1,30 @@
+{% extends 'layout.twig' %}
+{% block title %}Galeri | {{ site.brand_name|default('Çözüm Oto Elektrik') }}{% endblock %}
+
+{% block content %}
+<div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto">
+            <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>Galeri</span></nav>
+            <h1>Galeri</h1>
+            <p>Atölyemizden ve tamamladığımız çalışmalardan kareler.</p>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        {% if images|length %}
+        <div class="masonry">
+            {% for g in images %}
+            <a class="masonry__item" href="/{{ g.file_path }}" target="_blank" rel="noopener">
+                <img src="/{{ g.file_path }}" alt="{{ g.title|default('Galeri görseli') }}" loading="lazy">
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty">Galeri yakında güncellenecek.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

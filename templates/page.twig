@@ -1,0 +1,20 @@
+{% extends 'layout.twig' %}
+{% block title %}{{ page.meta_title|default(page.title ~ ' | ' ~ site.brand_name) }}{% endblock %}
+{% block description %}{{ page.meta_description|default(page.body|excerpt(150)) }}{% endblock %}
+
+{% block content %}
+<div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto">
+            <nav class="breadcrumb-line"><a href="/">Anasayfa</a> <i class="fa fa-angle-right"></i> <span>{{ page.title }}</span></nav>
+            <h1>{{ page.title }}</h1>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="card card-prose card-prose--wide"><div class="card-body prose">{{ page.body|raw }}</div></div>
+    </div>
+</div>
+{% endblock %}

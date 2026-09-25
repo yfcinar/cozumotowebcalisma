@@ -1,0 +1,23 @@
+# Render.com Blueprint — https://render.com/docs/blueprint-spec
+# Render hesabınızda "New > Blueprint" deyip bu repoyu seçmeniz yeterli.
+services:
+  - type: web
+    name: cozumoto-web
+    runtime: docker
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: DB_DRIVER
+        value: sqlite
+      - key: ADMIN_EMAIL
+        value: admin@cozumoto.local
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: APP_URL
+        fromService:
+          type: web
+          name: cozumoto-web
+          envVarKey: RENDER_EXTERNAL_URL

@@ -1,0 +1,106 @@
+========================================================
+  ÇÖZÜM OTO ELEKTRİK — cPanel KURULUM TALİMATLARI
+========================================================
+
+Bu zip içinde sitenin TAMAMI + vendor klasörü + .env şablonu hazır.
+Aşağıdaki adımları sırayla yap.
+
+--------------------------------------------------------
+0) ÖNCE: ESKİ DOSYALARI TEMİZLE
+--------------------------------------------------------
+cPanel > Dosya Yöneticisi (File Manager) > public_html klasörüne gir.
+İçindeki ESKİ dosyaları sil (yedek almak istersen önce indir).
+
+--------------------------------------------------------
+1) DOSYALARI YÜKLE
+--------------------------------------------------------
+cozumoto-deploy.zip dosyasını public_html'e yükle ve
+"Extract" (Ayıkla) ile aç. Zip içindeki her şey public_html
+içine açılmalı.
+
+Sonuç şöyle görünmeli:
+  public_html/
+    ├── public/        <- sitenin görünen kısmı
+    ├── src/
+    ├── templates/
+    ├── config/
+    ├── database/
+    ├── vendor/
+    ├── var/
+    ├── .htaccess
+    └── .env
+
+--------------------------------------------------------
+2) DOCUMENT ROOT (ÖNEMLİ)
+--------------------------------------------------------
+Uygulamanın gerçek kökü "public/" klasörü.
+İki seçenekten BİRİNİ yap:
+
+  SEÇENEK A (önerilen): Etkinhost desteğine yaz,
+  "renaultelektronikservisi.com.tr domaininin document root'unu
+  public_html/public yapar mısınız" de. Temiz çözüm.
+
+  SEÇENEK B (kendi yapabilirsin): Hiçbir şey yapma.
+  Zip'teki .htaccess dosyası zaten tüm istekleri otomatik
+  public/ klasörüne yönlendiriyor. Çoğu durumda böyle de çalışır.
+
+--------------------------------------------------------
+3) VERİTABANI OLUŞTUR
+--------------------------------------------------------
+cPanel > "MySQL Databases":
+  - Yeni bir veritabanı oluştur (örn: cozumoto)
+  - Yeni bir kullanıcı oluştur + şifre belirle
+  - Kullanıcıyı veritabanına EKLE ve TÜM YETKİLERİ (ALL PRIVILEGES) ver.
+
+cPanel sana isimlerin başına kullanıcı adını ekler,
+örn: "kullanici_cozumoto". TAM adları not al.
+
+--------------------------------------------------------
+4) .env DOSYASINI DÜZENLE
+--------------------------------------------------------
+Dosya Yöneticisi'nde .env dosyasına sağ tık > Edit.
+Şu satırları 3. adımdaki bilgilerle doldur:
+  DB_NAME=kullanici_cozumoto
+  DB_USER=kullanici_cozumoto
+  DB_PASS=(belirlediğin şifre)
+  ADMIN_EMAIL / ADMIN_PASSWORD  (panele giriş bilgin)
+Kaydet.
+
+--------------------------------------------------------
+5) VERİTABANI TABLOLARINI KUR (migrate + seed)
+--------------------------------------------------------
+YÖNTEM 1 — cPanel Terminal varsa (en kolay):
+  cd public_html
+  php database/migrate.php
+  php database/seed.php
+
+YÖNTEM 2 — Terminal yoksa, phpMyAdmin ile:
+  cPanel > phpMyAdmin > oluşturduğun veritabanını seç >
+  "Import" (İçe Aktar) > database/schema.mysql.sql dosyasını yükle > Go.
+  (Bu sadece tabloları kurar. Örnek içerik/yönetici için Terminal
+   yöntemi gerekir; Terminal yoksa etkinhost desteğinden
+   "php database/seed.php çalıştırır mısınız" diye rica et.)
+
+--------------------------------------------------------
+6) İZİNLER
+--------------------------------------------------------
+Şu klasör yazılabilir olmalı (genelde otomatik 755'tir):
+  var/                (Twig önbelleği)
+  public/assets/uploads/   (yüklenen görseller)
+Sorun olursa bu ikisine 755 ver.
+
+--------------------------------------------------------
+7) TEST
+--------------------------------------------------------
+Domain aktif olunca:
+  Site:  https://www.renaultelektronikservisi.com.tr
+  Panel: https://www.renaultelektronikservisi.com.tr/admin
+         (.env'deki ADMIN_EMAIL / ADMIN_PASSWORD ile giriş)
+
+NOT: Domain transferi tamamlanana kadar site açılmayabilir.
+Transfer bitmeden test etmek istersen etkinhost'un verdiği
+geçici test URL'sini (varsa) kullan.
+
+========================================================
+Takıldığın adımı söyle, oradan devam ederiz.
+========================================================

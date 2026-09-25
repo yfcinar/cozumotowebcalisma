@@ -1,0 +1,143 @@
+{% extends 'admin/layout.twig' %}
+{% set current_nav = 'seo' %}
+{% block title %}SEO Merkezi{% endblock %}
+
+{% block content %}
+<div class="adm-pagehead">
+    <div>
+        <h2>SEO Merkezi</h2>
+        <p>İçerik SEO analizi, arama motoru entegrasyonları ve teknik SEO ayarları.</p>
+    </div>
+    <div class="adm-quick">
+        <a class="adm-btn" href="/sitemap.xml" target="_blank"><i class="fa fa-sitemap"></i> sitemap.xml</a>
+        <a class="adm-btn" href="/robots.txt" target="_blank"><i class="fa fa-file-o"></i> robots.txt</a>
+    </div>
+</div>
+
+<div class="adm-kpis">
+    <div class="adm-kpi">
+        <div class="adm-kpi__top">
+            <div class="adm-kpi__icon adm-kpi__icon--amber"><i class="fa fa-tachometer"></i></div>
+            <span class="adm-grade adm-grade--{{ grade }}">{{ grade }}</span>
+        </div>
+        <div class="adm-kpi__num">{{ avg }}<span style="font-size:1rem;color:var(--muted)">/100</span></div>
+        <div class="adm-kpi__lbl">Ortalama SEO Puanı</div>
+    </div>
+    <div class="adm-kpi">
+        <div class="adm-kpi__top"><div class="adm-kpi__icon adm-kpi__icon--red"><i class="fa fa-exclamation-triangle"></i></div></div>
+        <div class="adm-kpi__num">{{ error_count }}</div>
+        <div class="adm-kpi__lbl">Kritik SEO Sorunu</div>
+    </div>
+    <div class="adm-kpi">
+        <div class="adm-kpi__top"><div class="adm-kpi__icon adm-kpi__icon--blue"><i class="fa fa-sitemap"></i></div></div>
+        <div class="adm-kpi__num">{{ sitemap_urls }}</div>
+        <div class="adm-kpi__lbl">Site Haritası URL Sayısı</div>
+    </div>
+    <div class="adm-kpi">
+        <div class="adm-kpi__top"><div class="adm-kpi__icon adm-kpi__icon--green"><i class="fa fa-plug"></i></div></div>
+        <div class="adm-kpi__num">
+            {% set active_int = (values.ga4_id ? 1 : 0) + (values.gtm_id ? 1 : 0) + (values.gsc_verification ? 1 : 0) + (values.bing_verification ? 1 : 0) %}
+            {{ active_int }}<span style="font-size:1rem;color:var(--muted)">/4</span>
+        </div>
+        <div class="adm-kpi__lbl">Aktif Entegrasyon</div>
+    </div>
+</div>
+
+<form method="post" action="/yonetim/seo" class="adm-form">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
+
+    <fieldset class="adm-fieldset">
+        <legend>Analytics & Arama Motoru Entegrasyonları</legend>
+        <div class="adm-row">
+            <div class="adm-field">
+                <label>Google Analytics 4 (Ölçüm Kimliği)</label>
+                <input type="text" name="ga4_id" value="{{ values.ga4_id|default('') }}" placeholder="G-XXXXXXXXXX">
+                <span class="hint">gtag.js otomatik olarak tüm sayfalara eklenir.</span>
+            </div>
+            <div class="adm-field">
+                <label>Google Tag Manager Kimliği</label>
+                <input type="text" name="gtm_id" value="{{ values.gtm_id|default('') }}" placeholder="GTM-XXXXXXX">
+                <span class="hint">GTM konteyneri head + body'ye eklenir.</span>
+            </div>
+        </div>
+        <div class="adm-row">
+            <div class="adm-field">
+                <label>Google Search Console Doğrulama</label>
+                <input type="text" name="gsc_verification" value="{{ values.gsc_verification|default('') }}" placeholder="doğrulama meta içeriği">
+                <span class="hint">&lt;meta name="google-site-verification"&gt; içeriği.</span>
+            </div>
+            <div class="adm-field">
+                <label>Bing Webmaster Doğrulama</label>
+                <input type="text" name="bing_verification" value="{{ values.bing_verification|default('') }}" placeholder="msvalidate.01 içeriği">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="adm-fieldset">
+        <legend>Varsayılan Meta & Sosyal Paylaşım</legend>
+        <div class="adm-field">
+            <label>Anahtar Kelimeler</label>
+            <input type="text" name="seo_keywords" value="{{ values.seo_keywords|default('') }}" placeholder="renault edc şanzıman, mekatronik onarım, oto elektronik">
+            <span class="hint">Virgülle ayrılmış genel anahtar kelimeler.</span>
+        </div>
+        <div class="adm-field">
+            <label>Open Graph / Sosyal Paylaşım Görseli (URL)</label>
+            <input type="url" name="og_image" value="{{ values.og_image|default('') }}" placeholder="{{ app_url }}/assets/img/og.jpg">
+            <span class="hint">WhatsApp/Facebook paylaşımlarında görünecek görsel.</span>
+        </div>
+        <label class="adm-check">
+            <input type="checkbox" name="seo_index" value="1" {{ values.seo_index != '0' ? 'checked' }}>
+            Arama motorlarının siteyi indekslemesine izin ver
+            <span class="hint">(Kapatırsanız tüm sayfalara noindex eklenir — yapım aşamasında kullanın.)</span>
+        </label>
+    </fieldset>
+
+    <fieldset class="adm-fieldset">
+        <legend>robots.txt (Gelişmiş)</legend>
+        <div class="adm-field">
+            <label>Özel robots.txt İçeriği</label>
+            <textarea name="robots_custom" rows="5" placeholder="Boş bırakırsanız otomatik robots.txt kullanılır.">{{ values.robots_custom|default('') }}</textarea>
+            <span class="hint">Sitemap satırı otomatik eklenir. Boş = varsayılan (yönetim paneli engellenir).</span>
+        </div>
+    </fieldset>
+
+    <div class="adm-form__actions">
+        <button type="submit" class="adm-btn adm-btn--primary"><i class="fa fa-check"></i> Ayarları Kaydet</button>
+    </div>
+</form>
+
+<div class="adm-card">
+    <div class="adm-card__head">
+        <h3><i class="fa fa-search"></i> İçerik SEO Analizi</h3>
+        <span class="adm-badge adm-badge--gray">{{ rows|length }} içerik</span>
+    </div>
+    <div class="adm-card__body adm-card__body--pad0">
+        <div class="adm-tablewrap">
+        <table class="adm-table">
+            <thead><tr><th>Puan</th><th>İçerik</th><th>Başlık</th><th>Açıklama</th><th>Sorunlar</th><th></th></tr></thead>
+            <tbody>
+            {% for r in rows %}
+            <tr>
+                <td><span class="adm-grade adm-grade--{{ r.analysis.grade }}">{{ r.analysis.score }}</span></td>
+                <td><span class="adm-badge adm-badge--{{ r.type == 'Hizmet' ? 'blue' : 'gray' }}">{{ r.type }}</span><br><strong>{{ r.title }}</strong></td>
+                <td class="adm-meter"><b>{{ r.analysis.title_len }}</b> kr. {% if r.analysis.title_len >= 30 and r.analysis.title_len <= 60 %}<i class="fa fa-check" style="color:var(--ok)"></i>{% else %}<i class="fa fa-exclamation" style="color:var(--warn)"></i>{% endif %}</td>
+                <td class="adm-meter"><b>{{ r.analysis.desc_len }}</b> kr. {% if r.analysis.desc_len >= 70 and r.analysis.desc_len <= 160 %}<i class="fa fa-check" style="color:var(--ok)"></i>{% else %}<i class="fa fa-exclamation" style="color:var(--warn)"></i>{% endif %}</td>
+                <td>
+                    {% if r.analysis.issues|length %}
+                        {% for i in r.analysis.issues|slice(0,2) %}
+                        <div class="adm-issue adm-issue--{{ i.level }}"><i class="fa fa-{{ i.level == 'error' ? 'times-circle' : 'exclamation-circle' }}"></i> {{ i.text }}</div>
+                        {% endfor %}
+                        {% if r.analysis.issues|length > 2 %}<small class="adm-muted">+{{ r.analysis.issues|length - 2 }} sorun daha</small>{% endif %}
+                    {% else %}
+                        <span class="adm-badge adm-badge--green"><i class="fa fa-check"></i> Sorun yok</span>
+                    {% endif %}
+                </td>
+                <td class="text-right"><a class="adm-iconbtn" href="{{ r.url }}" target="_blank" title="Sayfayı aç"><i class="fa fa-external-link"></i></a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
