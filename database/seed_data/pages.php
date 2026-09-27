@@ -6,10 +6,10 @@ return [
     [
         'slug' => 'hakkimizda',
         'title' => 'Hakkımızda',
-        'meta_title' => 'Hakkımızda | Çözüm Oto Elektrik - Renault Elektronik Servisi',
-        'meta_description' => 'Çözüm Oto Elektrik; Renault EDC şanzıman, mekatronik beyin ve oto elektronik arızalarında uzman, garantili servis. Esenyurt / İstanbul.',
+        'meta_title' => 'Hakkımızda | Çözüm Oto Elektronik - Renault Elektronik Servisi',
+        'meta_description' => 'Çözüm Oto Elektronik; Renault EDC şanzıman, mekatronik beyin ve oto elektronik arızalarında uzman, garantili servis. Esenyurt / İstanbul.',
         'body' => <<<HTML
-<p><strong>Çözüm Oto Elektrik</strong>, Renault başta olmak üzere uyumlu modellerde EDC şanzıman, mekatronik beyin onarımı, kavrama, otomatik şanzıman, EGR ve partikül filtre temizliği gibi elektronik ve mekanik arızalarda uzmanlaşmış bir servistir.</p>
+<p><strong>Çözüm Oto Elektronik</strong>, Renault başta olmak üzere uyumlu modellerde EDC şanzıman, mekatronik beyin onarımı, kavrama, otomatik şanzıman, EGR ve partikül filtre temizliği gibi elektronik ve mekanik arızalarda uzmanlaşmış bir servistir.</p>
 <p>Esenyurt / İstanbul'daki atölyemizde, güncel diagnostik ve programlama ekipmanlarıyla aracınızın arızasını doğru tespit eder, kalıcı çözümler sunarız. Onarım öncesi net bilgilendirme ve şeffaf fiyatlandırma ilkemizdir.</p>
 <h2>Neden Biz?</h2>
 <ul>

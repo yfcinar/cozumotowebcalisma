@@ -23,8 +23,34 @@
     <div><h2>Site Ayarları</h2><p>İletişim bilgileri, sosyal medya ve anasayfa metinleri.</p></div>
 </div>
 
-<form class="adm-form" method="post" action="/yonetim/ayarlar">
+<form class="adm-form" method="post" action="/yonetim/ayarlar" enctype="multipart/form-data">
     <input type="hidden" name="_csrf" value="{{ csrf }}">
+
+    <div class="adm-card">
+        <div class="adm-card__head"><h3><i class="fa fa-picture-o"></i> Logo</h3></div>
+        <div class="adm-card__body">
+            <div class="adm-form">
+                <div class="adm-field">
+                    <label>Mevcut logo</label>
+                    {% if values.logo %}
+                        <div style="background:#0b0e14;padding:.8rem 1rem;border-radius:10px;display:inline-block"><img src="/{{ values.logo }}" alt="Logo" style="height:48px;width:auto;max-width:240px;display:block"></div>
+                        <label class="adm-check" style="margin-top:.6rem"><input type="checkbox" name="logo_remove" value="1"> Logoyu kaldır (varsayılan "RES" işaretine dön)</label>
+                    {% else %}
+                        <p style="margin:0;color:#66615b">Logo yüklenmedi, varsayılan "RES" işareti kullanılıyor.</p>
+                    {% endif %}
+                </div>
+                <div class="adm-field">
+                    <label>Yeni logo yükle</label>
+                    <input type="file" name="logo_file" accept="image/png,image/jpeg,image/webp">
+                    <small style="color:#66615b">PNG, JPG veya WEBP, en fazla 2 MB. Site üstte koyu zeminde açıldığı için açık renkli veya şeffaf zeminli PNG en iyi sonucu verir.</small>
+                </div>
+                <div class="adm-field">
+                    <label class="adm-check"><input type="checkbox" name="logo_hide_text" value="1" {{ values.logo_hide_text == '1' ? 'checked' }}> Logonun yanındaki marka yazısını gizle (logo zaten isim içeriyorsa)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% for group, gkeys in groups %}
     <div class="adm-card">
         <div class="adm-card__head"><h3><i class="fa fa-{{ group == 'İletişim' ? 'phone' : (group == 'Sosyal Medya' ? 'share-alt' : 'info-circle') }}"></i> {{ group }}</h3></div>

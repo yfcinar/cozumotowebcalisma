@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Controllers\Admin\GalleryController as AdminGalleryController;
+use App\Controllers\CacheController;
 use App\Controllers\SitemapController;
+use App\Support\ImageUploader;
 use App\Database\Database;
 use App\Repository\ServiceRepository;
 use App\Support\SettingsService;
@@ -57,6 +59,20 @@ return [
         $c->get(Twig::class),
         $c->get(App\Repository\GalleryRepository::class),
         $c->get('settings')['app']['root'] . '/public/assets/uploads'
+    ),
+
+    ImageUploader::class => fn (ContainerInterface $c) => new ImageUploader(
+        $c->get('settings')['app']['root'] . '/public/assets/uploads'
+    ),
+
+    CacheController::class => fn (ContainerInterface $c) => new CacheController(
+        $c->get('settings')['app']
+    ),
+
+    App\Controllers\Admin\SettingController::class => fn (ContainerInterface $c) => new App\Controllers\Admin\SettingController(
+        $c->get(Twig::class),
+        $c->get(SettingsService::class),
+        $c->get(ImageUploader::class)
     ),
 
     App\Controllers\Admin\SeoController::class => fn (ContainerInterface $c) => new App\Controllers\Admin\SeoController(

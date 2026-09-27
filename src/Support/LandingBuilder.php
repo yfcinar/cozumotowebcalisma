@@ -61,6 +61,6 @@ final class LandingBuilder
 
     private function brand(): string
     {
-        return $this->settings->get('brand_name', 'Çözüm Oto Elektrik');
+        return $this->settings->get('brand_name', 'Çözüm Oto Elektronik');
     }
 }

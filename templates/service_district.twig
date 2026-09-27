@@ -11,7 +11,7 @@
   "areaServed": "{{ district.name }}, İstanbul",
   "provider": {
     "@type": "AutoRepair",
-    "name": "{{ site.brand_name|default('Çözüm Oto Elektrik') }}",
+    "name": "{{ site.brand_name|default('Çözüm Oto Elektronik') }}",
     "telephone": "{{ site.phone_primary }}",
     "address": "{{ site.address }}"
   }
@@ -66,18 +66,6 @@
 
             <div class="col-lg-4">
                 <aside class="sidebar">
-                    <div class="card sidebar__box">
-                        <div class="card-body">
-                            <h3 class="card-title">Diğer Bölgeler</h3>
-                            <ul class="district-list list-unstyled">
-                                {% for d in districts %}
-                                <li{% if d.id == district.id %} class="is-active"{% endif %}>
-                                    <a href="/hizmet/{{ service.slug }}/{{ d.slug }}">{{ d.name }}</a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
                     <div class="card sidebar__box sidebar__box--accent">
                         <div class="card-body">
                             <h3 class="card-title">Hızlı İletişim</h3>

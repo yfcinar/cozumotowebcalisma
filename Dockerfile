@@ -1,4 +1,4 @@
-# Çözüm Oto Elektrik — production/test container
+# Çözüm Oto Elektronik — production/test container
 # Render, Railway, Fly.io gibi Docker destekleyen platformlarda çalışır.
 
 FROM composer:2 AS deps

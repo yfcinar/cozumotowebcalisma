@@ -113,7 +113,7 @@ final class SitemapController
     {
         $base = $this->appConfig['url'] ?: $this->baseFromRequest($request);
         $s = $this->settings?->all() ?? [];
-        $brand = $s['brand_name'] ?? 'Çözüm Oto Elektrik';
+        $brand = $s['brand_name'] ?? 'Çözüm Oto Elektronik';
         $desc = $s['site_description'] ?? 'Renault EDC şanzıman, mekatronik beyin onarımı ve oto elektronik servisi.';
 
         $out = "# {$brand}\n\n";

@@ -1,6 +1,6 @@
 {
     "name": "cozumoto/web",
-    "description": "Çözüm Oto Elektrik - Renault Elektronik Servisi kurumsal web sitesi ve yönetim paneli",
+    "description": "Çözüm Oto Elektronik - Renault Elektronik Servisi kurumsal web sitesi ve yönetim paneli",
     "type": "project",
     "license": "proprietary",
     "require": {

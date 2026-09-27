@@ -1,4 +1,4 @@
--- Çözüm Oto Elektrik — SQLite şeması (lokal geliştirme/test)
+-- Çözüm Oto Elektronik — SQLite şeması (lokal geliştirme/test)
 
 CREATE TABLE IF NOT EXISTS users (
     id            INTEGER PRIMARY KEY AUTOINCREMENT,

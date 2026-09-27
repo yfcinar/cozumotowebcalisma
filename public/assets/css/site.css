@@ -1,5 +1,5 @@
 /* =====================================================================
-   Çözüm Oto Elektrik — Paper Kit 2 (Creative Tim) üzerine marka katmanı
+   Çözüm Oto Elektronik — Paper Kit 2 (Creative Tim) üzerine marka katmanı
    Temel bileşenler Paper Kit 2 / Bootstrap 4'ten gelir; bu dosya marka
    renkleri, hero, kartlar ve küçük animasyon dokunuşlarını içerir.
    ===================================================================== */
@@ -31,6 +31,7 @@ body{overflow-x:hidden}
 
 /* ---------- Navbar / marka ---------- */
 .brand{display:flex;align-items:center;gap:.65rem}
+.brand__logo{display:block;height:42px;width:auto;max-width:200px;object-fit:contain}
 .brand__mark{display:grid;place-items:center;width:42px;height:42px;background:var(--brand);color:#fff;font-weight:800;border-radius:10px;letter-spacing:.5px;font-size:.85rem}
 .navbar .brand__text strong{display:block;font-size:1rem;line-height:1.15;text-transform:none}
 .navbar .brand__text small{display:block;font-size:.62rem;letter-spacing:.6px;text-transform:uppercase;opacity:.75;line-height:1}
@@ -157,10 +158,6 @@ body{overflow-x:hidden}
 .sidebar__box--accent p{color:#aeb6c4;font-size:.88rem}
 .sidebar__phone{display:block;font-size:1.4rem;font-weight:800;color:var(--gold);margin:.4rem 0}
 .sidebar__phone:hover{color:#fff}
-.district-list{margin:.6rem 0 0;max-height:340px;overflow:auto}
-.district-list a{display:block;padding:.5rem .7rem;border-radius:8px;font-size:.9rem;color:#3a4252;transition:background .15s,color .15s,transform .2s var(--ease)}
-.district-list a:hover{background:#f3f4f8;color:var(--brand);transform:translateX(4px);text-decoration:none}
-.district-list .is-active a{background:var(--brand);color:#fff}
 
 /* ---------- İletişim ---------- */
 .contact-info{display:flex;flex-direction:column;gap:1.1rem}
@@ -195,13 +192,19 @@ textarea.form-control{max-height:none}
 .brand--footer .brand__text strong{color:#fff}
 .brand--footer .brand__text small{color:#9aa3b2;text-transform:uppercase;letter-spacing:.5px;font-size:.62rem;display:block}
 .footer__about{font-size:.9rem;margin:1rem 0}
-.footer__title{color:#fff;font-weight:700;font-size:1rem;margin-bottom:1rem;text-transform:none}
+.footer .footer__title{color:#fff;font-weight:700;font-size:1rem;margin-bottom:1rem;text-transform:none}
 .footer__links{list-style:none;padding:0;margin:0;font-size:.9rem}
 .footer__links li{margin-bottom:.45rem}
 .footer__links a{color:#aeb6c4;transition:color .15s,padding-left .25s var(--ease)}
 .footer__links a:hover{color:#fff;padding-left:4px;text-decoration:none}
 .footer__contact i{width:18px;color:var(--brand)}
 .footer__social .btn{margin-right:.4rem}
+.footer__regions{margin-top:2rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.08)}
+.footer__regions-title{color:#8891a0;font-size:.72rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin:0 0 .5rem}
+.footer__regions-list{margin:0;font-size:.82rem;line-height:1.9}
+.footer__regions-list a{color:#7f8898;transition:color .15s}
+.footer__regions-list a:not(:last-child)::after{content:"·";margin:0 .6rem;color:#3a4252}
+.footer__regions-list a:hover,.footer__regions-list a.is-active{color:#fff;text-decoration:none}
 .footer__hr{border-color:rgba(255,255,255,.08);margin:1.5rem 0 1rem}
 .footer__bottom{font-size:.82rem;color:#8891a0}
 .footer__admin{color:#8891a0;opacity:.7}

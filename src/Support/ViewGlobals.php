@@ -77,7 +77,7 @@ final class ViewGlobals
             $data = array_filter([
                 '@context'    => 'https://schema.org',
                 '@type'       => 'AutoRepair',
-                'name'        => $s['brand_name'] ?? 'Çözüm Oto Elektrik',
+                'name'        => $s['brand_name'] ?? 'Çözüm Oto Elektronik',
                 'description' => $s['site_description'] ?? null,
                 'url'         => $url ?: null,
                 'telephone'   => $s['phone_primary'] ?? null,
@@ -107,7 +107,7 @@ final class ViewGlobals
                 $data['sameAs'] = $sameAs;
             }
 
-            return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_INVALID_UTF8_SUBSTITUTE) ?: "{}";
         }));
 
         // SSS yapısal verisi (FAQPage) — SSS listesinden üretir.
@@ -130,7 +130,7 @@ final class ViewGlobals
                 '@context'   => 'https://schema.org',
                 '@type'      => 'FAQPage',
                 'mainEntity' => $items,
-            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_INVALID_UTF8_SUBSTITUTE) ?: "{}";
         }));
     }
 }

@@ -42,8 +42,8 @@ if (!$users->exists($adminEmail)) {
 /* ---------------- Site ayarları ---------------- */
 $settings = new SettingsService($pdo);
 $settings->setMany([
-    'brand_name'       => 'Çözüm Oto Elektrik',
-    'site_title'       => 'Çözüm Oto Elektrik — Renault EDC Şanzıman & Elektronik Servisi | Esenyurt',
+    'brand_name'       => 'Çözüm Oto Elektronik',
+    'site_title'       => 'Çözüm Oto Elektronik — Renault EDC Şanzıman & Elektronik Servisi | Esenyurt',
     'site_description' => 'Renault EDC şanzıman, mekatronik beyin onarımı, kavrama, DW5 otomatik şanzıman, EGR ve partikül filtre temizliğinde garantili servis. Esenyurt / İstanbul. Aynı gün teslim.',
     'phone_primary'    => '0539 586 93 56',
     'phone_secondary'  => '0538 527 93 56',

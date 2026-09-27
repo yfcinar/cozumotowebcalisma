@@ -7,17 +7,17 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": {{ service.title|json_encode|raw }},
-  "serviceType": {{ service.title|json_encode|raw }},
-  "description": {{ (service.summary|default(service.body|excerpt(160)))|json_encode|raw }},
+  "name": {{ service.title|json_encode(constant('JSON_HEX_TAG'))|raw }},
+  "serviceType": {{ service.title|json_encode(constant('JSON_HEX_TAG'))|raw }},
+  "description": {{ (service.summary|default(service.body|excerpt(160)))|json_encode(constant('JSON_HEX_TAG'))|raw }},
   "url": "{{ app.url }}/hizmet/{{ service.slug }}",
   "areaServed": "İstanbul",
   "provider": {
     "@type": "AutoRepair",
-    "name": {{ (site.brand_name|default('Çözüm Oto Elektrik'))|json_encode|raw }},
-    "telephone": {{ (site.phone_primary|default(''))|json_encode|raw }}
+    "name": {{ (site.brand_name|default('Çözüm Oto Elektronik'))|json_encode(constant('JSON_HEX_TAG'))|raw }},
+    "telephone": {{ (site.phone_primary|default(''))|json_encode(constant('JSON_HEX_TAG'))|raw }}
   }{% if service.price %},
-  "offers": { "@type": "Offer", "priceCurrency": "TRY", "description": {{ service.price|json_encode|raw }} }{% endif %}
+  "offers": { "@type": "Offer", "priceCurrency": "TRY", "description": {{ service.price|json_encode(constant('JSON_HEX_TAG'))|raw }} }{% endif %}
 }
 </script>
 {% if faqs|length %}<script type="application/ld+json">{{ schema_faq(faqs)|raw }}</script>{% endif %}
@@ -71,19 +71,6 @@
 
             <div class="col-lg-4">
                 <aside class="sidebar">
-                    {% if districts|length %}
-                    <div class="card sidebar__box">
-                        <div class="card-body">
-                            <h3 class="card-title">Hizmet Bölgelerimiz</h3>
-                            <p class="sidebar__hint">{{ service.title }} için bölgenizi seçin:</p>
-                            <ul class="district-list list-unstyled">
-                                {% for d in districts %}
-                                <li><a href="/hizmet/{{ service.slug }}/{{ d.slug }}">{{ d.name }} {{ service.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    {% endif %}
                     <div class="card sidebar__box sidebar__box--accent">
                         <div class="card-body">
                             <h3 class="card-title">Hızlı İletişim</h3>

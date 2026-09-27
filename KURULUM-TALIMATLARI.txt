@@ -1,5 +1,5 @@
 ========================================================
-  ÇÖZÜM OTO ELEKTRİK — cPanel KURULUM TALİMATLARI
+  ÇÖZÜM OTO ELEKTRONİK — cPanel KURULUM TALİMATLARI
 ========================================================
 
 Bu zip içinde sitenin TAMAMI + vendor klasörü + .env şablonu hazır.

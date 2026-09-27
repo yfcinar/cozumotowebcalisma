@@ -2,11 +2,7 @@
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand brand" href="/">
-                <span class="brand__mark">RES</span>
-                <span class="brand__text">
-                    <strong>{{ site.brand_name|default('Çözüm Oto Elektrik') }}</strong>
-                    <small>Renault Elektronik Servisi</small>
-                </span>
+                {% include 'partials/brand.twig' %}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                     aria-controls="navigation" aria-expanded="false" aria-label="Menüyü aç/kapat">

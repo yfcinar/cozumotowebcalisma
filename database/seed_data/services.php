@@ -12,7 +12,7 @@ return [
         'icon' => 'fa-cogs',
         'price' => "8.500 ₺'den başlayan",
         'summary' => 'Renault EDC yarı otomatik çift kavramalı şanzımanlarda arıza tespiti, onarım ve programlama.',
-        'meta_title' => 'EDC Şanzıman Tamiri | Renault EDC Servisi - Çözüm Oto Elektrik',
+        'meta_title' => 'EDC Şanzıman Tamiri | Renault EDC Servisi - Çözüm Oto Elektronik',
         'meta_description' => 'Renault EDC (çift kavramalı yarı otomatik) şanzıman arızalarında garantili tamir, mekatronik onarım ve programlama. Esenyurt / İstanbul. Aynı gün teslim.',
         'body' => <<<HTML
 <p>EDC şanzıman, Renault tarafından geliştirilen çift kavramalı yarı otomatik bir şanzıman türüdür. 6 ileri vitesli bu sistemde bir kavrama tek vitesleri (1-3-5), diğeri çift vitesleri (2-4-6) yönetir. Şanzıman; yol şartlarını, sürücünün uyguladığı gazı ve motor gücünü optimize ederek doğru vitesi otomatik seçer.</p>
@@ -24,7 +24,7 @@ return [
   <li>Kavrama (debriyaj) balatalarının erken aşınması</li>
   <li>Mekatronik beyin ve sensör arızaları</li>
 </ul>
-<h2>Çözüm Oto Elektrik'te EDC Onarım Süreci</h2>
+<h2>Çözüm Oto Elektronik'te EDC Onarım Süreci</h2>
 <p>Aracınızın arızasını orijinal diagnostik cihazlarla tespit eder, mekanik ve elektronik tüm bileşenleri (mekatronik, kavrama, aktüatör, sensörler) tek tek kontrol ederiz. Onarım sonrası gerekli adaptasyon ve programlama işlemleri yapılır, aracınız test edilerek aynı gün içinde teslim edilir. Tüm işlemler garanti kapsamındadır.</p>
 HTML,
     ],
@@ -34,7 +34,7 @@ HTML,
         'icon' => 'fa-microchip',
         'price' => "6.000 ₺'den başlayan",
         'summary' => 'EDC şanzıman mekatronik / kontrol ünitesi arızalarında onarım, programlama ve kodlama.',
-        'meta_title' => 'EDC Beyin (Mekatronik) Onarımı | Çözüm Oto Elektrik',
+        'meta_title' => 'EDC Beyin (Mekatronik) Onarımı | Çözüm Oto Elektronik',
         'meta_description' => 'Renault EDC şanzıman beyni (mekatronik) onarımı, programlama ve kodlama. Garantili işçilik, Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>EDC şanzımanın beyni olarak da bilinen mekatronik ünite, vites geçişlerini ve kavrama kontrolünü yöneten elektronik kontrol modülüdür. Bu ünitedeki arızalar; vites atlamama, ani sarsıntı ve arıza lambası gibi belirtilerle kendini gösterir.</p>
@@ -55,7 +55,7 @@ HTML,
         'icon' => 'fa-circle-o-notch',
         'price' => "7.500 ₺'den başlayan",
         'summary' => 'EDC çift kavrama sistemi balata değişimi, aktüatör onarımı ve adaptasyon.',
-        'meta_title' => 'EDC Kavrama (Debriyaj) Tamiri | Çözüm Oto Elektrik',
+        'meta_title' => 'EDC Kavrama (Debriyaj) Tamiri | Çözüm Oto Elektronik',
         'meta_description' => 'Renault EDC çift kavrama sistemi balata değişimi, aktüatör onarımı ve adaptasyonu. Garantili, aynı gün teslim. Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>EDC çift kavramalı şanzımanlarda kavrama (debriyaj) sistemi, gücün motordan şanzımana aktarılmasını sağlar. Kavrama balatalarının aşınması ya da aktüatör arızası; sarsıntı, koku ve performans kaybına yol açar.</p>
@@ -76,7 +76,7 @@ HTML,
         'icon' => 'fa-wrench',
         'price' => "9.000 ₺'den başlayan",
         'summary' => 'DW5 / otomatik şanzıman arıza tespiti, mekanik ve elektronik onarım.',
-        'meta_title' => 'DW5 Otomatik Şanzıman Onarımı | Çözüm Oto Elektrik',
+        'meta_title' => 'DW5 Otomatik Şanzıman Onarımı | Çözüm Oto Elektronik',
         'meta_description' => 'DW5 ve otomatik şanzıman onarımı, arıza tespiti, yağ değişimi ve programlama. Garantili servis, Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>DW5 otomatik şanzımanlar, konfor odaklı sürüş sunan ancak periyodik bakım gerektiren sistemlerdir. Bakımsızlık ve yağ ömrünün dolması; vites geçiş sorunları ve mekanik aşınmalara neden olabilir.</p>
@@ -97,7 +97,7 @@ HTML,
         'icon' => 'fa-tint',
         'price' => "3.500 ₺'den başlayan",
         'summary' => 'AdBlue (SCR) sistemi arızaları, pompa, enjektör ve sensör onarımı.',
-        'meta_title' => 'AdBlue / SCR Sistemi Servisi | Çözüm Oto Elektrik',
+        'meta_title' => 'AdBlue / SCR Sistemi Servisi | Çözüm Oto Elektronik',
         'meta_description' => 'AdBlue (SCR) sistemi arıza tespiti, pompa ve enjektör onarımı, sensör değişimi. Garantili servis, Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>AdBlue (SCR) sistemi, dizel araçlarda egzoz emisyonlarını azaltan bir teknolojidir. Sistemdeki arızalar; motor uyarı lambası, performans kısıtlaması ve aracın çalışmaması gibi sonuçlar doğurabilir.</p>
@@ -118,7 +118,7 @@ HTML,
         'icon' => 'fa-refresh',
         'price' => "2.500 ₺'den başlayan",
         'summary' => 'EGR valfi temizliği, onarımı ve karbon kaynaklı arızaların giderilmesi.',
-        'meta_title' => 'EGR Temizleme ve Onarımı | Çözüm Oto Elektrik',
+        'meta_title' => 'EGR Temizleme ve Onarımı | Çözüm Oto Elektronik',
         'meta_description' => 'EGR valfi temizliği, onarımı ve karbon birikimi kaynaklı arızaların giderilmesi. Garantili servis, Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>EGR (Egzoz Gazı Resirkülasyonu) valfi, egzoz gazının bir kısmını yanma odasına geri göndererek emisyonları düşürür. Zamanla biriken kurum ve karbon, valfin sıkışmasına ve motor arızalarına yol açar.</p>
@@ -139,7 +139,7 @@ HTML,
         'icon' => 'fa-filter',
         'price' => "3.000 ₺'den başlayan",
         'summary' => 'DPF partikül filtre profesyonel temizliği ve tıkanma kaynaklı arızaların giderilmesi.',
-        'meta_title' => 'Partikül Filtre (DPF) Temizliği | Çözüm Oto Elektrik',
+        'meta_title' => 'Partikül Filtre (DPF) Temizliği | Çözüm Oto Elektronik',
         'meta_description' => 'DPF partikül filtre profesyonel temizliği, tıkanma kaynaklı arızaların giderilmesi ve rejenerasyon. Garantili servis, Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>Partikül filtre (DPF), dizel araçlarda egzozdaki kurum partiküllerini tutarak çevreye salınmasını engeller. Zamanla dolan filtre; performans kaybına ve motor arızalarına neden olur.</p>
@@ -160,7 +160,7 @@ HTML,
         'icon' => 'fa-tachometer',
         'price' => "4.000 ₺'den başlayan",
         'summary' => 'Yakıt tasarrufu ve performans odaklı motor yazılımı optimizasyonu.',
-        'meta_title' => 'ECO Performans Yazılımları | Çözüm Oto Elektrik',
+        'meta_title' => 'ECO Performans Yazılımları | Çözüm Oto Elektronik',
         'meta_description' => 'Yakıt tasarrufu ve performans odaklı ECO motor yazılımı optimizasyonu. Güvenli ve garantili. Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>ECO performans yazılımları; motor verimliliğini artırmaya, yakıt tüketimini düşürmeye ve sürüş konforunu iyileştirmeye yönelik motor kontrol ünitesi (ECU) optimizasyonudur.</p>
@@ -180,7 +180,7 @@ HTML,
         'icon' => 'fa-shield',
         'price' => "2.000 ₺'den başlayan",
         'summary' => 'Airbag kontrol ünitesi (beyin) arıza silme, onarım ve kodlama.',
-        'meta_title' => 'Airbag Beyin Onarımı | Çözüm Oto Elektrik',
+        'meta_title' => 'Airbag Beyin Onarımı | Çözüm Oto Elektronik',
         'meta_description' => 'Airbag kontrol ünitesi (beyin) onarımı, kaza sonrası arıza silme ve kodlama. Garantili işçilik. Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>Airbag kontrol ünitesi, kaza anında hava yastıklarının ve gergi sisteminin devreye girmesini yönetir. Kaza sonrası veya arıza durumunda bu ünitenin onarımı ya da sıfırlanması gerekir.</p>
@@ -199,7 +199,7 @@ HTML,
         'icon' => 'fa-plug',
         'price' => "3.500 ₺'den başlayan",
         'summary' => 'Motor / enjeksiyon kontrol ünitesi (ECU) arıza tespiti, onarım ve programlama.',
-        'meta_title' => 'Enjeksiyon Beyin (ECU) Onarımı | Çözüm Oto Elektrik',
+        'meta_title' => 'Enjeksiyon Beyin (ECU) Onarımı | Çözüm Oto Elektronik',
         'meta_description' => 'Enjeksiyon / motor beyni (ECU) onarımı, arıza tespiti ve programlama. Garantili işçilik. Esenyurt / İstanbul.',
         'body' => <<<HTML
 <p>Enjeksiyon beyni (ECU), motorun yakıt ve ateşleme parametrelerini yöneten ana kontrol ünitesidir. Arızalı bir ECU; çalışmama, tekleme ve performans sorunlarına neden olur.</p>

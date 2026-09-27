@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Controllers\CacheController;
 use App\Controllers\ContactController;
 use App\Controllers\GalleryController;
 use App\Controllers\HomeController;
@@ -35,6 +36,9 @@ return function (SlimApp $app): void {
     $app->get('/sitemap.xml', [SitemapController::class, 'sitemap']);
     $app->get('/robots.txt', [SitemapController::class, 'robots']);
     $app->get('/llms.txt', [SitemapController::class, 'llms']);
+
+    // Deploy sonrası şablon önbelleğini temizlemek için: /clearcache (yönetim girişi gerekir)
+    $app->get('/clearcache', [CacheController::class, 'clear'])->add(AuthMiddleware::class);
 
     // Eski CMS URL'leri için 301 yönlendirmeleri.
     $app->get('/icerik[/{rest:.*}]', [LegacyRedirectController::class, 'handle']);

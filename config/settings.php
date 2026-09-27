@@ -11,7 +11,7 @@ $root = dirname(__DIR__);
 
 return [
     'app' => [
-        'name'  => $_ENV['APP_NAME'] ?? 'Çözüm Oto Elektrik',
+        'name'  => $_ENV['APP_NAME'] ?? 'Çözüm Oto Elektronik',
         'env'   => $_ENV['APP_ENV'] ?? 'production',
         'debug' => filter_var($_ENV['APP_DEBUG'] ?? false, FILTER_VALIDATE_BOOL),
         'url'   => rtrim($_ENV['APP_URL'] ?? '', '/'),

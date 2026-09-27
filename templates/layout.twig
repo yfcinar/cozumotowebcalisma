@@ -55,7 +55,7 @@
 <script src="/assets/vendor/paper-kit/js/bootstrap.min.js"></script>
 <script src="/assets/vendor/paper-kit/js/paper-kit.min.js"></script>
 {% if flash is defined and flash|length %}
-<script>window.__flash = {{ flash|json_encode|raw }};</script>
+<script>window.__flash = {{ flash|json_encode(constant('JSON_HEX_TAG'))|raw }};</script>
 {% endif %}
 <script src="/assets/vendor/toastify/toastify.js"></script>
 <script src="/assets/js/toast.js"></script>

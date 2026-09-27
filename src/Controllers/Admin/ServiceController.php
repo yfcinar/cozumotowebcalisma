@@ -7,19 +7,25 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Repository\ActivityRepository;
 use App\Repository\ServiceRepository;
+use App\Support\ImageUploader;
 use App\Support\Session;
 use App\Support\Str;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\UploadedFileInterface;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 
 final class ServiceController extends BaseController
 {
+    private const IMAGE_PREFIX = 'svc-';
+    private const IMAGE_MAX_BYTES = 4 * 1024 * 1024;
+
     public function __construct(
         Twig $view,
         private readonly ServiceRepository $services,
-        private readonly ActivityRepository $activity
+        private readonly ActivityRepository $activity,
+        private readonly ImageUploader $images
     ) {
         parent::__construct($view);
     }
@@ -41,7 +47,7 @@ final class ServiceController extends BaseController
 
     public function store(Request $request, Response $response): Response
     {
-        $data = $this->validated((array) $request->getParsedBody());
+        $data = $this->validated($request, (array) $request->getParsedBody(), null);
         if ($data === null) {
             return $this->redirect($response, '/yonetim/hizmetler/yeni');
         }
@@ -66,10 +72,11 @@ final class ServiceController extends BaseController
     public function update(Request $request, Response $response, array $args): Response
     {
         $id = (int) $args['id'];
-        if ($this->services->find($id) === null) {
+        $existing = $this->services->find($id);
+        if ($existing === null) {
             throw new HttpNotFoundException($request);
         }
-        $data = $this->validated((array) $request->getParsedBody());
+        $data = $this->validated($request, (array) $request->getParsedBody(), $existing);
         if ($data === null) {
             return $this->redirect($response, '/yonetim/hizmetler/' . $id . '/duzenle');
         }
@@ -82,13 +89,14 @@ final class ServiceController extends BaseController
     public function delete(Request $request, Response $response, array $args): Response
     {
         $svc = $this->services->find((int) $args['id']);
+        $this->images->delete($svc['image'] ?? null, self::IMAGE_PREFIX);
         $this->services->delete((int) $args['id']);
         $this->activity->log(Session::user()['name'] ?? null, 'sildi', 'Hizmet', $svc['title'] ?? ('#' . $args['id']));
         Session::flash('success', 'Hizmet silindi.');
         return $this->redirect($response, '/yonetim/hizmetler');
     }
 
-    private function validated(array $d): ?array
+    private function validated(Request $request, array $d, ?array $existing): ?array
     {
         $title = trim((string) ($d['title'] ?? ''));
         if ($title === '') {
@@ -97,13 +105,31 @@ final class ServiceController extends BaseController
         }
         $slug = trim((string) ($d['slug'] ?? '')) ?: $title;
 
+        $image = $existing['image'] ?? null;
+        if (!empty($d['image_remove'])) {
+            $this->images->delete($image, self::IMAGE_PREFIX);
+            $image = null;
+        }
+
+        $file = $request->getUploadedFiles()['image_file'] ?? null;
+        if ($file instanceof UploadedFileInterface && $file->getError() !== UPLOAD_ERR_NO_FILE) {
+            $error = null;
+            $path  = $this->images->store($file, self::IMAGE_PREFIX, self::IMAGE_MAX_BYTES, $error);
+            if ($path !== null) {
+                $this->images->delete($image, self::IMAGE_PREFIX);
+                $image = $path;
+            } else {
+                Session::flash('error', $error ?? 'Görsel yüklenemedi.');
+            }
+        }
+
         return [
             'title'            => $title,
             'slug'             => Str::slug($slug),
             'summary'          => trim((string) ($d['summary'] ?? '')) ?: null,
             'body'             => (string) ($d['body'] ?? ''),
             'icon'             => trim((string) ($d['icon'] ?? '')) ?: null,
-            'image'            => trim((string) ($d['image'] ?? '')) ?: null,
+            'image'            => $image,
             'price'            => trim((string) ($d['price'] ?? '')) ?: null,
             'meta_title'       => trim((string) ($d['meta_title'] ?? '')) ?: null,
             'meta_description' => trim((string) ($d['meta_description'] ?? '')) ?: null,

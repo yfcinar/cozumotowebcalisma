@@ -1,4 +1,4 @@
-# Çözüm Oto Elektrik — Renault Elektronik Servisi
+# Çözüm Oto Elektronik — Renault Elektronik Servisi
 
 Renault EDC şanzıman, mekatronik beyin onarımı ve oto elektronik servisi için
 **PHP Slim 4** ile geliştirilmiş kurumsal web sitesi ve yönetim paneli.
@@ -141,4 +141,4 @@ templates/     Twig şablonları (public + admin)
 
 ## Lisans
 
-Özel (proprietary) — Çözüm Oto Elektrik için geliştirilmiştir.
+Özel (proprietary) — Çözüm Oto Elektronik için geliştirilmiştir.

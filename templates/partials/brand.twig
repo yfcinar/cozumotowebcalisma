@@ -1,0 +1,12 @@
+{% set brand_name = site.brand_name|default('Çözüm Oto Elektronik') %}
+{% if site.logo %}
+<img class="brand__logo" src="/{{ site.logo }}" alt="{{ brand_name }}">
+{% else %}
+<span class="brand__mark">RES</span>
+{% endif %}
+{% if not (site.logo and site.logo_hide_text == '1') %}
+<span class="brand__text">
+    <strong>{{ brand_name }}</strong>
+    <small>Renault Elektronik Servisi</small>
+</span>
+{% endif %}

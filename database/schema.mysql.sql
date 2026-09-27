@@ -1,4 +1,4 @@
--- Çözüm Oto Elektrik — MySQL şeması (production)
+-- Çözüm Oto Elektronik — MySQL şeması (production)
 SET NAMES utf8mb4;
 SET foreign_key_checks = 0;
 

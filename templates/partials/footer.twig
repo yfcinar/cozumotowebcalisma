@@ -3,11 +3,7 @@
         <div class="row">
             <div class="col-md-4 mb-4 mb-md-0">
                 <div class="brand brand--footer mb-3">
-                    <span class="brand__mark">RES</span>
-                    <span class="brand__text">
-                        <strong>{{ site.brand_name|default('Çözüm Oto Elektrik') }}</strong>
-                        <small>Renault Elektronik Servisi</small>
-                    </span>
+                    {% include 'partials/brand.twig' %}
                 </div>
                 <p class="footer__about">{{ site.site_description|default('Renault EDC şanzıman, beyin onarımı, kavrama ve oto elektronik arızalarında garantili, aynı gün teslim hizmet.') }}</p>
                 <div class="footer__social">
@@ -39,9 +35,20 @@
             </div>
         </div>
 
+        {% if service is defined and districts is defined and districts|length %}
+        <div class="footer__regions">
+            <h6 class="footer__regions-title">{{ service.title }} Hizmet Bölgeleri</h6>
+            <p class="footer__regions-list">
+                {% for d in districts %}
+                <a href="/hizmet/{{ service.slug }}/{{ d.slug }}" title="{{ d.name }} {{ service.title }}"{% if district is defined and district.id == d.id %} class="is-active" aria-current="page"{% endif %}>{{ d.name }}</a>
+                {% endfor %}
+            </p>
+        </div>
+        {% endif %}
+
         <hr class="footer__hr">
         <div class="d-flex justify-content-between flex-wrap footer__bottom">
-            <span>© {{ app.year }} {{ site.brand_name|default('Çözüm Oto Elektrik') }}. Tüm hakları saklıdır.</span>
+            <span>© {{ app.year }} {{ site.brand_name|default('Çözüm Oto Elektronik') }}. Tüm hakları saklıdır.</span>
             <a href="/yonetim/giris" class="footer__admin">Yönetim</a>
         </div>
     </div>

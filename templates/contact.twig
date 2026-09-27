@@ -1,6 +1,6 @@
 {% extends 'layout.twig' %}
-{% block title %}İletişim | {{ site.brand_name|default('Çözüm Oto Elektrik') }}{% endblock %}
-{% block description %}{{ site.brand_name|default('Çözüm Oto Elektrik') }} iletişim bilgileri, adres ve konum. Esenyurt / İstanbul.{% endblock %}
+{% block title %}İletişim | {{ site.brand_name|default('Çözüm Oto Elektronik') }}{% endblock %}
+{% block description %}{{ site.brand_name|default('Çözüm Oto Elektronik') }} iletişim bilgileri, adres ve konum. Esenyurt / İstanbul.{% endblock %}
 
 {% block content %}
 <div class="page-header page-head" style="background-image: url('/assets/img/head-tools.jpg');">
@@ -100,7 +100,7 @@
         {% set map_query = site.maps_query|default(site.address|default('Esenyurt İstanbul')) %}
         <iframe
             src="https://www.google.com/maps?q={{ map_query|url_encode }}&hl=tr&z=16&output=embed"
-            title="{{ site.brand_name|default('Çözüm Oto Elektrik') }} konumu"
+            title="{{ site.brand_name|default('Çözüm Oto Elektronik') }} konumu"
             loading="lazy" referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen></iframe>
     {% endif %}

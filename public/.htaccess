@@ -1,4 +1,4 @@
-# Çözüm Oto Elektrik - Apache front controller yönlendirmesi
+# Çözüm Oto Elektronik - Apache front controller yönlendirmesi
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} -f [OR]
