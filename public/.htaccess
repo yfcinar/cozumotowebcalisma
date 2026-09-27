@@ -1,6 +1,12 @@
 # Çözüm Oto Elektronik - Apache front controller yönlendirmesi
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # HTTP isteklerini HTTPS'e zorla (SSL kurulu ama önceden zorunlu değildi)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
